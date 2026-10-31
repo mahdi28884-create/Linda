@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لیندا</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<meta name="theme-color" content="#0E6B6B">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF3F3;--card:#fff;--tx:#14232B;--mut:#65767F;--bd:#DCE5E7;--ac:#0E6B6B;--acx:#fff;--inc:#1B7F4B;--exp:#B5382E;--chip:#E5EEEF;--sh:0 1px 2px rgba(20,35,43,.05),0 8px 22px rgba(20,35,43,.07);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E181D;--card:#16252C;--tx:#E6EEF1;--mut:#8DA0A9;--bd:#2A3D46;--ac:#4DC1B8;--acx:#08201F;--inc:#5CCB8D;--exp:#F08A7F;--chip:#22353D;--sh:0 1px 2px rgba(0,0,0,.3)}}
+:root[data-theme="dark"]{--bg:#0E181D;--card:#16252C;--tx:#E6EEF1;--mut:#8DA0A9;--bd:#2A3D46;--ac:#4DC1B8;--acx:#08201F;--inc:#5CCB8D;--exp:#F08A7F;--chip:#22353D;--sh:0 1px 2px rgba(0,0,0,.3)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.7 Vazirmatn,Tahoma,sans-serif}
+main{max-width:560px;margin:0 auto;padding:16px 14px 44px}
+header{display:flex;align-items:center;gap:12px;margin:8px 2px 18px}
+.logo{width:48px;height:48px;border-radius:16px;background:var(--ac);color:var(--acx);display:grid;place-items:center;font-size:26px;font-weight:800;box-shadow:var(--sh);overflow:hidden}.logo img{width:100%;height:100%;object-fit:cover;display:block}textarea{font:inherit;width:100%;min-height:90px;padding:10px;border:1px solid var(--bd);border-radius:13px;background:var(--bg);color:var(--tx);direction:ltr;font-size:12px}.bk{display:flex;gap:6px;margin-top:8px}.bk button{flex:1;background:var(--ac);color:var(--acx)}.hint{color:var(--mut);font-size:12.5px;margin:0 0 8px}
+h1{font-size:28px;line-height:1.2;font-weight:800;margin:0}
+header p{margin:0;color:var(--mut);font-size:13.5px}
+h2{font-size:15px;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+h2:before{content:"";width:4px;height:16px;border-radius:2px;background:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:5px;box-shadow:var(--sh)}
+.nav b{font-size:17px;font-weight:700}
+button{font:inherit;cursor:pointer;border:0;border-radius:11px;padding:8px 14px;background:var(--chip);color:var(--tx)}
+.nav button{width:42px;height:38px;padding:0;font-size:20px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.sum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.sum div{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px 14px;box-shadow:var(--sh)}
+.sum small{color:var(--mut);display:block}
+.sum b{font-weight:700;font-size:17px}
+.sum .bal{grid-column:1/-1;position:relative;overflow:hidden;background:var(--ac);color:var(--acx);border-color:var(--ac);padding:20px;border-radius:22px}
+.sum .bal:after{content:"";position:absolute;left:-30px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.sum .bal small{color:inherit;opacity:.85}
+.sum .bal b{font-size:32px;font-weight:800}
+.inc{color:var(--inc)}.exp{color:var(--exp)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:12px;background:var(--chip);padding:4px;border-radius:15px}
+.seg button{padding:9px;background:transparent;border-radius:11px}
+.seg button.on{background:var(--card);box-shadow:var(--sh);font-weight:700}
+#te.on{color:var(--exp)}#ti.on{color:var(--inc)}
+input,select{font:inherit;width:100%;padding:11px 12px;border:1px solid var(--bd);border-radius:13px;background:var(--bg);color:var(--tx)}
+.row{display:grid;gap:8px;margin-bottom:8px}
+.r3{grid-template-columns:1fr 1.6fr 1.2fr}
+.add{width:100%;background:var(--ac);color:var(--acx);font-weight:700;font-size:16px;padding:13px;border-radius:14px;margin-top:4px}
+.sub{font-size:13px;color:var(--mut);margin:14px 2px 8px;display:flex;justify-content:space-between}
+.sub:first-of-type{margin-top:0}
+.g{border:1px solid var(--bd);border-radius:16px;margin-bottom:8px;background:var(--bg);overflow:hidden}
+.gh{width:100%;display:flex;align-items:center;gap:10px;padding:11px 12px;background:none;border-radius:0;text-align:right}
+.gi{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:700;flex:none}
+.ke .gi{background:color-mix(in srgb,var(--exp) 14%,transparent);color:var(--exp)}
+.ki .gi{background:color-mix(in srgb,var(--inc) 14%,transparent);color:var(--inc)}
+.gn{flex:1;min-width:0;font-weight:500;line-height:1.4}
+.gn small{display:block;color:var(--mut);font-size:12px;font-weight:400}
+.gh b{font-size:15px}
+.chev{color:var(--mut);transition:transform .2s;font-size:16px}
+.g.open .chev{transform:rotate(180deg)}
+.bar{height:4px;background:var(--chip);margin:0 12px 10px;border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:2px;background:var(--exp)}
+.ki .bar i{background:var(--inc)}
+.gb{display:none;background:var(--card);border-top:1px solid var(--bd);padding:2px 12px}
+.g.open .gb{display:block}
+.it{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.it:last-child{border:0}
+.it .m{flex:1;min-width:0}
+.it .m span{display:block;color:var(--mut);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it .a{font-weight:700;white-space:nowrap}
+.x{background:none;color:var(--mut);padding:4px 8px;font-size:13px}
+.empty{color:var(--mut);text-align:center;padding:16px 0}
+details summary{cursor:pointer;font-weight:700;list-style:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{background:var(--chip);border-radius:20px;padding:2px 4px 2px 12px;display:flex;align-items:center;gap:2px;font-size:14px}
+.chip button{padding:0 8px;background:none;font-size:16px;color:var(--mut)}
+.addc{display:flex;gap:6px;margin-bottom:14px}
+.addc button{background:var(--ac);color:var(--acx);white-space:nowrap}
+</style>
+</head>
+<body>
+<main>
+<header><div class="logo"><img src="data:image/jpeg;base64,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" alt="لیندا"></div><div><h1>لیندا</h1><p>دخل و خرج خانه</p></div></header>
+<div class="nav"><button id="nx" aria-label="ماه قبل">›</button><b id="mt"></b><button id="pv" aria-label="ماه بعد">‹</button></div>
+<div class="sum" id="sum"></div>
+
+<div class="card">
+<div class="seg"><button id="te" class="on">هزینه</button><button id="ti">درآمد</button></div>
+<div class="row"><input id="amt" inputmode="numeric" placeholder="مبلغ (تومان)" autocomplete="off"></div>
+<div class="row"><select id="cat" aria-label="سرفصل"></select></div>
+<div class="row r3"><select id="dd" aria-label="روز"></select><select id="dm" aria-label="ماه"></select><input id="dy" inputmode="numeric" aria-label="سال"></div>
+<div class="row"><input id="note" placeholder="توضیحات (اختیاری)"></div>
+<button class="add" id="add">ثبت هزینه</button>
+</div>
+
+<div class="card"><h2>سرفصل‌ها و تراکنش‌ها</h2><div id="grp"></div></div>
+
+<div class="card"><details><summary>مدیریت سرفصل‌ها (افزودن و حذف)</summary>
+<h2 style="margin-top:14px">سرفصل‌های هزینه</h2>
+<div class="addc"><input id="ne" placeholder="سرفصل جدید هزینه"><button id="ae">افزودن</button></div>
+<div class="chips" id="ce"></div>
+<h2 style="margin-top:14px">سرفصل‌های درآمد</h2>
+<div class="addc"><input id="ni" placeholder="سرفصل جدید درآمد"><button id="ai">افزودن</button></div>
+<div class="chips" id="ci"></div>
+<h2 style="margin-top:14px">پشتیبان‌گیری</h2><p class="hint">«نمایش پشتیبان» را بزنید و متن را کپی و جایی نگه دارید. برای بازگردانی، متن را در همین کادر بچسبانید و «بازگردانی» را بزنید.</p><textarea id="bk" aria-label="متن پشتیبان"></textarea><div class="bk"><button id="bs">نمایش پشتیبان</button><button id="br">بازگردانی</button></div></details></div>
+</main>
+<script>
+const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const $=i=>document.getElementById(i);
+const fa=n=>Number(n).toLocaleString('fa-IR');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const div=(a,b)=>Math.trunc(a/b);
+function toJ(gy,gm,gd){const t=[0,31,59,90,120,151,181,212,243,273,304,334];const g2=gm>2?gy+1:gy;
+let d=355666+365*gy+div(g2+3,4)-div(g2+99,100)+div(g2+399,400)+gd+t[gm-1];
+let jy=-1595+33*div(d,12053);d%=12053;jy+=4*div(d,1461);d%=1461;
+if(d>365){jy+=div(d-1,365);d=(d-1)%365}
+const jm=d<186?1+div(d,31):7+div(d-186,30);const jd=d<186?1+d%31:1+(d-186)%30;return[jy,jm,jd]}
+const leap=y=>[1,5,9,13,17,22,26,30].includes(y%33);
+const dim=(y,m)=>m<=6?31:m<=11?30:leap(y)?30:29;
+const now=new Date(),T=toJ(now.getFullYear(),now.getMonth()+1,now.getDate());
+const DEF={e:['شارژ ساختمان','گاز','آب','برق','تلفن','اینترنت','شهریه مدرسه البرز','شهریه لیندا','پول زهرا','هزینه تعمیرات','پول توجیبی خاتون','خوراک و خرید','حمل‌ونقل','درمان','سایر'],i:['حقوق','اجاره','سایر درآمدها']};
+let S;try{S=JSON.parse(localStorage.getItem('dk1'))}catch(e){}
+if(!S||!S.tx)S={tx:[],cats:DEF};
+const save=()=>{try{localStorage.setItem('dk1',JSON.stringify(S))}catch(e){}};
+let type='e',vy=T[0],vm=T[1];const open=new Set();
+
+const toLat=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const num=s=>parseInt(toLat(s).replace(/[^\d]/g,''),10)||0;
+
+function fillDate(){
+ $('dm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');
+ $('dm').value=vm;$('dy').value=toLat(vy);fillDays(T[0]===vy&&T[1]===vm?T[2]:1)}
+function fillDays(sel){const y=num($('dy').value)||vy,m=+$('dm').value,n=dim(y,m);
+ $('dd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');
+ $('dd').value=Math.min(sel||+$('dd').value||1,n)}
+function fillCats(){const c=S.cats[type];$('cat').innerHTML=c.length?c.map(x=>`<option>${esc(x)}</option>`).join(''):'<option value="">(سرفصلی نیست)</option>'}
+function setType(t){type=t;$('te').classList.toggle('on',t==='e');$('ti').classList.toggle('on',t==='i');
+ $('add').textContent=t==='e'?'ثبت هزینه':'ثبت درآمد';fillCats()}
+
+function groups(kind,tx,total){
+ const by={};tx.filter(t=>t.t===kind).forEach(t=>{const k=t.c||'بدون سرفصل';(by[k]=by[k]||[]).push(t)});
+ const sm=a=>a.reduce((s,t)=>s+t.a,0);
+ const ks=Object.keys(by).sort((a,b)=>sm(by[b])-sm(by[a]));
+ if(!ks.length)return '';
+ return `<div class="sub"><span>${kind==='e'?'هزینه‌ها':'درآمدها'}</span><b class="${kind==='e'?'exp':'inc'}">${fa(total)}</b></div>`+ks.map(k=>{
+  const id=kind+':'+k,o=open.has(id),a=by[k],s=sm(a);
+  return `<div class="g k${kind}${o?' open':''}"><button class="gh" data-g="${esc(id)}" aria-expanded="${o}"><span class="gi">${esc(k.charAt(0))}</span><span class="gn">${esc(k)}<small>${fa(a.length)} تراکنش</small></span><b>${fa(s)}</b><span class="chev">⌄</span></button><div class="bar"><i style="width:${Math.max(3,Math.round(s/total*100))}%"></i></div><div class="gb">${a.sort((x,y)=>y.d-x.d||y.id-x.id).map(t=>`<div class="it"><div class="m"><b>${fa(t.d)} ${MN[t.m-1]}</b>${t.n?`<span>${esc(t.n)}</span>`:''}</div><div class="a ${kind==='i'?'inc':'exp'}">${fa(t.a)}</div><button class="x" data-del="${t.id}">حذف</button></div>`).join('')}</div></div>`}).join('')}
+
+function render(){
+ $('mt').textContent=MN[vm-1]+' '+toLat(vy);
+ const tx=S.tx.filter(t=>t.y===vy&&t.m===vm);
+ const I=tx.filter(t=>t.t==='i').reduce((s,t)=>s+t.a,0),E=tx.filter(t=>t.t==='e').reduce((s,t)=>s+t.a,0);
+ $('sum').innerHTML=`<div class="bal"><small>مانده این ماه (تومان)</small><b>${fa(I-E)}</b></div><div><small>درآمد</small><b class="inc">${fa(I)}</b></div><div><small>هزینه</small><b class="exp">${fa(E)}</b></div>`;
+ $('grp').innerHTML=tx.length?groups('e',tx,E)+groups('i',tx,I):'<div class="empty">هنوز چیزی برای این ماه ثبت نشده. از فرم بالا شروع کنید.</div>';
+ ['e','i'].forEach(k=>$('c'+k).innerHTML=S.cats[k].map((c,i)=>`<span class="chip">${esc(c)}<button data-rc="${k}:${i}" aria-label="حذف ${esc(c)}">×</button></span>`).join(''))}
+
+$('amt').addEventListener('input',e=>{const n=num(e.target.value);e.target.value=n?fa(n):''});
+$('add').onclick=()=>{const a=num($('amt').value);if(!a){$('amt').focus();return}
+ const y=num($('dy').value)||vy;
+ S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});
+ save();vy=y;vm=+$('dm').value;$('amt').value='';$('note').value='';render()};
+$('dm').onchange=()=>fillDays();$('dy').onchange=()=>fillDays();
+$('te').onclick=()=>setType('e');$('ti').onclick=()=>setType('i');
+$('nx').onclick=()=>{vm--;if(vm<1){vm=12;vy--}fillDate();render()};
+$('pv').onclick=()=>{vm++;if(vm>12){vm=1;vy++}fillDate();render()};
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.g){const g=b.dataset.g;open.has(g)?open.delete(g):open.add(g);render()}
+ if(b.dataset.del){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}
+  else{S.tx=S.tx.filter(t=>t.id!=b.dataset.del);save();render()}}
+ if(b.dataset.rc){const[k,i]=b.dataset.rc.split(':');S.cats[k].splice(+i,1);save();fillCats();render()}});
+[['e','ne'],['i','ni']].forEach(([k,id])=>$('a'+k).onclick=()=>{const v=$(id).value.trim();
+ if(v&&!S.cats[k].includes(v)){S.cats[k].push(v);save();$(id).value='';if(type===k)fillCats();render()}});
+$('bs').onclick=()=>{$('bk').value=JSON.stringify(S);$('bk').select()};
+$('br').onclick=()=>{try{const o=JSON.parse($('bk').value);if(!Array.isArray(o.tx)||!o.cats||!Array.isArray(o.cats.e)||!Array.isArray(o.cats.i))throw 0;S=o;save();fillCats();render();$('bk').value='بازگردانی انجام شد.'}catch(e){$('bk').value='متن پشتیبان معتبر نیست.'}};
+fillDate();setType('e');render();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
