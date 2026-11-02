@@ -1,133 +1,78 @@
-name: Build HESAB Android APK
+webView.setWebChromeClient(new WebChromeClient() {
+                      @Override
+                      public boolean onShowFileChooser(
+                              WebView view,
+                              ValueCallback<Uri[]> callback,
+                              FileChooserParams params) {
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
+                          if (fileCallback != null) {
+                              fileCallback.onReceiveValue(null);
+                          }
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+                          fileCallback = callback;
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+                          Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                          intent.addCategory(Intent.CATEGORY_OPENABLE);
+                          intent.setType("*/*");
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
+                          try {
+                              startActivityForResult(
+                                  Intent.createChooser(intent, "انتخاب فایل پشتیبان"),
+                                  FILE_REQUEST
+                              );
+                          } catch (Exception e) {
+                              fileCallback = null;
+                              return false;
+                          }
 
-      - name: Install Gradle
-        run: |
-          wget -q https://services.gradle.org/distributions/gradle-8.9-bin.zip
-          unzip -q gradle-8.9-bin.zip
-          echo "$GITHUB_WORKSPACE/gradle-8.9/bin" >> $GITHUB_PATH
+                          return true;
+                      }
+                  });
 
-      - name: Create Android project
-        run: |
-          mkdir -p app/src/main/java/com/hesab/app
-          mkdir -p app/src/main/res/values
-
-          cat > settings.gradle <<'EOF'
-          pluginManagement {
-              repositories {
-                  google()
-                  mavenCentral()
-                  gradlePluginPortal()
+                  webView.loadUrl("https://mahdi28884-create.github.io/Linda/");
               }
-          }
-          dependencyResolutionManagement {
-              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-              repositories {
-                  google()
-                  mavenCentral()
-              }
-          }
-          rootProject.name = "HESAB"
-          include ':app'
-          EOF
-
-          cat > build.gradle <<'EOF'
-          plugins {
-              id 'com.android.application' version '8.7.3' apply false
-          }
-          EOF
-
-          cat > app/build.gradle <<'EOF'
-          plugins {
-              id 'com.android.application'
-          }
-
-          android {
-              namespace 'com.hesab.app'
-              compileSdk 35
-
-              defaultConfig {
-                  applicationId 'com.hesab.app'
-                  minSdk 23
-                  targetSdk 35
-                  versionCode 2
-                  versionName '1.1'
-              }
-          }
-          EOF
-
-          cat > app/src/main/AndroidManifest.xml <<'EOF'
-          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-              <uses-permission android:name="android.permission.INTERNET"/>
-
-              <application
-                  android:theme="@android:style/Theme.Material.Light.NoActionBar"
-                  android:label="HESAB"
-                  android:usesCleartextTraffic="false">
-
-                  <activity
-                      android:name=".MainActivity"
-                      android:exported="true">
-
-                      <intent-filter>
-                          <action android:name="android.intent.action.MAIN"/>
-                          <category android:name="android.intent.category.LAUNCHER"/>
-                      </intent-filter>
-
-                  </activity>
-              </application>
-          </manifest>
-          EOF
-
-          cat > app/src/main/java/com/hesab/app/MainActivity.java <<'EOF'
-          package com.hesab.app;
-
-          import android.app.Activity;
-          import android.os.Bundle;
-          import android.content.Intent;
-          import android.net.Uri;
-          import android.webkit.WebView;
-          import android.webkit.WebViewClient;
-          import android.webkit.WebChromeClient;
-          import android.webkit.WebSettings;
-          import android.webkit.ValueCallback;
-
-          public class MainActivity extends Activity {
-
-              private WebView web;
-              private ValueCallback<Uri[]> fileCallback;
-              private static final int FILE_REQUEST = 1001;
 
               @Override
-              protected void onCreate(Bundle savedInstanceState) {
-                  super.onCreate(savedInstanceState);
+              protected void onActivityResult(
+                      int requestCode, int resultCode, Intent data) {
+                  super.onActivityResult(requestCode, resultCode, data);
 
-                  web = new WebView(this);
+                  if (requestCode == FILE_REQUEST && fileCallback != null) {
+                      Uri[] result = null;
 
-                  WebSettings settings = web.getSettings();
-                  settings.setJavaScriptEnabled(true);
-                  settings.setDomStorageEnabled(true);
-                  settings.setAllowFileAccess(true);
-                  settings.setAllowContentAccess(true);
-                  settings.setTextZoom(100);
+                      if (resultCode == Activity.RESULT_OK && data != null) {
+                          Uri uri = data.getData();
+                          if (uri != null) {
+                              result = new Uri[]{uri};
+                          }
+                      }
 
-                  web.setWebViewClient(new WebViewClient());
+                      fileCallback.onReceiveValue(result);
+                      fileCallback = null;
+                  }
+              }
+
+              @Override
+              public void onBackPressed() {
+                  if (webView != null && webView.canGoBack()) {
+                      webView.goBack();
+                  } else {
+                      super.onBackPressed();
+                  }
+              }
+          }
+          EOF
+
+          gradle wrapper --gradle-version 8.9
+
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: HESAB-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
