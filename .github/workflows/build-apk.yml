@@ -3,14 +3,15 @@ name: Build HESAB Android APK
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get source
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Java
@@ -18,6 +19,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+
+      - name: Install Gradle
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-8.9-bin.zip
+          unzip -q gradle-8.9-bin.zip
+          echo "$GITHUB_WORKSPACE/gradle-8.9/bin" >> $GITHUB_PATH
 
       - name: Create Android project
         run: |
@@ -53,15 +60,17 @@ jobs:
           plugins {
               id 'com.android.application'
           }
+
           android {
               namespace 'com.hesab.app'
               compileSdk 35
+
               defaultConfig {
                   applicationId 'com.hesab.app'
                   minSdk 23
                   targetSdk 35
-                  versionCode 1
-                  versionName '1.0'
+                  versionCode 2
+                  versionName '1.1'
               }
           }
           EOF
@@ -69,23 +78,27 @@ jobs:
           cat > app/src/main/AndroidManifest.xml <<'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.INTERNET"/>
+
               <application
                   android:theme="@android:style/Theme.Material.Light.NoActionBar"
                   android:label="HESAB"
                   android:usesCleartextTraffic="false">
+
                   <activity
                       android:name=".MainActivity"
                       android:exported="true">
+
                       <intent-filter>
                           <action android:name="android.intent.action.MAIN"/>
                           <category android:name="android.intent.category.LAUNCHER"/>
                       </intent-filter>
+
                   </activity>
               </application>
           </manifest>
           EOF
 
-         cat > app/src/main/java/com/hesab/app/MainActivity.java <<'EOF'
+          cat > app/src/main/java/com/hesab/app/MainActivity.java <<'EOF'
           package com.hesab.app;
 
           import android.app.Activity;
@@ -118,86 +131,3 @@ jobs:
                   settings.setTextZoom(100);
 
                   web.setWebViewClient(new WebViewClient());
-
-                  web.setWebChromeClient(new WebChromeClient() {
-                      @Override
-                      public boolean onShowFileChooser(
-                          WebView view,
-                          ValueCallback<Uri[]> callback,
-                          FileChooserParams params) {
-
-                          if (fileCallback != null) {
-                              fileCallback.onReceiveValue(null);
-                          }
-
-                          fileCallback = callback;
-
-                          Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                          intent.addCategory(Intent.CATEGORY_OPENABLE);
-                          intent.setType("*/*");
-
-                          try {
-                              startActivityForResult(
-                                  Intent.createChooser(intent, "انتخاب فایل پشتیبان"),
-                                  FILE_REQUEST
-                              );
-                          } catch (Exception e) {
-                              fileCallback = null;
-                              return false;
-                          }
-
-                          return true;
-                      }
-                  });
-
-                  setContentView(web);
-                  web.loadUrl("https://mahdi28884-create.github.io/Linda/");
-              }
-
-              @Override
-              protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-                  super.onActivityResult(requestCode, resultCode, data);
-
-                  if (requestCode == FILE_REQUEST && fileCallback != null) {
-                      Uri[] results = null;
-
-                      if (resultCode == Activity.RESULT_OK && data != null
-                          && data.getData() != null) {
-                          results = new Uri[]{data.getData()};
-                      }
-
-                      fileCallback.onReceiveValue(results);
-                      fileCallback = null;
-                  }
-              }
-
-              @Override
-              public void onBackPressed() {
-                  if (web != null && web.canGoBack()) {
-                      web.goBack();
-                  } else {
-                      super.onBackPressed();
-                  }
-              }
-
-              @Override
-              protected void onDestroy() {
-                  if (fileCallback != null) {
-                      fileCallback.onReceiveValue(null);
-                      fileCallback = null;
-                  }
-                  super.onDestroy();
-              }
-          }
-          EOF
-      - name: Build APK
-        run: |
-          gradle wrapper --gradle-version 8.9
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: HESAB-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
