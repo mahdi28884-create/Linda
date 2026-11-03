@@ -10,15 +10,15 @@
 <meta name="theme-color" content="#10806F">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200..700&family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#EDF6F3;--ac2:#0A5F66;--card:#fff;--tx:#15302B;--mut:#62786F;--bd:#D5E5DF;--ac:#10806F;--acx:#fff;--inc:#1F8A4C;--exp:#C0453A;--chip:#E1EFEA;--sh:0 1px 2px rgba(20,35,43,.05),0 8px 22px rgba(20,35,43,.07);
+:root{--bg:#EDF6F3;--ac2:#0A5F66;--expa:rgba(192,69,58,.14);--inca:rgba(31,138,76,.14);--aca:rgba(16,128,111,.2);--fi-bg:#EFF6E2;--fi-bd:#CFE3AE;--fe-bg:#FFF3F0;--fe-bd:#F7D3CC;--bi:#9CCB6F;--bit:#173008;--be:#F9D2CC;--bet:#A12D23;--card:#fff;--tx:#15302B;--mut:#62786F;--bd:#D5E5DF;--ac:#10806F;--acx:#fff;--inc:#1F8A4C;--exp:#C0453A;--chip:#E1EFEA;--sh:0 1px 2px rgba(20,35,43,.05),0 8px 22px rgba(20,35,43,.07);
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1A17;--ac2:#3BB0A8;--card:#13251F;--tx:#E4F1EC;--mut:#8FA89F;--bd:#26403A;--ac:#5FD3B8;--acx:#06241D;--inc:#6BD59A;--exp:#F29A8E;--chip:#1D332D;--sh:0 1px 2px rgba(0,0,0,.3)}}
-:root[data-theme="dark"]{--bg:#0C1A17;--ac2:#3BB0A8;--card:#13251F;--tx:#E4F1EC;--mut:#8FA89F;--bd:#26403A;--ac:#5FD3B8;--acx:#06241D;--inc:#6BD59A;--exp:#F29A8E;--chip:#1D332D;--sh:0 1px 2px rgba(0,0,0,.3)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1A17;--ac2:#3BB0A8;--expa:rgba(242,154,142,.16);--inca:rgba(107,213,154,.16);--aca:rgba(95,211,184,.2);--fi-bg:#1E2A16;--fi-bd:#3E5A2A;--fe-bg:#2B1A18;--fe-bd:#5A3530;--bi:#93C572;--bit:#12260A;--be:#6B3A34;--bet:#FFB4A9;--card:#13251F;--tx:#E4F1EC;--mut:#8FA89F;--bd:#26403A;--ac:#5FD3B8;--acx:#06241D;--inc:#6BD59A;--exp:#F29A8E;--chip:#1D332D;--sh:0 1px 2px rgba(0,0,0,.3)}}
+:root[data-theme="dark"]{--bg:#0C1A17;--ac2:#3BB0A8;--expa:rgba(242,154,142,.16);--inca:rgba(107,213,154,.16);--aca:rgba(95,211,184,.2);--fi-bg:#1E2A16;--fi-bd:#3E5A2A;--fe-bg:#2B1A18;--fe-bd:#5A3530;--bi:#93C572;--bit:#12260A;--be:#6B3A34;--bet:#FFB4A9;--card:#13251F;--tx:#E4F1EC;--mut:#8FA89F;--bd:#26403A;--ac:#5FD3B8;--acx:#06241D;--inc:#6BD59A;--exp:#F29A8E;--chip:#1D332D;--sh:0 1px 2px rgba(0,0,0,.3)}
 *{box-sizing:border-box}b,strong{font-weight:600}.tl{background:linear-gradient(to left,#E0443E 50%,#3DBE7A 50%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;font-size:17px}.wr{color:#E0443E}.wg{color:#3DBE7A}
 body{margin:0;background:var(--bg);color:var(--tx);font:350 15px/1.75 Vazirmatn,Tahoma,sans-serif}
 main{max-width:560px;margin:0 auto;padding:16px 14px 44px}
 header{display:flex;align-items:center;gap:12px;margin:8px 2px 18px}
-.logo{width:48px;height:48px;border-radius:16px;background:var(--ac);color:var(--acx);display:grid;place-items:center;font-size:26px;font-weight:600;box-shadow:var(--sh);overflow:hidden}.logo img{width:100%;height:100%;object-fit:cover;display:block}.logo{position:relative;cursor:pointer}textarea{font:inherit;width:100%;min-height:90px;padding:10px;border:1px solid var(--bd);border-radius:13px;background:var(--bg);color:var(--tx);direction:ltr;font-size:12px}.bk{display:flex;gap:6px;margin-top:8px}.bk button{flex:1;background:var(--ac);color:var(--acx)}.dli{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--bd);border-radius:16px;background:var(--bg);margin-bottom:8px}.dli.done{opacity:.55}.dtop{display:flex;align-items:center;gap:10px}.dtop .m{flex:1;min-width:0}.dtop .m b{display:block}.dtop .m span{display:block;color:var(--mut);font-size:12.5px}.dam2{font-weight:600;white-space:nowrap}.bdg{font-size:12px;padding:1px 10px;border-radius:10px;background:var(--chip);color:var(--mut);white-space:nowrap}.bdg.od{background:color-mix(in srgb,var(--exp) 16%,transparent);color:var(--exp)}.bdg.sn{background:color-mix(in srgb,var(--ac) 20%,transparent);color:var(--ac)}.dact{display:flex;gap:6px;flex-wrap:wrap}.dact button{font-size:13px;padding:5px 11px}.alb{width:100%;text-align:right;background:var(--card);border:1px solid var(--bd);box-shadow:var(--sh);border-radius:16px;padding:10px 14px;margin-bottom:12px;line-height:1.8;font-size:13.5px}#dform summary{font-size:15px}#lk{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px;overflow:auto}#lk[hidden]{display:none}.lkc{max-width:420px;width:100%;text-align:center}.lkc .lkl{font-size:46px;line-height:1.3}.lkc h2{justify-content:center;font-size:19px}.lkc h2:before{display:none}.lkc p{color:var(--mut);margin:6px 0 14px}.pay{display:block;text-align:center;text-decoration:none}.lkc input{margin:8px 0;text-align:center;direction:ltr}.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}.ii{display:inline-block;vertical-align:-3px;margin-inline-end:6px;font-style:normal}.ii .ic{width:18px;height:18px}.gi .ic{width:22px;height:22px}.ib{display:grid;place-items:center}.ib .ii{margin:0}.lkl .ic{width:52px;height:52px;margin:0 auto}.lkl .ii{margin:0}.ipk{display:flex;flex-wrap:wrap;gap:4px;width:100%;margin:4px 0}.ipk button{width:36px;height:36px;padding:0;display:grid;place-items:center;border-radius:10px;color:var(--ac)}.ipk .ic{width:20px;height:20px}.tabhid{display:none!important}.bn{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;background:var(--card);border-top:1px solid var(--bd);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(20,35,43,.07)}.bn button{flex:1;background:none;border-radius:12px;padding:4px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--mut)}.bn button.on{color:var(--ac);font-weight:600}.bn .ii{margin:0}.bn .ic{width:24px;height:24px}main{padding-bottom:96px}[data-tab]>details>summary{pointer-events:none}[data-tab]>details>.st .chev{display:none}.t-i input,.t-i select{background:color-mix(in srgb,#93C572 24%,var(--card));border-color:color-mix(in srgb,#93C572 55%,var(--card))}.t-e input,.t-e select{background:color-mix(in srgb,#E57373 10%,var(--card));border-color:color-mix(in srgb,#E57373 28%,var(--card))}.t-i .add{background:#93C572;color:#18310A}.t-e .add{background:color-mix(in srgb,#E57373 26%,var(--card));color:var(--exp)}.more{width:100%;margin:2px 0 8px;background:var(--chip);color:var(--ac);font-weight:600}.pc{max-width:360px;width:100%;text-align:center}.pc .ic{width:52px;height:52px;margin:0 auto}.pc .ii{margin:0}#pl{position:fixed;inset:0;z-index:120;background:var(--bg);display:grid;place-items:center;padding:24px}#pl[hidden]{display:none}.ch{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.dn{text-align:center}.dn svg{width:100%;max-width:140px;display:block;margin:6px auto}.lg div{display:flex;align-items:center;gap:6px;font-size:12px;text-align:right}.lg i,.lg2 i{width:10px;height:10px;border-radius:3px;flex:none;display:inline-block}.lg b{margin-inline-start:auto;font-weight:500}.lg2{font-size:12px;display:flex;align-items:center;gap:4px}.bch{width:100%;height:auto;color:var(--mut);margin-bottom:10px}.ipk.em{max-height:150px;overflow:auto}.ipk.em button{font-size:20px;color:inherit}.hb{margin-inline-start:auto;display:flex;gap:8px}.ib{width:40px;height:40px;padding:0;border-radius:13px;background:var(--card);border:1px solid var(--bd);box-shadow:var(--sh);font-size:18px}.seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--chip);padding:4px;border-radius:14px;margin-bottom:12px}.seg3 button{background:transparent;padding:8px;border-radius:11px}.seg3 button.on{background:var(--card);box-shadow:var(--sh);font-weight:600}.sw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}.swb{background:none;padding:0;text-align:center;font-size:12px;color:var(--mut)}.swb i{display:block;height:40px;border-radius:12px;border:2px solid var(--bd);background:linear-gradient(135deg,var(--a) 50%,var(--b) 50%);margin-bottom:3px}.swb.on i{border-color:var(--ac)}.swb.on{color:var(--tx);font-weight:600}.hint{color:var(--mut);font-size:12.5px;margin:0 0 8px}.alt{margin-top:12px}.alt summary{font-weight:450;font-size:13.5px;color:var(--mut)}.st{font-size:17px;font-weight:600;color:var(--ac);display:flex;align-items:center;justify-content:space-between}details[open]>.st .chev{transform:rotate(180deg)!important}.nav button,.ynav button{background:transparent;display:grid;place-items:center}.nav .chev,.ynav .chev{display:block}
+.logo{width:48px;height:48px;border-radius:16px;background:var(--ac);color:var(--acx);display:grid;place-items:center;font-size:26px;font-weight:600;box-shadow:var(--sh);overflow:hidden}.logo img{width:100%;height:100%;object-fit:cover;display:block}.logo{position:relative;cursor:pointer}textarea{font:inherit;width:100%;min-height:90px;padding:10px;border:1px solid var(--bd);border-radius:13px;background:var(--bg);color:var(--tx);direction:ltr;font-size:12px}.bk{display:flex;gap:6px;margin-top:8px}.bk button{flex:1;background:var(--ac);color:var(--acx)}.dli{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--bd);border-radius:16px;background:var(--bg);margin-bottom:8px}.dli.done{opacity:.55}.dtop{display:flex;align-items:center;gap:10px}.dtop .m{flex:1;min-width:0}.dtop .m b{display:block}.dtop .m span{display:block;color:var(--mut);font-size:12.5px}.dam2{font-weight:600;white-space:nowrap}.bdg{font-size:12px;padding:1px 10px;border-radius:10px;background:var(--chip);color:var(--mut);white-space:nowrap}.bdg.od{background:var(--expa);color:var(--exp)}.bdg.sn{background:var(--aca);color:var(--ac)}.dact{display:flex;gap:6px;flex-wrap:wrap}.dact button{font-size:13px;padding:5px 11px}.alb{width:100%;text-align:right;background:var(--card);border:1px solid var(--bd);box-shadow:var(--sh);border-radius:16px;padding:10px 14px;margin-bottom:12px;line-height:1.8;font-size:13.5px}#dform summary{font-size:15px}#lk{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px;overflow:auto}#lk[hidden]{display:none}.lkc{max-width:420px;width:100%;text-align:center}.lkc .lkl{font-size:46px;line-height:1.3}.lkc h2{justify-content:center;font-size:19px}.lkc h2:before{display:none}.lkc p{color:var(--mut);margin:6px 0 14px}.pay{display:block;text-align:center;text-decoration:none}.lkc input{margin:8px 0;text-align:center;direction:ltr}.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}.ii{display:inline-block;vertical-align:-3px;margin-inline-end:6px;font-style:normal}.ii .ic{width:18px;height:18px}.gi .ic{width:22px;height:22px}.ib{display:grid;place-items:center}.ib .ii{margin:0}.lkl .ic{width:52px;height:52px;margin:0 auto}.lkl .ii{margin:0}.ipk{display:flex;flex-wrap:wrap;gap:4px;width:100%;margin:4px 0}.ipk button{width:36px;height:36px;padding:0;display:grid;place-items:center;border-radius:10px;color:var(--ac)}.ipk .ic{width:20px;height:20px}.tabhid{display:none!important}.bn{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;background:var(--card);border-top:1px solid var(--bd);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(20,35,43,.07)}.bn button{flex:1;background:none;border-radius:12px;padding:4px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--mut)}.bn button.on{color:var(--ac);font-weight:600}.bn .ii{margin:0}.bn .ic{width:24px;height:24px}main{padding-bottom:96px}[data-tab]>details>summary{pointer-events:none}[data-tab]>details>.st .chev{display:none}.t-i input,.t-i select{background:var(--fi-bg);border-color:var(--fi-bd)}.t-e input,.t-e select{background:var(--fe-bg);border-color:var(--fe-bd)}.t-i .add{background:var(--bi);color:var(--bit)}.t-e .add{background:var(--be);color:var(--bet)}.more{width:100%;margin:2px 0 8px;background:var(--chip);color:var(--ac);font-weight:600}.pc{max-width:360px;width:100%;text-align:center}.pc .ic{width:52px;height:52px;margin:0 auto}.pc .ii{margin:0}#pl{position:fixed;inset:0;z-index:120;background:var(--bg);display:grid;place-items:center;padding:24px}#pl[hidden]{display:none}.ch{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.dn{text-align:center}.dn svg{width:100%;max-width:140px;display:block;margin:6px auto}.lg div{display:flex;align-items:center;gap:6px;font-size:12px;text-align:right}.lg i,.lg2 i{width:10px;height:10px;border-radius:3px;flex:none;display:inline-block}.lg b{margin-inline-start:auto;font-weight:500}.lg2{font-size:12px;display:flex;align-items:center;gap:4px}.bch{width:100%;height:auto;color:var(--mut);margin-bottom:10px}.ipk.em{max-height:150px;overflow:auto}.ipk.em button{font-size:20px;color:inherit}.pwel{font-size:21px;font-weight:600;line-height:2;margin-bottom:16px}.pbox{background:linear-gradient(160deg,var(--card),var(--chip));border:1px solid var(--bd);border-radius:26px;padding:22px 18px;box-shadow:0 14px 36px rgba(16,128,111,.22)}.pbox .ic{width:46px;height:46px;margin:0 auto;color:var(--ac)}#pi{background:var(--bg);border:2px solid var(--ac);box-shadow:0 0 0 5px var(--aca);margin:10px 0}.pbtn{width:100%;margin-top:4px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--acx);font-weight:600;padding:12px;border-radius:15px;box-shadow:0 6px 16px rgba(16,128,111,.3)}.padv{margin-top:16px;padding:14px;border-radius:18px;background:linear-gradient(135deg,var(--aca),var(--expa));font-size:13.5px;line-height:1.9}.padv b{display:block;font-size:15px;margin-bottom:2px}.pft{margin-top:14px;font-size:12px;color:var(--mut)}.pft a{color:inherit}#lang{width:auto;min-width:88px;padding:0 8px;height:40px;border-radius:13px;background:var(--card);border:1px solid var(--bd);font-size:13px;box-shadow:var(--sh)}[dir=ltr] #nx .chev,[dir=ltr] #yp .chev{transform:rotate(90deg)!important}[dir=ltr] #pv .chev,[dir=ltr] #yn .chev{transform:rotate(-90deg)!important}.bn button{font-size:12.5px;padding:8px 2px}.bn .ic{width:28px;height:28px}.bn button.on{background:var(--aca);color:var(--ac)}[dir=ltr] .alb,[dir=ltr] .gh,[dir=ltr] .lg div,[dir=ltr] .lkc{text-align:left}#gd{position:fixed;inset:0;z-index:90;background:var(--bg);overflow:auto;padding:16px}#gd[hidden]{display:none}.gdc{max-width:560px;margin:0 auto;padding-bottom:30px}.gdh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.gdh h2{margin:0;font-size:19px}.gdc details{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--sh)}.gdc summary{font-weight:600;cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;color:var(--ac)}.gdc p,.gdc li{font-size:14px;line-height:2;margin:4px 0}.gdc ol,.gdc ul{padding-inline-start:22px;margin:6px 0}.hb{margin-inline-start:auto;display:flex;gap:8px}.ib{width:40px;height:40px;padding:0;border-radius:13px;background:var(--card);border:1px solid var(--bd);box-shadow:var(--sh);font-size:18px}.seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--chip);padding:4px;border-radius:14px;margin-bottom:12px}.seg3 button{background:transparent;padding:8px;border-radius:11px}.seg3 button.on{background:var(--card);box-shadow:var(--sh);font-weight:600}.sw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}.swb{background:none;padding:0;text-align:center;font-size:12px;color:var(--mut)}.swb i{display:block;height:40px;border-radius:12px;border:2px solid var(--bd);background:linear-gradient(135deg,var(--a) 50%,var(--b) 50%);margin-bottom:3px}.swb.on i{border-color:var(--ac)}.swb.on{color:var(--tx);font-weight:600}.hint{color:var(--mut);font-size:12.5px;margin:0 0 8px}.alt{margin-top:12px}.alt summary{font-weight:450;font-size:13.5px;color:var(--mut)}.st{font-size:17px;font-weight:600;color:var(--ac);display:flex;align-items:center;justify-content:space-between}details[open]>.st .chev{transform:rotate(180deg)!important}.nav button,.ynav button{background:transparent;display:grid;place-items:center}.nav .chev,.ynav .chev{display:block}
 h1{font-size:28px;line-height:1.2;font-weight:600;margin:0;letter-spacing:.16em;font-family:Montserrat,Vazirmatn,sans-serif;direction:ltr}
 header p{margin:0;color:var(--mut);font-size:13.5px}
 h2{font-size:15px;font-weight:600;margin:0 0 10px;display:flex;align-items:center;gap:8px}
@@ -51,8 +51,8 @@ input,select{font:inherit;width:100%;padding:11px 12px;border:1px solid var(--bd
 .g{border:1px solid var(--bd);border-radius:16px;margin-bottom:8px;background:var(--bg);overflow:hidden}
 .gh{width:100%;display:flex;align-items:center;gap:10px;padding:11px 12px;background:none;border-radius:0;text-align:right}
 .gi{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:600;flex:none}
-.ke .gi{background:color-mix(in srgb,var(--exp) 14%,transparent);color:var(--exp)}
-.ki .gi{background:color-mix(in srgb,var(--inc) 14%,transparent);color:var(--inc)}
+.ke .gi{background:var(--expa);color:var(--exp)}
+.ki .gi{background:var(--inca);color:var(--inc)}
 .gn{flex:1;min-width:0;font-weight:450;line-height:1.4}
 .gn small{display:block;color:var(--mut);font-size:12px;font-weight:400}
 .gh b{font-size:15px}
@@ -80,8 +80,8 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 </head>
 <body>
 <main>
-<header><div class="logo" id="lg" role="button" tabindex="0" aria-label="تغییر عکس"><img src="data:image/jpeg;base64,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" alt="HESAB"></div><div><h1><span class="wr">HES</span><span class="wg">AB</span></h1><p>دخل و خرج خانه</p></div><div class="hb"><button id="ui" class="ib" aria-label="تغییر پس‌زمینه"><i class="ii" data-ic="palette"></i></button></div></header><div class="card" id="up" hidden><h2>ظاهر برنامه</h2><div class="seg3"><button data-m="auto">خودکار</button><button data-m="light"><i class="ii" data-ic="sun"></i>روز</button><button data-m="dark"><i class="ii" data-ic="moon"></i>شب</button></div><p class="hint">«خودکار» با حالت روز و شب خود گوشی هماهنگ می‌شود. هر رنگ پس‌زمینه در روز روشن و در شب تیره نمایش داده می‌شود:</p><div class="sw" id="sw"></div></div><input type="file" id="lf" accept="image/*" hidden>
-<div id="al" hidden data-tab="home"></div><div id="dmb" class="alb" hidden data-tab="home"></div><div id="abn" class="alb" hidden data-tab="home"></div><div id="upb" class="alb" hidden data-tab="home"></div>
+<header><div class="logo" id="lg" role="button" tabindex="0" aria-label="تغییر عکس"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQDAwMEBAQFBgoGBgUFBgwICQcKDgwPDg4MDQ0PERYTDxAVEQ0NExoTFRcYGRkZDxIbHRsYHRYYGRj/2wBDAQQEBAYFBgsGBgsYEA0QGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCACAAIADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7rP1qndanaWm0SzKGZtqjuzdgB1J9hWb4n11dIsMRo8s7kJHFGMvIxOAqjuSSBXh3hG38XeP/ABhfeJNev5rfQ/OaHTrC2Yqs8akqXLjnyyc8jBfH93Gfn8XiZUmoU1eT27erPXw2FVSLqTdor+tD2fVfEV5A/k2Fr9om5+WPD7T/ALTZCJ9CxP8As1ych+LN9cO8WsaTYRN92MxSTso9ygiH6n612tjp1vp9misiKqjCoAAF9gOgrh/EXxt8HaFatJaXC6hjIWeORYbUkdvtEhCv0P8Aq/MPHSpVGbfPVqP0Tsvw/UyqYmlSi9El3ZLHpHxQBDT+NrUnknGnygfrc1V1WTxzo1sl1q/xG0qxgJwr3Nm8asfQZuRuPtXk+sftH3mrSmKyvmtIifu6XHs/OedSx/4DEn1rBg+Is0+riWyhjgupWCveMTPdNnjmeUtJ+AYD2rGvXhSTfvN/P9Twq/E2Eop8rTPfrK2+IesWCXlh4+065tpAdktvp7spwcHkXHYggjtV9dM+JoQIvi2yx3Y6bJn8/tFcr+zTqE118F0v5JWcX2q6jeoznJKyXkpBya9pa5wBitoUuZJtv72e5RxMpU4ycVqk9u55+dJ+JyxkDxjZnPc6bISP/Jio/wCyficINh8a2gP97+zZM/n9or0L7SNpLEAcDJ9T0rzz4uePvEXgvwDPqXhHwufEWsGRYorMzLGqKQcytkjcFwPlBBJI5AzVqglvJ/ezaFSU2opIii0f4oICo8dWshP/AFDJCR9P9IqCTRfiyH3Hx9bxrno2mS8/j9pr4v8AFfx/+Ml1eSL4sutV0qFjkJEGgt0Hp+4YD/vrP1rV8HfGnxPZ3Mcq3M8qEBi9vfzxlh7NvZT+KkVlKpGP81vX/gn1WE4Uq4qnzU6sHLsv+G0Pr+2HxVsLkSXWu6VqMA6p5MkDH/vvzB+orrtN1+eWRYL/AMuKZvuhhsDn0U5KsfbcD7V5T4A+MsHiCH7PfTm6mUbniMIS6RepYKnyzqB12BXA52Nya9RWKz1WwE9pLFPBPGGVkIeOVCMg+jAilySf7yjUfo9V/wAD+tDxMdgKuBn7HF0uV91/Wp0NtfRXAwpIbOCpGCD6EHoatr94YNeO69d+I/Cuv2d/aM13pMsiW8yStl7NicISx+9CzELk8xsVPKEgen6JqSalYLKoKsCQyt95SDgqR2IIII7EGtsJinVbhUVpL+ro87EYdU0pQd4s8i8aave6j8Zk8OwCZIltn3Tpx5W4YdgeziMOoPYyA9q9I8OadDa2COIljVVCoijARQMAAegAArgdCuLfVPH+vYXdcW11JHI5HTcyqAD6bYP1NeqbFt9LGPSubCRc6lSs3fWy8rafnv5nTi5KNOnSStpr89fysYXiS3n1PS57SCVo/MUpleuCMV+evjr4bW/h3xlcXOh+LZYtFsna0PmqLlZZU4a3tgxyQnR3B2IflyWyo+vvjD8QV0TRjoFnqM1hPdwSXN9f25xLY2KELI8Z7TSMywx+jOW/5Z18Q+JPEz67q/2lYY7O1hQQWllDxFawrwkaD0A79Sck5JJrpbTmuXdb/wBdz5HP8dTo0vYuKcn3V7BDPIDkEj2FaGn64UK3cNwsoRyMqwIyp5GR3GKw9C0PW/H3iFvD2giSO3jA+33ijPlg/wDLNf8AaPf/ADn0HW/2ddS0eztV8ITNDfXQ8pbFw0gueMFwo53KCTu4A7kCssRF1E0+p8lhuFsRi8O8S2kuifVdT6/+ANqLT9nbwfiILJNpcMxVR1aQbz/6FW54h+IOl6VbTtaz2s/kuY57yeby7O2buryAEvJ/0yjDP67eteSjxg1r4a0n4deHbeXWLyzs4bIabpsh8piiKn+kToQWXjmOMhezOw4rofD/AMG7jVNSh1z4oamNUmjULbaNbjyrS1TP3QFwMf7KgD1LVpPExguWB9jPMub91hFzNaX6L+uxxWq/HSBvFVvPHp0mvWkcuJ7q8/dBYz8rC1gU4hOCcO5eQ9yOlexSa34evtHi+134vA0SyQMi5a5hIykoHTkcMSQAwb2rnPjPongbS/h/L4jl8L20t9AsVla+SWhRMkhSyoQCqjJAPsK8H8JeJG1LRD4VKLPqenFr3SFfnz16y2xGecgb1H95feuHEYmvGlKdFXlbrsc+XY14fHqjjZ3jLqun9fP8T1jU/DXgHxjPNZWl3YQXDZUCSdDuPpxkfzr5q+Jnwu1L4S6/JqlhZudLk+e6tIyCqof+W0WOPqBx1r6m8Halc+LPCmdMTTtUVo8vCg2sR3Co/X6d+1Vtei07xD4b07w3duLu9s4Zw7NywU7cKSfTgc+tfNZTnlfEVVRxMfiuk7W1W6+X3o/Vo05YCaxOElrH56efk9vM+S7TWpYmhvbC8eMgrLDPC5UjurKRyD0IPavqP4GfFx9d1IaNqs0a3NwW+VV2j7QAWLKOgEqh2IHAkR8f6wAfHepabN4T8Xar4Yl3CG3kM9rkdInP3ffaat+GfE13oPjGx1GymfzYZVlUL3ZGDqPzUD8TX0UE6M3JbdT9EzCnRz/LY6e9JXj5S7el1b8T9MtXtoL3TWLwpMjqUeNhkOpGCD7EVyngXW7yH4oap4ZvgxAiS4imKn96eQWJ7sV8sn3LHvW5oninw5q8cFvZatbyS3C7o4cMpPy79oyACQoJx14PpWW7RWHxV0cCMeddybA+BkKiSgj/AMeT8hXZiVyVaVVO2tn89LffY/F6cJKE6U47q6+XX0smYHgmLZ8RPFh2Ab9QBJz/ANNJv6V6hrk5g0jcvpXmHgsMPiR4rDEZ+3A4x/00nr0PxSzpo/y9lowcv3U3/el/6UzPFq9WHovyR8JfGzxXLrGpawkUoZr7VGt+OotrLMKL9DM1w/4ivHYNC8RaqzQ6JpN5fXOPljt4WkIPYnA4HfJ9K9p0LwzYar8dZ9C8QrJLa6deajc3EZbaGh3vdJg9gyyYJ69TXVfFCxvNZvIbXSvFei6J4SWWFpfDssraWyx4BMbFFIdm9WbnpxXivNfYzdBbtu7fa7t66JHz+X8MVs0qV8ZXTcYykrJXbs9l2uaHwpsPDfwx+HDwW13DcXcb/wDEw1e4iLWyXDDLrHgg3EgIwEXAAA3Mo69Bp1j4m+IzyyWslxonhq4YC4v5yDe6ko7ZGAE9FUCNewavNP7OvG8QRzX2r+Dr2308CKw0s6qkVpbpyQJFC8DHOO56nAwfVNN+IWoJGttruqeEbW4UDYLLVFePZgY4IyO2B37dK654+moJSqJixeW5tjp8ssLOFNbRtul3aOP8feIz4Q1KfwL4FDaNZWqqt5cQHE91KVDHfJ97ABAxx37YrF+G3xG8WaH8R9M099ZvL6xvrlLa4tLmZpQQ5xvXcSVYZzkemDW3450nw94r1ptUTxtoGm3xUJMxulkjkwAASBghsYHuMVzVr4dtPDly95o3jbw1d64gCreXN6scdkrDG+NQGLOeQGPA9DSjjsNbWX5nhT4ZztV+enh5WW1l07WPbfil8Q9FGlT+BodNHiDWdRXy101MkR91dyCCpBwwAIPGeBXhnhnR/M8fjSvCq2WseLrNPNu9RnkP9maCo4LyMpBmlBJAReM5yRgms/xP4X8QpE+j+E/G3hOwt7pc6pqs2s7b++ZuTGCEPkxnPOCWPJPpXYfBLR9L+HPg/VbXxP4o8HNqF/fpcGPTr8PF9njCiOIkqMLkSEjnO4k9TXNjcdToYZzovmfb16v07fefRZXwvjcXiozx9JxS6W/C/f8ApHpWjeGrjw9osDWv/CQ6s4k803oWCyVmPLGFGw3lMc4HTGMetaOm6Tpkd7rPi/SLy7mvZEDXmmXy+XJby9SxUcFXJJYgdSXBYZqDUvibo975kkvibQzztLNfoRk9Pz7flWDpviXR/wDhJHv5fF/htEaFrUpFqCs0m48KQOn8X/fRr4iGIxFGs61Om+97O/rofqKy+ToqnJWtpbfTsfL/AMQx4g07xJJa+J7G1nkn3Paa20H726RmLBGfJCMM42jAOOK4H7UYpQ4ZkkQ5DA4IIr69a6u7nRrfwZ8ZvDel3mnXMZt7TXdPYPCF6AllJVtvGSMMuc7cc14L48+Cfi7w347XRbCxutUtbmbZZ3kcZPBPCyntj+/0wOeTX3GEzGFefs5q0vz9D2cBmcsPRjRqWils1ZJ+vn/T8/XP2TfD+pa743u/HmqyXF0LRWtbWa4cuTI4/eNk88KQv/Amr6Y1iMt8WPCTZGUupPrjaf8A61VPgz4Jg8HeA7LR7ZRtghUO4GN79Wc+5JJ/Gr2srt+K3hRu/wBqlHT/AGCa9OsuSjD/ABR/9KR8NmGPnmGNq1pfytL0UXYy/B2T8SfFgK4xfrgeo3zV6Vr0YfRypGflrzTwVkfEzxaCcj7eOT/vzcV6rqgLaWRgHitcDG9Oa/vS/wDSmeVjJfvYPyj/AOko+a9Q8FW8fxE1DxWrCNotKu45V6CX9y4Q/wC8NxGfQkV5D49u4rLxwhDxEwlLiE7QVEhjCs+CMZx3xn3r6L8UnydJ1ojGTYzjJ6D5D1r5f8T6XrXjP4vx+G/Dlk09yyRCSWYiOK1jyoeeVyQFjXeOp5OAMkgV8liKNSeYyp0t3Y+4ySVGlgalara3UZBq1hDZIsNvagxytMpSJFyzZy3A68nn3qNNRs/Nt3SCAPDIZYD5aDy3OcsOOvJ5681L4H8I6dqPxJm8I6rpOq3p0fxxF4f1jWLbUEhg8iR5IY0FvjzAzyxZ35wAcZzxRpfw08Z+IPhvf61ofhVNU1B795rKK01eP7UljFNLDKVsiN0il1AVt2flOBx83urJ8UldvX1ZzS4hwN+VR09F1GQ3lpavH9kSBCkrTAqigh2zuYHHBOTyMdaYNSt7dYfJs7VPIkYwFIkUxFs7tvHGcmq/gHwF4j+IY1GHQ9Y0Gyv7ORoo9N1K6MVzcugBkCIFJULlQWYAZOOxrNi0XWovH8HhzU7a1ikh1D7LfPc3ogtYxEPMnRrpQVXEYYkrkgds1w8sk7Sl+J0yzDC2ailp5G5DqlpB9kaKytUNmX+zMIUHklvvFMD5ScnJ96qS6zDAtt9ngto2tixi2woAm772OOM5PTHU1J4h8F+KNF8YwaeNEi8jWL0xaINOvhfRXKu2Y445eGcgEAlgD36c1zPjDTNd8I63e6Hrtg9jqVooaWAssmAwDKwZSVKkEEMDjmnGM2uaLuu/T7zWGKw84KVldq9tLm5Bq9tYG1McUA+y7vs8aRqEh3fe2jHGepxQmrxW4gEENqghD+XthQbA/wB4DjAz39awY47SfUdDmhOhWdrfeHYLl01m/eBGupTJFlWUli29c4HAxzjiqsmg+IbXxA3hjUbiytdZWya6tbdpQ329lP3I2HGSoYjOOmMekypTtZOz9f626ng4bjTKas5qo1HlV3zW7tPz03fZP1PULDxJGfhf4ksXhENq9k1xAiBFihuYPLZNijkHZuB9Q2PUV9W+BoYPFPww8P61cQRiSazj3FRxlQAf5V8BeHrTV/EPg/UXtZ9P06xuY57UajfK4Yt5YLLGsYaSTaOSFXCk8sMgV9Gfs5X+veGPFVv4ZvfGN3rVvcxR24sRZvb2tqFTcGUyne7svPCgDoTniuenh/qdVV59Hquutv1PTzT/AGum/Yrzv00Tv+FvyPrTTrWO2sdkQ6CuJ1iMf8LR8KSFsEXcoA9cxmu3sJWeM45BFcTru4fFTwng4H2qbPv8nSvp8a704NfzQ/8ASkfG4S/PNP8All/6SzH8H7E+InirDZf7eNwHQfvJv1r1HUn2aWWz2ryrwbIJPiZ4sVQo234z6kmSb/6wr07WWI0s8cbaMBpTn/il/wClMMZ/Eh6R/JHi3jKQPoPiA910+cj0zsNfMmt/EDxL8P8A4h63d6DoXhzW7fU7OC3ubTX7P7VFujPmRyqNw+ZXJYA8Zx0IGPpLxkWbwx4iCdfsEwB/4DXyf8RLpE8Ytlm5iTdu7HYOa+YlXnRzSVSnvY+3y3C08Rlk6VT4W0dLrf7R3ibX9ML6B8KPCHhbX7m+s9T1PXLUF5L+e2mWdCVCqcGRATuZjgsOpzTfEXx78WapYXdv4G8B+GPhjNqBJ1LV9CiU39wWOXCzbFMYZsngFueoPNeXw6la4JSeM8dd4q013atnM8Y9ywr3JZviXpscFPh/Bqz3t5nd/DCOB/hhcaHoOt6JY6lHrMlzrtjqupSaa2q2XkbYENxF84iRmdyvRmByRnnL0D4iaZ8Ovh3L4K0O30Pxxqtzqz3dzFfwG406wZEESSwO4JmMmA27g44OO/CTaBaeItXtrW3tY767nlSCGH5SWdiFUcnAyTjJIFfVXwW/Z4hNudRj0zRtbnCvHJqOp27z6TCQCDDaxqVa7fOVa4ysac+X5jDNZYXAzxcpO+l7vp+N7vytZ9G2jzsdGlg3eb0eyWt/8vx9Dw3TvGHim4+J+k+N/GPjGaxlsrpZbaa3037Zb6aoGMRWYZdy4+UjOcHOTgVqePfH/grxp8S9WubqW70Tw3daLa6FZX0Vh5RUW5VhI1vH/qo3YMAgBwqqCBnj0r4vfCrRfDnhA/2JoD6Tq1ldTXepWd7eiV/sZVVRrVyQJ4Fc9QPMXeodQa8rHw3vf+EQ1DxFr13aWFtZ2cl4tm3z3EgVSUyo4jDNgDcc9eOKWKqPCU/qlS0U2mrfpp38vU5M0eV1MOq1Wt7O/ur+a6d7pat208trnP8A/CbTWumWfh7wZpOnX1hpcBtbTWtWt98+SzM7xrwApLcA9Md6ybHXfEGjNezPYadrOo3LCf8AtnU90lzbOFKjy+wA5IAxgn04pwnt4owqvEg9FYVG1xatC6C5iLsODvFczly6Jafn/W/byNsLwNlMaUqdWHNKXxSb1fXXyb3SsvI9D+BtxoLeM9GsfEGkWuq21noiz2emSBybqfMcsm7na4zLLIY+pKgsOBXsui33h8/tO6DLpPh2Dw/cTW87TWVvCIECkfLI0Y4VmJbnA3AA+9fGdrb6tHYXdnc6XBqFpawyyxTCYxzwog3blwwORkYbvgA5xivrz4CfDjTbDw5ovxFkhktrzUYnngtNzyFVJ2AvI7MT90nH+0ee1cOa0KkpqSm3zOySta/du/5rQ92nVp0k29PdtrftayVrfO59U6Ddl7Yg88VzOsyBvij4VGcZu5evf5DXQ6DE6WWdvaua1VlHxS8KBgN32qXaf+AV9Lik1Rpp/wA0P/SkfJ0Le1nb+WX/AKSzJ8Hkj4k+K+FH+nDp1/1k3Jr1TVl3aSeAeK8r8KWctr8RvFF44wlxf4j57JJLn9Wr1q6j83TsDkba1wS9ya/vS/NmeMfvwfkvyR4B46k8jwt4h4PNhMOB7V8i+OrgL4vMwupAQsZjkU8oQBg59Rj9K+3fFfh+S7t7yCSLfDcRtFIMdVYYP418ueNPgrrWoa8Li3Om3iBmZs3/ANlJBBwpBGEAOOgJOMZr5fG0/q+OdWrpFrc+zyfGQeCnRVnK60vY4CDxl44Llh8S/E4JOcfbev6U6bxl47l+ZviZ4qDDgYvcY/StvS/gJ4lZ7Vrg6XL5e7zmj1YL5x5wB8h2AcdM5PcVe/4UP4liNs0zaS4RmaaMasoEoP3RkL8gHHqTg5xW8s1pJ/xio4WjbWkvvX+Zwmtar4i1zR2sNe8XazrUHLLDf3HmIGIxkDA5wSPxr6I1r4pfDDWfgD8PPCUfxC0nTNT0HSha3sN/DqibG/s9rfYrWqjdh2GckjAJXnBrzaP4GeIYltUnn0eVlLtMx1YJ5uc7VB24QDjpknHUU6P4E+IwkDSS6TMFVvNH9rBfNY/dxhTsA9s59RW+E4go0JN86d/X/I48flVPExjFLl5ezXX5m98e/ir4A8QfCf4Z2HhXxFaa/f8AhaMfbPIhuUiR0tUjVt1wodlLr3JcgHPNeOXfjnUdf0FPDOmzXctpM3majfToY/tJJBYgHn5sYweFXAFejRfAfxBst4rptGaJQ/nrLqir5zfwkYX5Megzn1psPwP8RWQt90WkzqqMJNmsKpkb+EnC/KB6Dr61GKzjCYmftJtXW2/+R4NbgrCYjF0cRXfN7PZXjZu7euv9db9OTTxV42tbRbW2+IniW3gjULHFFeYWNQMADjgAYFIvi3x0ihx8TPFA5ySb3/61dX/worxETAZn0540RhMy6qAZnPQ4CfIB6D73qKgb4E+JPKtgJtIfCMJv+JttLsej/d+UD+6M59ayWbUrfxv6+4+seFoXv7Nfev8AMwNFgafSNanlneVZbC7+V4RhiI1LN5nUk5Hy4wM56mvsr4a2scXwo8I2ag747IZBH3cnIH5V5P4J+Cum6Z4Zlsr66t7i8vVjhmNmm/bApBYFjwXcqoJxwARjmvoTw5pDwPBFHCIoIlCRoOdoFY4CjUxWJjWgnyRvq1a+iWxw5vjKXsvZ397/AIf/ADO4soPJ07PtXDaq6f8AC0PCqEjcbqUj/vg16IcR2R47V5nfq83xX8LzLykdxIrD0LKSp/8AHGr6fHRvGC/vR/8ASkfLYR+9N+UvyZzlz4pGjftBz+DrmGQDUIpLy2m2/L/yzyuex3I/HffXsVpeibT1+bPHSvIPjfp2p6dO/ifRIPMu7eMhkAyzxblche+5WjR1x3XHQmt/wr4sTUPDun6n8oivYFmXb93kc4/H8ulRSqKhiJUn9rVfqbVaftqEaq6aP9P68i94z1p7WWw0TTDENV1ObyYGlTcsajlnI74Hbv8ArWRFpXhEu0WoePrmaeRvnX+0oYV3dMCNFAX6fqazviDZ393qGk+ItFxJeabP5yRkkCQEYZSecZHfBwQKjg+JGkROguvC+uJP/wAtALON1U98Nv5/Kpr8zqyc1p0urq1vJrW9/VW7BTS9nHk3662d7/laxtvoPgXS7mSO88b39o8dol8/2nVliRIHkMSSFmAUKz5UZPJ6V45afE/4fWvibxSni7xXfWukWF59n0q40zVDcy6kouJomaNRw6qkSu5TOMkegPTeMrz4ceOdTS+8QeF/G0rNaiwuYbSU20V7bCQyCC4RJcSoHLMAeQWPPNdN/wALI8AxW9ta/wDCt9RkhhQpBB/YtrtiUkMwVd+FXIBOOMgE+tdieDUbyj+BztYq+kvxM/xDrnwk8OfEJvCGs+Pby3vY0tpmkutcjSMebciBozwWWRN6OVZQNrg5ADFcO6+JvwYXQLa+0X4gSnbelLm11XWHguDbKU3SwoisZGYSxGNTgMGPTawHdTeP/Aeo3Ut1dfDV7ue4bMsstlYSPISu0bmMp3HbxyenFEvjLwCPMZ/hZ5rS/NKBp+nkknP3syc/eb8z61ksTli0svuBxxr+0/vPPPEvxi+CmjT2zRa54v1NX1OSwnEV8iPGiICbmOOQgyxgsFwvzfK5AOw11Gr638H9E1Oa21Tx/qFtb2dwtpd3FzraQvbyyLE0QELASOrCZDvVSoG4kgKTS6Hf/DjRrjU7hvhlq2o6hql217fXuqQ2N3NM5IwCxl4VdqhVAAGM8kkneuPiF4L1PU/7TvvhxczX7RGL7ZNa2DSheV2eYZt2ME8ZrT22XXsor7gVPGrq/vMFvEXwZTR7S6PxC1eKO8uPIgSXUADKPtrWRlUn5ZIxKjZZC2Ew5+Ug1m6H4n+EPiHxTpPhu18Y682tahe3llFZw6ilx5b27su6V4tyqkgXdGeQwYdOaVdR+G2j+KINQk8GeOBfWscUVq12/nLBCuSI41MpURMSSwHD8ZyAANaz+IXgazvI5rHwDfWUkfEcsGk20TINu35SrZHHHHbj2pz+pLaH4DjHFveX4m6tp4VtJfJ0v4i3EF2xBQPqUVwCewMTghgfTg+4rc8I6/cahcalp2pRQx6lplybe48gHY4IyrqD0DDnHauRk+JWkyKPsXhDWJLkn5Q9rFGM+7F+PrVnwHb3+nx6lq+tNGL/AFO5N1MsZyqcAKgz1AAAz3OTxXJTm/aL2e3WyaVvn1v26X7m8oL2cvab9Or/AOGsekapqCQ2Z+btXlmgeIIte/aDOhW4kZNIWOedtvyb2jcKM9z+8fj/AGa0vF3ilNM8M6lrG0tHYwGZjjIHYZ/Ejjv0qv8AA3R9SOmLruuQhNRnjUuNoBjQFiqE92y7sSedzt7VUp+2xEKa+zq/0/ryFGn7KhKb66f1/XU9P8QaNFq2nOhUFwOPevn/AFyy8V+Aong0LT4dS0fzzNJprDbJESfmaBu2epQ8Z6elfS/QVl6pollqcJEqAMe9dWLwkMQve3W3dHNhcVKhLuvwPJNA1e41XRV1TTLeW/sukmxMyQN3WRPvKR7itu2m0W6OZrZAx65GMVLffDeWG+N9ptxNa3HTz7WVonx7lSCfxri/EXw28Z314s0Pi/xDayKchoZU/XKc1yRWKp2i0pLvs/ut+qOlyw9STd+X8T0JdN0d4S0cMZ444r5B/ad1jXtM8R232JJk0i3yZwgzGMhRG7jpt3GQZPG7HfbXvuh+HviNoU487X31dB/DqFtuH47XFUfEfgLxV4muFu72e0jmTPlSW1k0TRAjBCkSdCOoOQe4NZVp4ifL+60T7rUzq4ejVpzpOpZSVr63X9dfI+a/g1d/BXUfDOjzfETWNNtdTn8VTwFHmiQPaCxV1+0FpUMMPmlsSKCS+FpV1j4fD4V/DTVbdvCt7qN9NbJ4hSTWba2uWBuJQ8cjNcboQY1jyxhCKMHeCcV7LJ8DfEMmc63ccHIzY25/9kpp+AevPGVOu3fzDBK2VuCfqdma7fa3Vvq6+9f5HjrIsMoKLkn8vQ4+0j+ByfFbWpPEXjHwhBoUkVja2kNrdFVgurknzH/cyzAvAqHdIHMIZxlh0GBOPhZYfs0yT3Wo+FX8XQQXStNFqkUk8lzHqRjQLGkxZg8G5lxEUK4YyDgH04/ALWVYSf25cqyjapWzgGB6cL0pifAfWk5XWJWA6brG3P0/hrFN6/uF16rr8uh+gLibGc0JfWpPlcHbVJ8qtZ67S69+tzkf2Yda1vXddvLLUfNn0YqXtzKdyowB37M9Ez5YIHG4+pNfVLaZokSbpIY849BXmXhbwV4s8KStJpr2TM+PNa4szK0uOxJk4HoBgDsKu674e+JGu3BNvr39lI3Hl2NmAB9N7NXNh54ikmnS3fdHl5ri6eYYqWIlJRv2XU7W4udEskzBbIzdsDPNc/4h8RS6VocmqX1vLbWygiNXUq87YyEjU8ux9ADWNoHw08a6feNPc+NvEV5I5yRLJGoHsAqcCu4074ZTTakNR1S4mubnp593K0sgHoCxJA9hgVtKOKqXikorvu/usvzOBToU2nfm/A8/8K6f4r8cRwz+JLFNOsmkW4j0pMs2QcoZm7kddo4z1zgY+hdF01NM01IFUBuppul6PZ6VbhIUBYcZrRUgniu3C4WGHVo7vc5MTiZV3d7H/9k=" alt="HESAB"></div><div><h1><span class="wr">HES</span><span class="wg">AB</span></h1><p>دخل و خرج خانه</p></div><div class="hb"><select id="lang" aria-label="زبان"><option value="fa">فارسی</option><option value="en">English</option><option value="ar">العربية</option></select><button id="ui" class="ib" aria-label="تغییر پس‌زمینه"><i class="ii" data-ic="palette"></i></button></div></header><div class="card" id="up" hidden><h2>ظاهر برنامه</h2><div class="seg3"><button data-m="auto">خودکار</button><button data-m="light"><i class="ii" data-ic="sun"></i>روز</button><button data-m="dark"><i class="ii" data-ic="moon"></i>شب</button></div><p class="hint">«خودکار» با حالت روز و شب خود گوشی هماهنگ می‌شود. هر رنگ پس‌زمینه در روز روشن و در شب تیره نمایش داده می‌شود:</p><div class="sw" id="sw"></div><h2 style="margin-top:12px">اندازه نوشته</h2><div class="seg3"><button data-fs="-1">A−</button><button data-fs="0">عادی</button><button data-fs="1">A+</button></div></div><input type="file" id="lf" accept="image/*" hidden>
+<div id="al" hidden data-tab="home"></div><div id="dmb" class="alb" hidden data-tab="home"></div><div id="abn" class="alb" hidden data-tab="home"></div><div id="ghb" class="alb" hidden data-tab="home">برای آشنایی سریع با برنامه، راهنما را ببینید. <button class="eb" data-guide="1">راهنما</button> <button class="eb" data-gx="1">بعداً</button></div><div id="upb" class="alb" hidden></div>
 <div id="tn" class="alb" hidden></div>
 <div class="nav" data-tab="home"><button id="nx" aria-label="ماه قبل"><span class="chev" style="transform:rotate(-90deg)"></span></button><b id="mt"></b><button id="pv" aria-label="ماه بعد"><span class="chev" style="transform:rotate(90deg)"></span></button></div>
 <div class="sum" id="sum" data-tab="home"></div>
@@ -114,22 +114,26 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 </details></details></div>
 <div class="card" data-tab="reports"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">گزارشات</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div><div class="seg3" id="rsc"><button data-rs2="y" class="on">سالانه</button><button data-rs2="m">ماهانه</button><button data-rs2="a">همه</button></div><select id="rmn" hidden aria-label="ماه" style="margin-bottom:10px"></select><div class="ynav" id="ynav"><button id="yp" aria-label="سال قبل"><span class="chev" style="transform:rotate(-90deg)"></span></button><b id="yt"></b><button id="yn" aria-label="سال بعد"><span class="chev" style="transform:rotate(90deg)"></span></button></div><div id="yr"></div></details></div>
 
-<div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><h2 style="margin-top:14px">اشتراک</h2><p class="hint" id="lst"></p><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p>
+<div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><button class="pbtn" data-guide="1" style="margin-top:12px">راهنمای کار با برنامه</button><h2 style="margin-top:14px">اشتراک</h2><p class="hint" id="lst"></p><div id="lbuy" hidden><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p><p class="hint">برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید: <b dir="ltr">09361239027</b></p></div>
 <p class="hint">برای عوض کردن اسم یا آیکن یک سرفصل، روی علامت مداد کنار آن بزنید. در کادر کوچک، ایموجی را با کیبورد گوشی بزنید؛ خالی بگذارید تا خودکار انتخاب شود.</p><h2 style="margin-top:14px">سرفصل‌های هزینه</h2>
 <div class="addc"><input id="ne" placeholder="سرفصل جدید هزینه"><button id="ae">افزودن</button></div>
 <div class="chips" id="ce"></div>
 <h2 style="margin-top:14px">سرفصل‌های درآمد</h2>
 <div class="addc"><input id="ni" placeholder="سرفصل جدید درآمد"><button id="ai">افزودن</button></div>
 <div class="chips" id="ci"></div>
-<h2 style="margin-top:14px">به‌روزرسانی برنامه</h2><p class="hint">نسخه فعلی: <b id="vcur"></b>. اطلاعات شما با به‌روزرسانی پاک نمی‌شود.</p><div class="bk"><button id="upd">بررسی و به‌روزرسانی</button><button id="updf">به‌روزرسانی اجباری</button></div><p class="hint" id="updm"></p>
-<h2 style="margin-top:14px">رمز ورود (۴ رقمی)</h2><p class="hint" id="pst"></p><div class="addc"><input id="pn1" type="password" inputmode="numeric" maxlength="4" placeholder="رمز جدید" style="direction:ltr"><input id="pn2" type="password" inputmode="numeric" maxlength="4" placeholder="تکرار رمز" style="direction:ltr"><button id="psv">ذخیره</button></div><button class="eb" id="prm" hidden>غیرفعال کردن رمز</button><p class="hint" id="pmsg"></p><p class="hint">این رمز فقط قفل صفحه است و اطلاعات را رمزنگاری نمی‌کند. اگر رمز را فراموش کنید، فقط با پاک شدن اطلاعات (و بازگردانی از فایل پشتیبان) وارد می‌شوید.</p>
-<h2 style="margin-top:14px">اطلاعات برنامه</h2><p class="hint">برای شروع واقعی، داده‌های نمونه را حذف کنید. «پاک کردن همه اطلاعات» همه تراکنش‌ها، مطالبات و دیون را پاک می‌کند و سرفصل‌ها را به حالت اولیه برمی‌گرداند. اشتراک شما پاک نمی‌شود. قبلش پشتیبان بگیرید.</p><div class="bk"><button data-cd="1">حذف داده‌های نمونه</button><button data-rs="1">پاک کردن همه اطلاعات</button></div>
-<h2 style="margin-top:14px">پشتیبان‌گیری خودکار</h2><select id="abf"><option value="off">خاموش</option><option value="d">روزانه</option><option value="w">هفتگی</option><option value="m">ماهانه</option></select><p class="hint" style="margin-top:8px">مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود (۳ نسخه آخر) و پیامی برای ذخیره فایل می‌آید.</p><div id="snl"></div>
-<h2 style="margin-top:14px">پشتیبان‌گیری</h2><p class="hint">با زدن «پشتیبان‌گیری»، یک فایل با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) ساخته می‌شود و در پوشه دانلودهای دستگاه ذخیره می‌شود. «بازگردانی از فایل» اطلاعات فعلی را با اطلاعات آن فایل جایگزین می‌کند.</p><div class="bk"><button id="bd">پشتیبان‌گیری</button><button id="bf">بازگردانی از فایل</button></div><input type="file" id="bi" accept=".json,application/json" hidden><p class="hint" id="bm" style="margin-top:8px"></p><details class="alt"><summary>روش جایگزین: کپی متن</summary><p class="hint" style="margin-top:8px">اگر فایل ذخیره نشد، متن پشتیبان را کپی و جایی نگه دارید. برای بازگردانی، آن را همین‌جا بچسبانید.</p><textarea id="bk" aria-label="متن پشتیبان"></textarea><div class="bk"><button id="bs">نمایش پشتیبان</button><button id="br">بازگردانی از متن</button></div></details><h2 style="margin-top:14px">عکس برنامه</h2><p class="hint">برای تغییر عکس، روی عکس بالای صفحه بزنید.</p></details></div>
+<h2 style="margin-top:14px">رمز ورود (۴ رقمی)</h2><p class="hint" id="pst"></p><div class="addc"><input id="pn1" type="password" inputmode="numeric" maxlength="4" placeholder="رمز جدید" style="direction:ltr"><input id="pn2" type="password" inputmode="numeric" maxlength="4" placeholder="تکرار رمز" style="direction:ltr"><button id="psv">ذخیره</button></div><button class="eb" id="prm" hidden>غیرفعال کردن رمز</button><p class="hint" id="pmsg"></p><p class="hint">این رمز فقط قفل صفحه است و اطلاعات را رمزنگاری نمی‌کند. اگر رمز را فراموش کنید، فقط با پاک شدن اطلاعات (و بازیابی اطلاعات پشتیبان) وارد می‌شوید.</p>
+<h2 style="margin-top:14px">درباره برنامه و پشتیبانی</h2><p class="hint">سازنده: <b dir="ltr">MORAD_DARVISHPOR</b><br>پشتیبانی: <a href="tel:09361239027" dir="ltr" style="color:var(--ac)"><b>09361239027</b></a></p>
+<h2 style="margin-top:14px">اطلاعات برنامه</h2><p class="hint">«پاک کردن همه اطلاعات» همه تراکنش‌ها، مطالبات و دیون را پاک می‌کند و سرفصل‌ها را به حالت اولیه برمی‌گرداند. اشتراک شما پاک نمی‌شود. قبلش پشتیبان بگیرید.</p><div class="bk"><button data-rs="1">پاک کردن همه اطلاعات</button></div>
+<h2 style="margin-top:14px">پشتیبان‌گیری خودکار</h2><select id="abf"><option value="off">خاموش</option><option value="d">روزانه</option><option value="w">هفتگی</option><option value="m">ماهانه</option></select><p class="hint" style="margin-top:8px">مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود (۳ نسخه آخر) و پیامی برای ذخیره فایل می‌آید. اگر اطلاعات را اشتباهی پاک کردید، با «بازیابی این نسخه» به همان زمان برمی‌گردید.</p><div id="snl"></div>
+<h2 style="margin-top:14px">پشتیبان‌گیری</h2><p class="hint">با زدن «پشتیبان‌گیری»، یک فایل با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) ساخته می‌شود و در پوشه دانلودهای دستگاه ذخیره می‌شود. «بازیابی اطلاعات» اطلاعات فعلی را با اطلاعات آن فایل جایگزین می‌کند.</p><div class="bk"><button id="bd">پشتیبان‌گیری</button><button id="bf">بازیابی اطلاعات</button></div><input type="file" id="bi" accept=".json,application/json" hidden><p class="hint" id="bm" style="margin-top:8px"></p><details class="alt"><summary>روش جایگزین: کپی متن</summary><p class="hint" style="margin-top:8px">اگر فایل ذخیره نشد، متن پشتیبان را کپی و جایی نگه دارید. برای بازیابی، آن را همین‌جا بچسبانید.</p><textarea id="bk" aria-label="متن پشتیبان"></textarea><div class="bk"><button id="bs">نمایش پشتیبان</button><button id="br">بازیابی از متن</button></div></details><h2 style="margin-top:14px">عکس برنامه</h2><p class="hint">برای تغییر عکس، روی عکس بالای صفحه بزنید.</p></details></div>
 </main>
 <nav class="bn"><button data-tb="home" class="on"><i class="ii" data-ic="home"></i>خانه</button><button data-tb="dues"><i class="ii" data-ic="swap"></i>مطالبات و دیون</button><button data-tb="reports"><i class="ii" data-ic="chart"></i>گزارشات</button><button data-tb="settings"><i class="ii" data-ic="sliders"></i>تنظیمات</button></nav>
-<div id="pl" hidden><div class="pc"><div class="lkl"><i class="ii" data-ic="lock"></i></div><h2 style="justify-content:center">رمز ورود را وارد کنید</h2><input id="pi" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••" style="text-align:center;font-size:28px;letter-spacing:10px;direction:ltr"><p class="hint" id="pm"></p><button class="eb" id="pf">رمز را فراموش کرده‌ام</button></div></div>
-<div id="lk" hidden><div class="lkc"><div class="lkl"><i class="ii" data-ic="lock"></i></div><h2>دوره آزمایشی ۳۰ روزه تمام شد</h2>
+<div id="gd" hidden><div class="gdc"><div class="gdh"><h2>راهنمای HESAB</h2><button data-gc="1">بستن</button></div><details open><summary><i class="ii" data-ic="file"></i>شروع سریع</summary><ol><li>در صفحه <b>خانه</b> مبلغ را بنویسید و <b>هزینه</b> یا <b>درآمد</b> را انتخاب کنید.</li><li>سرفصل و تاریخ را انتخاب کنید و دکمه <b>ثبت</b> را بزنید.</li><li>همان لحظه مانده ماه و لیست تراکنش‌ها به‌روز می‌شود.</li></ol><p>نوار پایین صفحه چهار بخش دارد: خانه، مطالبات و دیون، گزارشات و تنظیمات.</p></details><details><summary><i class="ii" data-ic="plus"></i>ثبت درآمد و هزینه</summary><ul><li>با تب <b>هزینه</b> (قرمز ملایم) یا <b>درآمد</b> (سبز مغزپسته‌ای) نوع تراکنش را مشخص کنید.</li><li>تاریخ به‌صورت پیش‌فرض امروز (شمسی) است. توضیحات اختیاری است.</li><li>برای دیدن ماه‌های دیگر از فلش‌های بالای صفحه استفاده کنید. عنوان لیست نشان می‌دهد کدام ماه را می‌بینید.</li><li>در لیست، سرفصل‌ها بر اساس تعداد تراکنش مرتب‌اند و فقط ۷ سرفصل اول دیده می‌شود. برای بقیه <b>مشاهده همه تراکنش‌ها</b> را بزنید.</li><li>روی هر سرفصل بزنید تا تراکنش‌هایش باز شود. برای حذف یک تراکنش، دکمه <b>حذف</b> را دو بار بزنید.</li></ul></details><details><summary><i class="ii" data-ic="tag"></i>سرفصل‌ها و آیکن‌ها</summary><ul><li>از <b>تنظیمات</b> بخش سرفصل‌های هزینه و درآمد را باز کنید.</li><li>برای سرفصل جدید، اسم را بنویسید و <b>افزودن</b> را بزنید.</li><li>روی <b>مداد</b> کنار هر سرفصل بزنید تا اسم و آیکن آن را عوض کنید. آیکن را از ردیف آیکن‌ها یا ایموجی‌ها انتخاب کنید و ✓ بزنید.</li><li>علامت × سرفصل را حذف می‌کند. تراکنش‌های قبلی آن پاک نمی‌شوند.</li><li>با عوض کردن اسم یک سرفصل، تراکنش‌های قبلی هم به اسم جدید منتقل می‌شوند.</li></ul></details><details><summary><i class="ii" data-ic="swap"></i>مطالبات و دیون</summary><ul><li><b>مطالبات</b> پولی است که دیگران به شما بدهکارند و <b>دیون</b> پولی است که شما بدهکارید.</li><li>با <b>افزودن مورد جدید</b> نام، شماره تماس، مبلغ، موضوع، تاریخ سررسید و زمان یادآوری را ثبت کنید.</li><li>در لیست می‌بینید چند روز مانده یا چند روز گذشته است. سررسید گذشته با رنگ قرمز نمایش داده می‌شود.</li><li>دکمه <b>افزودن به تقویم</b> یک یادآور واقعی در تقویم گوشی می‌سازد که حتی وقتی برنامه بسته است زنگ می‌زند. فایل را باز کنید و در تقویم ذخیره کنید.</li><li>وقتی پول تسویه شد، <b>تسویه شد</b> را بزنید.</li><li>موارد نزدیک یا گذشته در بالای صفحه خانه هم یادآوری می‌شوند.</li></ul></details><details><summary><i class="ii" data-ic="chart"></i>گزارشات</summary><ul><li>در <b>گزارشات</b> بین <b>سالانه</b>، <b>ماهانه</b> و <b>همه</b> جابه‌جا شوید. سال یا ماه را با فلش‌ها و لیست انتخاب کنید.</li><li>دو نمودار دایره‌ای سهم هر سرفصل را از هزینه‌ها و درآمدها با درصد نشان می‌دهد.</li><li>نمودار میله‌ای روند را نشان می‌دهد: ماه‌های سال، هفته‌های ماه یا سال‌ها. سبز درآمد و قرمز هزینه است.</li><li>زیر نمودارها، با زدن روی هر سرفصل، مبلغ آن به تفکیک ماه و میانگین ماهانه‌اش باز می‌شود.</li></ul></details><details><summary><i class="ii" data-ic="sliders"></i>ظاهر، زبان و رمز ورود</summary><ul><li>دکمه رنگ بالای صفحه حالت <b>خودکار</b>، <b>روز</b> یا <b>شب</b>، رنگ پس‌زمینه و <b>اندازه نوشته</b> را تنظیم می‌کند.</li><li>زبان برنامه (فارسی، انگلیسی، عربی) را از لیست بالای صفحه انتخاب کنید.</li><li>در <b>تنظیمات</b> می‌توانید یک <b>رمز ۴ رقمی</b> بگذارید. برنامه هنگام باز شدن و بعد از چند دقیقه دور بودن رمز می‌خواهد.</li><li>رمز فقط قفل صفحه است و اطلاعات را رمزنگاری نمی‌کند. اگر رمز را فراموش کنید، فقط با پاک شدن اطلاعات (و بازیابی از فایل پشتیبان) وارد می‌شوید.</li></ul></details><details><summary><i class="ii" data-ic="file"></i>پشتیبان‌گیری و بازیابی (مهم)</summary><p><b>اطلاعات شما فقط روی همین دستگاه و همین مرورگر ذخیره می‌شود.</b> پاک کردن اطلاعات مرورگر، حذف آیکن در آیفون یا حالت ناشناس آن‌ها را از بین می‌برد. پس پشتیبان بگیرید.</p><ul><li><b>پشتیبان‌گیری:</b> در تنظیمات دکمه را بزنید. فایلی با اسم HESAB و تاریخ شمسی (مثل HESAB14050809) در پوشه دانلودها ذخیره می‌شود.</li><li><b>بازیابی اطلاعات:</b> همان فایل را انتخاب کنید تا اطلاعات برگردد.</li><li><b>پشتیبان‌گیری خودکار:</b> روزانه، هفتگی یا ماهانه را روشن کنید. برنامه ۳ نسخه آخر را داخل خود نگه می‌دارد و پیامی برای ذخیره فایل می‌دهد. با <b>بازیابی این نسخه</b> به همان زمان برمی‌گردید.</li><li><b>رفتن به گوشی یا کامپیوتر جدید:</b> در دستگاه قبلی پشتیبان بگیرید و در دستگاه جدید <b>بازیابی اطلاعات</b> را بزنید.</li></ul></details><details><summary><i class="ii" data-ic="lock"></i>اشتراک و فعال‌سازی</summary><ul><li>برنامه یک دوره آزمایشی رایگان دارد. بعد از آن، برای ادامه به اشتراک نیاز است. اطلاعات شما با پایان دوره آزمایشی هیچ‌وقت پاک نمی‌شود.</li><li>هفت روز مانده به پایان، پیامی بالای صفحه می‌آید و بخش فعال‌سازی در <b>تنظیمات</b> ← <b>اشتراک</b> ظاهر می‌شود.</li><li><b>شناسه دستگاه</b> را برای پشتیبانی بفرستید. کدی که می‌گیرید فقط روی همان دستگاه کار می‌کند. کد را در کادر بچسبانید و <b>فعال‌سازی</b> را بزنید.</li></ul></details><details><summary><i class="ii" data-ic="home"></i>نصب روی گوشی و کامپیوتر</summary><ul><li><b>اندروید:</b> در Chrome منو را باز کنید و <b>Install app</b> یا <b>Add to Home screen</b> را بزنید.</li><li><b>آیفون:</b> در Safari دکمه Share و بعد <b>Add to Home Screen</b> را بزنید.</li><li><b>کامپیوتر:</b> در Chrome آیکن نصب کنار نوار آدرس را بزنید، یا از <b>More tools</b> گزینه <b>Create shortcut</b> را انتخاب کنید.</li><li>نسخه جدید برنامه خودش اعلام می‌شود: پیام «نسخه جدید در دسترس است» را ببینید و <b>تأیید به‌روزرسانی</b> را بزنید. اطلاعات شما پاک نمی‌شود.</li></ul></details><details><summary><i class="ii" data-ic="tag"></i>پرسش‌های متداول</summary><ul><li><b>اطلاعاتم دیده نمی‌شود:</b> مطمئن شوید همان دستگاه، همان مرورگر و همان آدرس را باز کرده‌اید. اگر آدرس عوض شده یا اطلاعات مرورگر پاک شده، از فایل پشتیبان بازیابی کنید.</li><li><b>رمز را فراموش کرده‌ام:</b> در صفحه رمز دکمه فراموشی را دو بار بزنید. همه اطلاعات پاک می‌شود. سپس از فایل پشتیبان بازیابی کنید.</li><li><b>می‌خواهم از صفر شروع کنم:</b> در تنظیمات <b>پاک کردن همه اطلاعات</b> را دو بار بزنید.</li><li><b>تاریخ‌ها شمسی هستند</b> و اعداد با زبان انتخابی نمایش داده می‌شوند.</li><li><b>پشتیبانی:</b> MORAD_DARVISHPOR، تلفن ۰۹۳۶۱۲۳۹۰۲۷.</li></ul></details><button class="pbtn" data-gc="1" style="margin-top:8px">بستن راهنما</button></div></div>
+<div id="pl" hidden><div class="pc"><div class="pwel">به نرم‌افزار مدیریت هوشمند دخل و خرج <span class="tl" style="font-size:inherit">حساب</span> خوش آمدید</div>
+<div class="pbox"><div class="lkl"><i class="ii" data-ic="lock"></i></div><h2 style="justify-content:center">رمز ورود را وارد کنید</h2><input id="pi" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••" style="text-align:center;font-size:28px;letter-spacing:10px;direction:ltr"><p class="hint" id="pm"></p><button class="pbtn" id="pf">رمز را فراموش کرده‌ام</button></div>
+<div class="padv"><b>چرا «حساب»؟</b>همه درآمد و هزینه‌ات را هوشمند ثبت و تحلیل کن: نمودارهای رنگی، یادآور سررسید مطالبات و دیون، تقویم شمسی و پشتیبان‌گیری آسان. همین امروز مسیر مالی خانه‌ات را منظم کن.</div>
+<div class="pft">سازنده: <span dir="ltr">MORAD_DARVISHPOR</span> · پشتیبانی: <a href="tel:09361239027" dir="ltr">09361239027</a></div></div></div>
+<div id="lk" hidden><div class="lkc"><div class="lkl"><i class="ii" data-ic="lock"></i></div><h2>دوره آزمایشی به پایان رسید</h2>
 <p>برای ادامه استفاده از HESAB اشتراک تهیه کنید. اطلاعات شما سر جایش هست و بعد از فعال‌سازی اشتراک دوباره در دسترس می‌شود.</p>
 <a id="pay" class="add pay" target="_blank" rel="noopener" hidden>خرید اشتراک</a>
 <p id="lct"></p>
@@ -140,7 +144,9 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 <script>
 const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 const $=i=>document.getElementById(i);
-const fa=n=>Number(n).toLocaleString('fa-IR');
+let LANG='fa';try{LANG=(JSON.parse(localStorage.getItem('dk_ui'))||{}).lang||'fa'}catch(e){}
+const LOC={fa:'fa-IR',en:'en-US',ar:'ar-EG'};
+const fa=n=>Number(n).toLocaleString(LOC[LANG]);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const div=(a,b)=>Math.trunc(a/b);
 function toJ(gy,gm,gd){const t=[0,31,59,90,120,151,181,212,243,273,304,334];const g2=gm>2?gy+1:gy;
@@ -151,7 +157,7 @@ const jm=d<186?1+div(d,31):7+div(d-186,30);const jd=d<186?1+d%31:1+(d-186)%30;re
 const leap=y=>[1,5,9,13,17,22,26,30].includes(y%33);
 const dim=(y,m)=>m<=6?31:m<=11?30:leap(y)?30:29;
 const now=new Date(),T=toJ(now.getFullYear(),now.getMonth()+1,now.getDate());
-const DEF={e:['شارژ ساختمان','گاز','آب','برق','تلفن','اینترنت','شهریه مدرسه البرز','شهریه لیندا','پول زهرا','هزینه تعمیرات','پول توجیبی خاتون','خوراک و خرید','حمل‌ونقل','درمان','سایر'],i:['حقوق','اجاره','سایر درآمدها']};
+const DEF={e:['مایحتاج منزل','آموزش (شهریه، خرید کتاب و ...)','حمل و نقل','بهداشت و درمان','قبض، شارژ، اینترنت ...','تفریح و ورزش','ماهیانه اعضای خانواده','سایر هزینه‌ها'],i:['حقوق','سود بانکی','یارانه','هدیه','وصول طلب','وام','دریافت اجاره','سایر درآمدها']};
 let S;try{S=JSON.parse(localStorage.getItem('dk1'))}catch(e){}
 let FIRST=false;if(!S||!S.tx){S={tx:[],cats:DEF};FIRST=true}
 S.dues=S.dues||[];
@@ -159,7 +165,7 @@ const save=()=>{try{localStorage.setItem('dk1',JSON.stringify(S))}catch(e){}};
 let type='e',vy=T[0],vm=T[1];const open=new Set();let editing=null;let ry=T[0];
 
 const toLat=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
-const pd=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const pd=s=>String(s).replace(/\d/g,d=>({en:'0123456789',ar:'٠١٢٣٤٥٦٧٨٩',fa:'۰۱۲۳۴۵۶۷۸۹'}[LANG])[d]);
 const num=s=>parseInt(toLat(s).replace(/[^\d]/g,''),10)||0;
 
 function fillDate(){
@@ -264,10 +270,14 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(b.dataset.snap){const s=snaps()[+b.dataset.snap];if(s){S=JSON.parse(s.d);S.dues=S.dues||[];save();fillCats();render()}}
  if(b.dataset.pk2){document.querySelectorAll('input[data-ej]').forEach(i=>{i.value=b.dataset.pk2})}
  if(b.dataset.upd)hardRefresh();
+ if(b.dataset.guide){$('gd').hidden=false;$('gd').scrollTop=0;$('ghb').hidden=true;try{localStorage.setItem('dk_gh','1')}catch(e){}}
+ if(b.dataset.gx){$('ghb').hidden=true;try{localStorage.setItem('dk_gh','1')}catch(e){}}
+ if(b.dataset.gc)$('gd').hidden=true;
  if(b.id==='ui')$('up').hidden=!$('up').hidden;
  if(b.id==='dn'){UI.mode=(UI.mode==='dark'||(UI.mode==='auto'&&mq.matches))?'light':'dark';saveUI();applyUI()}
- if(b.dataset.m){UI.mode=b.dataset.m;saveUI();applyUI()}
- if(b.dataset.bg){UI.bg=+b.dataset.bg;saveUI();applyUI()}
+ if(b.dataset.m){UI.mode=b.dataset.m;saveUI();applyUI();$('up').hidden=true}
+ if(b.dataset.bg){UI.bg=+b.dataset.bg;saveUI();applyUI();$('up').hidden=true}
+ if(b.dataset.fs!==undefined){UI.fs=b.dataset.fs==='0'?2:Math.max(0,Math.min(4,(UI.fs??2)+ +b.dataset.fs));saveUI();applyUI()}
  if(b.dataset.yg){const g=b.dataset.yg;open.has(g)?open.delete(g):open.add(g);render()}
  if(b.dataset.ed){editing=b.dataset.ed;render();focusEd()}
  if(b.dataset.ok){const[k,i]=b.dataset.ok.split(':');const ins=b.parentElement.querySelectorAll('input');rename(k,+i,ins[0].value,ins[1].value)}
@@ -285,18 +295,20 @@ $('lf').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileRead
   const u=c.toDataURL('image/jpeg',.85);LI.src=u;try{localStorage.setItem(LK,u)}catch(x){}};im.src=r.result};
  r.readAsDataURL(f);e.target.value=''};
 const BG=[['پیش‌فرض',null,null,'#EDF6F3','#0C1A17'],['آسمانی','#EAF2FA','#0E1824'],['صورتی','#FBEEF1','#1D1118'],['کرم','#F8F3E8','#1A1710'],['بنفش','#F0EEFA','#14121F'],['خاکستری','#EFEFEF','#121212'],['ساده','#FFFFFF','#000000']];
-let UI={mode:'auto',bg:0};try{Object.assign(UI,JSON.parse(localStorage.getItem('dk_ui'))||{})}catch(e){}
+let UI={mode:'auto',bg:0,fs:2};try{Object.assign(UI,JSON.parse(localStorage.getItem('dk_ui'))||{})}catch(e){}
 const mq=matchMedia('(prefers-color-scheme: dark)');
 function saveUI(){try{localStorage.setItem('dk_ui',JSON.stringify(UI))}catch(e){}}
 function renderSw(){$('sw').innerHTML=BG.map((b,i)=>`<button class="swb" data-bg="${i}" aria-label="${b[0]}"><i style="--a:${b[1]||b[3]};--b:${b[2]||b[4]}"></i>${b[0]}</button>`).join('')}
+const mixc=(a,b,p)=>{const x=h=>(h.length===4?'#'+h[1]+h[1]+h[2]+h[2]+h[3]+h[3]:h),f=h=>[1,3,5].map(i=>parseInt(x(h).slice(i,i+2),16)),A=f(a),B=f(b);return '#'+A.map((v,i)=>Math.round(v*p/100+B[i]*(100-p)/100).toString(16).padStart(2,'0')).join('')};
 function applyUI(){const r=document.documentElement;
  if(UI.mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',UI.mode);
  const dark=UI.mode==='dark'||(UI.mode==='auto'&&mq.matches),b=BG[UI.bg]||BG[0],c=dark?b[2]:b[1];
  ['--bg','--card','--chip','--bd'].forEach(v=>r.style.removeProperty(v));
  if(c){r.style.setProperty('--bg',c);
-  if(dark){r.style.setProperty('--card','color-mix(in srgb,#fff 7%,'+c+')');r.style.setProperty('--chip','color-mix(in srgb,#fff 12%,'+c+')');r.style.setProperty('--bd','color-mix(in srgb,#fff 16%,'+c+')')}
-  else{r.style.setProperty('--chip','color-mix(in srgb,#000 6%,'+c+')');r.style.setProperty('--bd','color-mix(in srgb,#000 10%,'+c+')')}}
+  if(dark){r.style.setProperty('--card',mixc('#fff',c,7));r.style.setProperty('--chip',mixc('#fff',c,12));r.style.setProperty('--bd',mixc('#fff',c,16))}
+  else{r.style.setProperty('--chip',mixc('#000',c,6));r.style.setProperty('--bd',mixc('#000',c,10))}}
  
+ document.body.style.zoom=[.85,.92,1,1.12,1.25][UI.fs??2];
  document.querySelectorAll('[data-m]').forEach(x=>x.classList.toggle('on',x.dataset.m===UI.mode));
  document.querySelectorAll('[data-bg]').forEach(x=>x.classList.toggle('on',+x.dataset.bg===UI.bg))}
 if(mq.addEventListener)mq.addEventListener('change',applyUI);
@@ -336,7 +348,7 @@ $('dmm').onchange=()=>dDays();$('dyy').onchange=()=>dDays();
 $('dadd').onclick=()=>{const who=$('dnm').value.trim(),a=num($('dam').value);if(!who){$('dnm').focus();return}if(!a){$('dam').focus();return}
  S.dues.push({id:Date.now(),k:dtab,who,ph:$('dph').value.trim(),a,subj:$('dsb').value.trim(),y:num($('dyy').value)||T[0],m:+$('dmm').value,d:+$('ddd').value,rem:+$('drm').value,done:false});
  save();['dnm','dph','dam','dsb'].forEach(i=>$(i).value='');$('dform').open=false;render()};
-const TRIAL=30,PAY_URL='',CONTACT='',DAY=864e5,PUB={"kty":"EC","crv":"P-256","x":"saXn4qWSxqRqvUUC_H8NX-xUOyyAAgcjNmZIMR8tB_8","y":"16O_2pcImT6T3qqIvXSyKIswP_ERqIo9x0gjTjXJET8"};
+const TRIAL=45,PAY_URL='',CONTACT='09361239027 (MORAD_DARVISHPOR)',DAY=864e5,PUB={"kty":"EC","crv":"P-256","x":"saXn4qWSxqRqvUUC_H8NX-xUOyyAAgcjNmZIMR8tB_8","y":"16O_2pcImT6T3qqIvXSyKIswP_ERqIo9x0gjTjXJET8"};
 let LIC={first:0,last:0,code:''};try{Object.assign(LIC,JSON.parse(localStorage.getItem('dk_lic'))||{})}catch(e){}
 const lnow=()=>Math.max(Date.now(),LIC.last||0);
 const lsave=()=>{try{localStorage.setItem('dk_lic',JSON.stringify(LIC))}catch(e){}};
@@ -348,10 +360,10 @@ async function verifyCode(code){try{const[p,s]=String(code).trim().split('.'),pb
 const lfmt=ms=>{const d=new Date(ms-1),j=toJ(d.getFullYear(),d.getMonth()+1,d.getDate());return fa(j[2])+' '+MN[j[1]-1]+' '+pd(j[0])};
 async function licApply(){if(!LIC.dev){const al='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',r=crypto.getRandomValues(new Uint8Array(8));LIC.dev=Array.from(r,x=>al[x%32]).join('')}document.querySelectorAll('.dvid').forEach(e=>{e.textContent=LIC.dev.slice(0,4)+'-'+LIC.dev.slice(4)});const n=lnow();if(!LIC.first)LIC.first=n;LIC.last=n;lsave();
  let exp=0;if(LIC.code)exp=await verifyCode(LIC.code);
- const left=Math.ceil((LIC.first+TRIAL*DAY-n)/DAY),act=exp>n,trial=!act&&left>0;
+ const left=Math.ceil((LIC.first+TRIAL*DAY-n)/DAY),act=exp>n,trial=!act&&left>0,dl=act?Math.ceil((exp-n)/DAY):0,soon=(trial&&left<=7)||(act&&dl<=7);
  $('lk').hidden=act||trial;
- $('lst').textContent=act?'اشتراک فعال است تا '+lfmt(exp):trial?fa(left)+' روز از دوره آزمایشی باقی مانده است.':'دوره آزمایشی تمام شده است.';
- const tn=$('tn');tn.hidden=!(trial&&left<=7);if(!tn.hidden)tn.innerHTML=ic('clock')+fa(left)+' روز از دوره آزمایشی باقی مانده. برای ادامه، در «تنظیمات» اشتراک را فعال کنید.';
+ $('lst').textContent=act?'اشتراک فعال است تا '+lfmt(exp):trial?(left<=7?fa(left)+' روز از دوره آزمایشی باقی مانده است.':'دوره آزمایشی فعال است.'):'دوره آزمایشی تمام شده است.';
+ const tn=$('tn');tn.hidden=!soon;$('lbuy').hidden=!(soon||(!act&&!trial));if(soon)tn.innerHTML=ic('clock')+(act?'اشتراک شما '+fa(dl)+' روز دیگر تمام می\u200cشود. برای تمدید، در «تنظیمات» کد اشتراک را وارد کنید.':fa(left)+' روز از دوره آزمایشی باقی مانده. برای ادامه، در «تنظیمات» اشتراک را فعال کنید.');
  if(PAY_URL){$('pay').href=PAY_URL;$('pay').hidden=false}
  $('lct').textContent=CONTACT?'برای خرید اشتراک با این راه ارتباطی تماس بگیرید: '+CONTACT:(PAY_URL?'':'برای خرید اشتراک با فروشنده تماس بگیرید.')}
 async function activate(code,out){if(!window.crypto||!crypto.subtle){out.textContent='این مرورگر از فعال\u200cسازی پشتیبانی نمی\u200cکند.';return}
@@ -363,16 +375,6 @@ $('lact2').onclick=()=>activate($('lcode2').value,$('lmsg2'));
 $('lbk').onclick=()=>$('bd').click();
 let tab='home';const showAll={e:false,i:false};
 function showTab(t){tab=t;document.querySelectorAll('[data-tab]').forEach(e=>e.classList.toggle('tabhid',e.dataset.tab!==t));document.querySelectorAll('.bn button').forEach(b=>b.classList.toggle('on',b.dataset.tb===t));window.scrollTo(0,0)}
-function seedDemo(){let sd=7;const r=()=>{sd=(sd*9301+49297)%233280;return sd/233280},id0=Date.now();let n=0;
- const add=(t,c,a,y,m,d)=>S.tx.push({id:id0+(n++),t,a:Math.round(a/1000)*1000,c,y,m,d,n:'',demo:1});
- for(let k=5;k>=0;k--){let m=T[1]-k,y=T[0];if(m<1){m+=12;y--}
-  add('i','حقوق',12000000+r()*1500000,y,m,1);if(r()>.6)add('i','سایر درآمدها',1500000+r()*2000000,y,m,15);
-  [['شارژ ساختمان',350000],['گاز',200000],['آب',110000],['برق',380000],['تلفن',190000],['اینترنت',450000],['شهریه مدرسه البرز',5000000],['حمل\u200cونقل',900000],['پول توجیبی خاتون',1500000],['هزینه تعمیرات',600000]].forEach(([c,a],i)=>{if(c==='هزینه تعمیرات'&&r()>.5)return;add('e',c,a*(.85+r()*.3),y,m,2+(i*2)%26)});
-  for(let j=0;j<4;j++)add('e','خوراک و خرید',700000+r()*900000,y,m,3+j*7);if(r()>.5)add('e','درمان',400000+r()*900000,y,m,12)}
- const dj=x=>{const d=new Date(Date.now()+x*864e5);return toJ(d.getFullYear(),d.getMonth()+1,d.getDate())},a=dj(10),b=dj(25);
- S.dues.push({id:id0+900,k:'r',who:'علی رضایی',ph:'',a:3000000,subj:'قرض',y:a[0],m:a[1],d:a[2],rem:3,done:false,demo:1},{id:id0+901,k:'p',who:'فروشگاه لوازم خانگی',ph:'',a:8000000,subj:'قسط یخچال',y:b[0],m:b[1],d:b[2],rem:7,done:false,demo:1});
- S.demo=true;save()}
-if(FIRST)seedDemo();
 let PIN=null;try{PIN=JSON.parse(localStorage.getItem('dk_pin'))}catch(e){}
 async function hashPin(p,s){const d=new TextEncoder().encode(s+p);if(window.crypto&&crypto.subtle){const b=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('')}let h=5381;for(const c of s+p)h=(h*33^c.charCodeAt(0))>>>0;return 'x'+h}
 const pinFail=()=>{try{return JSON.parse(localStorage.getItem('dk_pf'))||{n:0,until:0}}catch(e){return{n:0,until:0}}};
@@ -392,7 +394,7 @@ const abSave=()=>{try{localStorage.setItem('dk_ab',JSON.stringify(AB))}catch(e){
 const snaps=()=>{try{return JSON.parse(localStorage.getItem('dk_snaps'))||[]}catch(e){return[]}};
 const jd=ts=>{const d=new Date(ts),j=toJ(d.getFullYear(),d.getMonth()+1,d.getDate());return pd(j[0])+'/'+pd(String(j[1]).padStart(2,'0'))+'/'+pd(String(j[2]).padStart(2,'0'))};
 function renderAB(){const n=$('abn');n.hidden=!(AB.f!=='off'&&AB.pend);if(!n.hidden)n.innerHTML='پشتیبان\u200cگیری زمان\u200cبندی\u200cشده انجام شد. فایل آن را هم ذخیره کنید. <button class="eb" data-abs="1">ذخیره فایل</button>';
- $('abf').value=AB.f;$('snl').innerHTML=snaps().map((s,i)=>`<div class="it"><div class="m"><b>${jd(s.t)}</b></div><button data-snap="${i}">بازگردانی</button></div>`).join('')||'<span class="hint">هنوز نسخه خودکاری ساخته نشده.</span>'}
+ $('abf').value=AB.f;$('snl').innerHTML=snaps().map((s,i)=>`<div class="it"><div class="m"><b>${jd(s.t)}</b></div><button data-snap="${i}">بازیابی این نسخه</button></div>`).join('')||'<span class="hint">هنوز نسخه خودکاری ساخته نشده.</span>'}
 function checkAB(){if(AB.f!=='off'){const iv={d:864e5,w:6048e5,m:2592e6}[AB.f];if(Date.now()-AB.last>=iv){const a=snaps();a.unshift({t:Date.now(),d:JSON.stringify(S)});try{localStorage.setItem('dk_snaps',JSON.stringify(a.slice(0,3)))}catch(e){}AB.last=Date.now();AB.pend=true;abSave()}}renderAB()}
 $('abf').onchange=()=>{AB.f=$('abf').value;AB.last=0;abSave();checkAB()};
 let hid=0;document.addEventListener('visibilitychange',()=>{if(document.hidden)hid=Date.now();else{autoUpd();if(PIN&&hid&&Date.now()-hid>12e4)pinLock();checkAB();hid=0}});
@@ -423,17 +425,277 @@ function renderYear(){
    const id='y'+kind+':'+k,o=open.has(id),s=sm(by[k]),p=Math.round(s/total*100),gp={};by[k].forEach(t=>{const kk=t.y*100+t.m;gp[kk]=(gp[kk]||0)+t.a});const kz=Object.keys(gp).sort();
    return `<div class="g k${kind}${o?' open':''}"><button class="gh" data-yg="${esc(id)}" aria-expanded="${o}"><span class="gi">${ico(k)}</span><span class="gn">${esc(k)}<small>${fa(p)}٪ از کل ${nm}</small></span><b>${fa(s)}</b><span class="chev"></span></button><div class="bar"><i style="width:${Math.max(3,p)}%"></i></div><div class="gb">${kz.map(z=>`<div class="it"><div class="m"><b>${MN[z%100-1]}${rscope==='a'?' '+pd(Math.floor(z/100)):''}</b></div><div class="a ${kind==='i'?'inc':'exp'}">${fa(gp[z])}</div></div>`).join('')}${kz.length>1?`<div class="it"><div class="m"><b>میانگین ماهانه</b></div><div class="a">${fa(Math.round(s/kz.length))}</div></div>`:''}</div></div>`}).join('')});
  $('yr').innerHTML=h}
-const APP_VER='1.1.0';
+const APP_VER='1.2.0';
 async function latestVer(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
-async function autoUpd(){try{if(Date.now()-(+localStorage.getItem('dk_uc')||0)<432e5)return;localStorage.setItem('dk_uc',Date.now())}catch(e){}
- const v=await latestVer();if(v&&v!==APP_VER){$('upb').hidden=false;$('upb').innerHTML='نسخه جدید برنامه آماده است. <button class="eb" data-upd="1">به\u200cروزرسانی</button>'}}
-$('vcur').textContent=pd(APP_VER);
-$('upd').onclick=async()=>{const m=$('updm');m.textContent='در حال بررسی…';const v=await latestVer();
- if(!v){m.textContent='اتصال به اینترنت برقرار نیست.';return}
- if(v===APP_VER){m.textContent='برنامه به\u200cروز است.';return}
- m.textContent='نسخه جدید پیدا شد. در حال به\u200cروزرسانی…';await hardRefresh()};
-$('updf').onclick=async()=>{$('updm').textContent='در حال به\u200cروزرسانی…';await hardRefresh()};
+async function autoUpd(){try{if(Date.now()-(+localStorage.getItem('dk_uc')||0)<18e5)return;localStorage.setItem('dk_uc',Date.now())}catch(e){}
+ const v=await latestVer();if(v&&v!==APP_VER){$('upb').hidden=false;$('upb').innerHTML='نسخه جدید نرم\u200cافزار در دسترس است. <button class="eb" data-upd="1">تأیید به\u200cروزرسانی</button>'}}
+const DICT=`خانه|Home|الرئيسية
+مطالبات و دیون|Receivables & debts|المستحقات والديون
+گزارشات|Reports|التقارير
+تنظیمات|Settings|الإعدادات
+مطالبات (طلب من)|Receivables (owed to me)|المستحقات (لي)
+دیون (بدهی من)|Debts (I owe)|الديون (عليّ)
+دخل و خرج خانه|Household income & expenses|دخل ومصروفات المنزل
+هزینه|Expense|مصروف
+درآمد|Income|دخل
+هزینه‌ها|Expenses|المصروفات
+درآمدها|Income|الدخل
+مانده|Balance|الرصيد
+مانده این ماه (تومان)|This month's balance (Toman)|رصيد هذا الشهر (تومان)
+مبلغ (تومان)|Amount (Toman)|المبلغ (تومان)
+تومان|Toman|تومان
+سرفصل|Category|الفئة
+توضیحات (اختیاری)|Notes (optional)|ملاحظات (اختياري)
+ثبت هزینه|Add expense|تسجيل مصروف
+ثبت درآمد|Add income|تسجيل دخل
+تراکنش‌های ماه جاری|Transactions this month|معاملات الشهر الحالي
+هنوز چیزی برای این ماه ثبت نشده. از فرم بالا شروع کنید.|Nothing recorded this month yet. Start with the form above.|لم يُسجَّل شيء لهذا الشهر بعد. ابدأ بالنموذج أعلاه.
+بدون سرفصل|No category|بدون فئة
+نمایش کمتر|Show less|عرض أقل
+روز|Day|نهار
+ماه|Month|الشهر
+سال|Year|السنة
+ماه قبل|Previous month|الشهر السابق
+ماه بعد|Next month|الشهر التالي
+سال قبل|Previous year|السنة السابقة
+سال بعد|Next year|السنة التالية
+حذف|Delete|حذف
+مطمئنید؟|Sure?|هل أنت متأكد؟
+مطمئنید؟ دوباره بزنید|Sure? Tap again|هل أنت متأكد؟ اضغط مرة أخرى
+ویرایش نام سرفصل|Edit category name|تعديل اسم الفئة
+نام سرفصل|Category name|اسم الفئة
+ایموجی|Emoji|إيموجي
+ایموجی سرفصل|Category emoji|إيموجي الفئة
+کادر کوچک: ایموجی دلخواه یا یکی از آیکن‌های زیر را انتخاب کنید (خالی = خودکار)|Small box: pick any emoji or one of the icons below (empty = automatic)|المربع الصغير: اختر أي إيموجي أو إحدى الأيقونات أدناه (فارغ = تلقائي)
+(سرفصلی نیست)|(no categories)|(لا توجد فئات)
+ابتدا در تنظیمات یک سرفصل اضافه کنید.|First add a category in Settings.|أضف فئة في الإعدادات أولًا.
+نام بدهکار|Debtor name|اسم المدين
+نام بستانکار|Creditor name|اسم الدائن
+شماره تماس (اختیاری)|Phone (optional)|رقم الهاتف (اختياري)
+مبلغ بدهی (تومان)|Debt amount (Toman)|مبلغ الدين (تومان)
+موضوع بدهی|Debt subject|موضوع الدين
+تاریخ سررسید|Due date|تاريخ الاستحقاق
+یادآوری|Reminder|التذكير
+بدون یادآوری|No reminder|بدون تذكير
+همان روز سررسید|On the due date|في يوم الاستحقاق
+همان روز|Same day|نفس اليوم
+ثبت مطالبه|Add receivable|تسجيل مستحق
+ثبت بدهی|Add debt|تسجيل دين
+＋ افزودن مورد جدید|＋ Add new item|＋ إضافة عنصر جديد
+جمع مطالبات باز|Open receivables total|مجموع المستحقات المفتوحة
+جمع دیون باز|Open debts total|مجموع الديون المفتوحة
+تعداد موارد باز|Open items|عدد العناصر المفتوحة
+موردی ثبت نشده است.|No items yet.|لا توجد عناصر بعد.
+افزودن به تقویم|Add to calendar|أضف إلى التقويم
+✓ تسویه شد|✓ Settled|✓ تمت التسوية
+↩ بازگشت|↩ Undo|↩ تراجع
+تسویه شد|Settled|تمت التسوية
+بدون موضوع|No subject|بدون موضوع
+برای اینکه حتی وقتی برنامه بسته است زنگ بزند، روی هر مورد «افزودن به تقویم» را بزنید تا یادآور در تقویم گوشی ثبت شود. سررسیدهای نزدیک و گذشته هم هنگام باز کردن برنامه بالای صفحه نمایش داده می‌شود.|To get an alarm even when the app is closed, tap “Add to calendar” on an item so the reminder is saved in your phone's calendar. Upcoming and overdue items are also shown at the top when you open the app.|لكي يرنّ التنبيه حتى والتطبيق مغلق، اضغط «أضف إلى التقويم» على العنصر ليُحفظ التذكير في تقويم هاتفك. كما تظهر العناصر القريبة والمتأخرة أعلى الصفحة عند فتح التطبيق.
+سالانه|Yearly|سنوي
+ماهانه|Monthly|شهري
+همه|All|الكل
+همه سال‌ها|All years|كل السنوات
+روند ماهانه|Monthly trend|الاتجاه الشهري
+روند هفتگی|Weekly trend|الاتجاه الأسبوعي
+روند سالانه|Yearly trend|الاتجاه السنوي
+برای این بازه چیزی ثبت نشده.|Nothing recorded for this period.|لا شيء مسجّل لهذه الفترة.
+میانگین ماهانه|Monthly average|المتوسط الشهري
+سایر|Other|أخرى
+ظاهر برنامه|Appearance|المظهر
+خودکار|Auto|تلقائي
+شب|Night|ليل
+«خودکار» با حالت روز و شب خود گوشی هماهنگ می‌شود. هر رنگ پس‌زمینه در روز روشن و در شب تیره نمایش داده می‌شود:|“Auto” follows your phone's day/night mode. Each background is shown light by day and dark at night:|«تلقائي» يتبع وضع النهار والليل في هاتفك. تظهر كل خلفية فاتحة نهارًا وداكنة ليلًا:
+پیش‌فرض|Default|الافتراضي
+آسمانی|Sky|سماوي
+صورتی|Pink|وردي
+کرم|Cream|كريمي
+بنفش|Purple|بنفسجي
+خاکستری|Gray|رمادي
+ساده|Plain|سادة
+اندازه نوشته|Text size|حجم الخط
+عادی|Normal|عادي
+اشتراک|Subscription|الاشتراك
+دوره آزمایشی فعال است.|Your trial is active.|الفترة التجريبية نشطة.
+دوره آزمایشی تمام شده است.|Your trial has ended.|انتهت الفترة التجريبية.
+شناسه دستگاه:|Device ID:|معرّف الجهاز:
+کد فعال‌سازی|Activation code|رمز التفعيل
+کد فعال‌سازی را اینجا بچسبانید|Paste the activation code here|الصق رمز التفعيل هنا
+فعال‌سازی|Activate|تفعيل
+فعال‌سازی اشتراک|Activate subscription|تفعيل الاشتراك
+کد معتبر نیست.|Invalid code.|الرمز غير صالح.
+این کد منقضی شده است.|This code has expired.|انتهت صلاحية هذا الرمز.
+این کد برای این دستگاه ساخته نشده است.|This code was not made for this device.|هذا الرمز غير مخصص لهذا الجهاز.
+اشتراک فعال شد.|Subscription activated.|تم تفعيل الاشتراك.
+این مرورگر از فعال‌سازی پشتیبانی نمی‌کند.|This browser does not support activation.|هذا المتصفح لا يدعم التفعيل.
+خرید اشتراک|Buy subscription|شراء اشتراك
+برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید:|To buy or renew, contact support:|للشراء أو التجديد تواصل مع الدعم:
+برای خرید اشتراک با فروشنده تماس بگیرید.|Contact the seller to buy a subscription.|تواصل مع البائع لشراء اشتراك.
+آن را برای فروشنده بفرستید تا کد مخصوص این دستگاه بسازد.|Send it to the seller to get a code made for this device.|أرسله إلى البائع ليصنع رمزًا خاصًا بهذا الجهاز.
+دوره آزمایشی به پایان رسید|Your trial has ended|انتهت الفترة التجريبية
+برای ادامه استفاده از HESAB اشتراک تهیه کنید. اطلاعات شما سر جایش هست و بعد از فعال‌سازی اشتراک دوباره در دسترس می‌شود.|Get a subscription to keep using HESAB. Your data is safe and will be available again after activation.|احصل على اشتراك لمواصلة استخدام HESAB. بياناتك محفوظة وستتاح مجددًا بعد التفعيل.
+دریافت نسخه پشتیبان از اطلاعاتم|Download a backup of my data|تنزيل نسخة احتياطية من بياناتي
+درباره برنامه و پشتیبانی|About & support|حول التطبيق والدعم
+سازنده:|Developer:|المطوّر:
+پشتیبانی:|Support:|الدعم:
+· پشتیبانی:|· Support:|· الدعم:
+اطلاعات برنامه|App data|بيانات التطبيق
+پاک کردن همه اطلاعات|Erase all data|مسح كل البيانات
+«پاک کردن همه اطلاعات» همه تراکنش‌ها، مطالبات و دیون را پاک می‌کند و سرفصل‌ها را به حالت اولیه برمی‌گرداند. اشتراک شما پاک نمی‌شود. قبلش پشتیبان بگیرید.|“Erase all data” deletes all transactions, receivables and debts and restores the default categories. Your subscription is kept. Make a backup first.|«مسح كل البيانات» يحذف كل المعاملات والمستحقات والديون ويعيد الفئات إلى الوضع الافتراضي. اشتراكك لا يُحذف. خذ نسخة احتياطية أولًا.
+رمز ورود (۴ رقمی)|PIN (4 digits)|رمز الدخول (٤ أرقام)
+رمز جدید|New PIN|رمز جديد
+تکرار رمز|Repeat PIN|أعد إدخال الرمز
+ذخیره|Save|حفظ
+غیرفعال کردن رمز|Disable PIN|تعطيل الرمز
+رمز ورود فعال است.|PIN is active.|رمز الدخول مفعّل.
+رمز ورود غیرفعال است.|PIN is off.|رمز الدخول معطّل.
+رمز باید ۴ رقم باشد.|The PIN must be 4 digits.|يجب أن يكون الرمز ٤ أرقام.
+دو رمز یکسان نیست.|The two PINs don't match.|الرمزان غير متطابقين.
+رمز فعال شد.|PIN enabled.|تم تفعيل الرمز.
+رمز غیرفعال شد.|PIN disabled.|تم تعطيل الرمز.
+برای غیرفعال کردن، رمز فعلی را در کادر اول بنویسید.|To disable, type the current PIN in the first box.|للتعطيل اكتب الرمز الحالي في المربع الأول.
+این رمز فقط قفل صفحه است و اطلاعات را رمزنگاری نمی‌کند. اگر رمز را فراموش کنید، فقط با پاک شدن اطلاعات (و بازیابی اطلاعات پشتیبان) وارد می‌شوید.|This PIN only locks the screen and does not encrypt your data. If you forget it, you can only get in by erasing the data (and restoring a backup).|هذا الرمز يقفل الشاشة فقط ولا يشفّر بياناتك. إذا نسيته فلن تدخل إلا بمسح البيانات (واستعادة نسخة احتياطية).
+به نرم‌افزار مدیریت هوشمند دخل و خرج|Welcome to the smart income & expense manager|مرحبًا بك في تطبيق الإدارة الذكية للدخل والمصروفات
+حساب|HESAB|حساب
+خوش آمدید|!|
+رمز ورود را وارد کنید|Enter your PIN|أدخل رمز الدخول
+رمز را فراموش کرده‌ام|I forgot my PIN|نسيت الرمز
+رمز اشتباه است.|Wrong PIN.|الرمز خاطئ.
+همه اطلاعات پاک می‌شود. دوباره بزنید|All data will be erased. Tap again|سيتم مسح كل البيانات. اضغط مرة أخرى
+چرا «حساب»؟|Why “HESAB”?|لماذا «حساب»؟
+همه درآمد و هزینه‌ات را هوشمند ثبت و تحلیل کن: نمودارهای رنگی، یادآور سررسید مطالبات و دیون، تقویم شمسی و پشتیبان‌گیری آسان. همین امروز مسیر مالی خانه‌ات را منظم کن.|Record and analyze all your income and expenses smartly: colorful charts, due-date reminders for receivables and debts, the Persian calendar and easy backups. Organize your household finances today.|سجّل وحلّل دخلك ومصروفاتك بذكاء: رسوم بيانية ملوّنة، تذكير بمواعيد المستحقات والديون، التقويم الفارسي ونسخ احتياطي سهل. نظّم مالية بيتك اليوم.
+پشتیبان‌گیری|Backup|النسخ الاحتياطي
+پشتیبان‌گیری خودکار|Automatic backup|النسخ الاحتياطي التلقائي
+خاموش|Off|إيقاف
+روزانه|Daily|يوميًا
+هفتگی|Weekly|أسبوعيًا
+نمایش پشتیبان|Show backup text|عرض نص النسخة
+بازیابی از متن|Restore from text|استعادة من النص
+بازیابی اطلاعات|Restore data|استعادة البيانات
+بازیابی این نسخه|Restore this version|استعادة هذه النسخة
+روش جایگزین: کپی متن|Alternative: copy text|بديل: نسخ النص
+متن پشتیبان|Backup text|نص النسخة الاحتياطية
+اگر فایل ذخیره نشد، متن پشتیبان را کپی و جایی نگه دارید. برای بازیابی، آن را همین‌جا بچسبانید.|If the file wasn't saved, copy the backup text and keep it somewhere. To restore, paste it here.|إن لم يُحفظ الملف فانسخ نص النسخة واحتفظ به. للاستعادة الصقه هنا.
+هنوز نسخه خودکاری ساخته نشده.|No automatic copy has been made yet.|لم تُنشأ نسخة تلقائية بعد.
+پشتیبان‌گیری زمان‌بندی‌شده انجام شد. فایل آن را هم ذخیره کنید.|Scheduled backup done. Save its file too.|تم النسخ الاحتياطي المجدول. احفظ ملفه أيضًا.
+ذخیره فایل|Save file|حفظ الملف
+با زدن «پشتیبان‌گیری»، یک فایل با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) ساخته می‌شود و در پوشه دانلودهای دستگاه ذخیره می‌شود. «بازیابی اطلاعات» اطلاعات فعلی را با اطلاعات آن فایل جایگزین می‌کند.|Tapping “Backup” creates a file named HESAB plus today's Persian date (e.g. HESAB14050809) in your device's Downloads folder. “Restore data” replaces the current data with the file's data.|بالضغط على «النسخ الاحتياطي» يُنشأ ملف باسم HESAB وتاريخ اليوم الفارسي (مثل HESAB14050809) في مجلد التنزيلات. «استعادة البيانات» تستبدل البيانات الحالية ببيانات الملف.
+مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود (۳ نسخه آخر) و پیامی برای ذخیره فایل می‌آید. اگر اطلاعات را اشتباهی پاک کردید، با «بازیابی این نسخه» به همان زمان برمی‌گردید.|Browsers can't save files silently. So at the chosen interval a copy is kept inside the app (last 3) and a prompt appears to save the file. If you deleted data by mistake, “Restore this version” takes you back to that moment.|لا يستطيع المتصفح حفظ الملفات بصمت. لذلك تُحفظ في الفترة المختارة نسخة داخل التطبيق (آخر ٣) وتظهر رسالة لحفظ الملف. إذا حذفت بياناتك بالخطأ فإن «استعادة هذه النسخة» تعيدك إلى تلك اللحظة.
+نسخه جدید نرم‌افزار در دسترس است.|A new version of the app is available.|يتوفر إصدار جديد من التطبيق.
+تأیید به‌روزرسانی|Confirm update|تأكيد التحديث
+داده‌های نمونه نمایش داده می‌شود. برای شروع واقعی آن‌ها را حذف کنید.|Sample data is shown. Delete it to start for real.|تُعرض بيانات تجريبية. احذفها للبدء الفعلي.
+حذف داده‌های نمونه|Delete sample data|حذف البيانات التجريبية
+برای تغییر عکس، روی عکس بالای صفحه بزنید.|To change the picture, tap the picture at the top of the page.|لتغيير الصورة اضغط على الصورة أعلى الصفحة.
+عکس برنامه|App picture|صورة التطبيق
+تغییر عکس|Change picture|تغيير الصورة
+تغییر پس‌زمینه|Change background|تغيير الخلفية
+زبان|Language|اللغة
+برای عوض کردن اسم یا آیکن یک سرفصل، روی علامت مداد کنار آن بزنید. در کادر کوچک، ایموجی را با کیبورد گوشی بزنید؛ خالی بگذارید تا خودکار انتخاب شود.|To change a category's name or icon, tap the pencil next to it. In the small box, type an emoji with your phone keyboard; leave it empty for an automatic icon.|لتغيير اسم الفئة أو أيقونتها اضغط على القلم بجانبها. في المربع الصغير اكتب إيموجي من لوحة المفاتيح؛ اتركه فارغًا لأيقونة تلقائية.
+سرفصل‌های هزینه|Expense categories|فئات المصروفات
+سرفصل‌های درآمد|Income categories|فئات الدخل
+سرفصل جدید هزینه|New expense category|فئة مصروف جديدة
+سرفصل جدید درآمد|New income category|فئة دخل جديدة
+افزودن|Add|إضافة
+شارژ ساختمان|Building charge|رسوم المبنى
+گاز|Gas|الغاز
+آب|Water|الماء
+برق|Electricity|الكهرباء
+تلفن|Phone|الهاتف
+اینترنت|Internet|الإنترنت
+هزینه تعمیرات|Repairs|الإصلاحات
+خوراک و خرید|Food & shopping|الطعام والتسوق
+حمل‌ونقل|Transport|النقل
+درمان|Medical|العلاج
+مایحتاج منزل|Household needs|مستلزمات المنزل
+آموزش (شهریه، خرید کتاب و ...)|Education (tuition, books, ...)|التعليم (الرسوم، الكتب ...)
+آموزش|Education|التعليم
+حمل و نقل|Transport|النقل
+بهداشت و درمان|Health & medical|الصحة والعلاج
+قبض، شارژ، اینترنت ...|Bills, utilities, internet ...|الفواتير والشحن والإنترنت ...
+تفریح و ورزش|Leisure & sports|الترفيه والرياضة
+ماهیانه اعضای خانواده|Family members' monthly allowance|مصروف أفراد الأسرة الشهري
+سایر هزینه‌ها|Other expenses|مصروفات أخرى
+حقوق|Salary|الراتب
+سود بانکی|Bank interest|فوائد بنكية
+یارانه|Subsidy|الدعم الحكومي
+هدیه|Gift|هدية
+وصول طلب|Debt collected|تحصيل دين
+وام|Loan|قرض
+دریافت اجاره|Rent received|إيجار مستلم
+اجاره|Rent|الإيجار
+سایر درآمدها|Other income|دخل آخر
+راهنمای کار با برنامه|User guide|دليل الاستخدام
+راهنمای HESAB|HESAB guide|دليل HESAB
+بستن|Close|إغلاق
+بستن راهنما|Close guide|إغلاق الدليل
+بعداً|Later|لاحقًا
+راهنما|Guide|الدليل
+برای آشنایی سریع با برنامه، راهنما را ببینید.|New here? Take a quick look at the user guide.|جديد هنا؟ ألقِ نظرة سريعة على دليل الاستخدام.
+فرو|Far|فرو
+ارد|Ord|ارد
+خرد|Kho|خرد
+مرد|Mor|مرد
+شهر|Sha|شهر
+آبا|Aba|آبا
+بهم|Bah|بهم
+اسف|Esf|اسف`,MONTHS=`فروردین|Farvardin|فروردين
+اردیبهشت|Ordibehesht|أرديبهشت
+خرداد|Khordad|خرداد
+تیر|Tir|تير
+مرداد|Mordad|مرداد
+شهریور|Shahrivar|شهريور
+مهر|Mehr|مهر
+آبان|Aban|آبان
+آذر|Azar|آذر
+دی|Dey|دي
+بهمن|Bahman|بهمن
+اسفند|Esfand|إسفند`;
+const nz=s=>s.replace(/\u200c/g,'').replace(/ي/g,'ی').replace(/ك/g,'ک');
+const D={},MT={};
+const load=(t,o)=>t.split('\n').forEach(l=>{const p=l.split('|');if(p.length===3)o[nz(p[0])]=[p[1],p[2]]});load(DICT,D);load(MONTHS,MT);
+const DG={en:'0123456789',ar:'٠١٢٣٤٥٦٧٨٩',fa:'۰۱۲۳۴۵۶۷۸۹'};
+const dg=s=>String(s).replace(/\d/g,d=>DG[LANG][d]);
+const fixD=s=>String(s).replace(/[۰-۹٠-٩]/g,ch=>{let i='۰۱۲۳۴۵۶۷۸۹'.indexOf(ch);if(i<0)i='٠١٢٣٤٥٦٧٨٩'.indexOf(ch);return DG[LANG][i]}).replace(/٪/g,LANG==='en'?'%':'٪').replace(/٬/g,LANG==='en'?',':'٬').replace(/٫/g,LANG==='en'?'.':'٫');
+const RULES=[
+[/^(\d+) تراکنش$/,(m,e)=>e?m[1]+' transactions':m[1]+' معاملة'],
+[/^(\d+) روز قبل$/,(m,e)=>e?m[1]+' day(s) before':'قبل '+m[1]+' يوم'],
+[/^(\d+) روز مانده$/,(m,e)=>e?m[1]+' day(s) left':'متبقٍ '+m[1]+' يوم'],
+[/^(\d+) روز گذشته$/,(m,e)=>e?m[1]+' day(s) overdue':'متأخر '+m[1]+' يوم'],
+[/^(\d+)٪ از کل (.+)$/,(m,e)=>e?m[1]+'% of all '+trCore(m[2]).toLowerCase():m[1]+'٪ من إجمالي '+trCore(m[2])],
+[/^هفته (\d+)$/,(m,e)=>(e?'Week ':'أسبوع ')+m[1]],
+[/^مشاهده همه تراکنشها \((\d+) سرفصل\)$/,(m,e)=>e?'View all transactions ('+m[1]+' categories)':'عرض كل المعاملات ('+m[1]+' فئة)'],
+[/^(\d+) مورد نیاز به توجه$/,(m,e)=>e?m[1]+' item(s) need your attention':m[1]+' عناصر تحتاج انتباهك'],
+[/^تراکنشهای (.+)$/,(m,e)=>(e?'Transactions of ':'معاملات ')+trCore(m[1])],
+[/^سررسید (.+?) · یادآوری: (.+)$/,(m,e)=>(e?'Due ':'الاستحقاق ')+trCore(m[1])+' · '+(e?'Reminder: ':'التذكير: ')+trCore(m[2])],
+[/^(طلب از|بدهی به) (.+?) — (.+) تومان · (.+)$/,(m,e)=>(e?(m[1]==='طلب از'?'Owed by ':'Debt to '):(m[1]==='طلب از'?'مستحق من ':'دين إلى '))+m[2]+' — '+m[3]+' '+(e?'Toman':'تومان')+' · '+trCore(m[4])],
+[/^اشتراک فعال است تا (.+)$/,(m,e)=>(e?'Subscription active until ':'الاشتراك فعّال حتى ')+trCore(m[1])],
+[/^(\d+) روز از دوره آزمایشی باقی مانده است\.$/,(m,e)=>e?m[1]+' day(s) left in your trial.':'متبقٍ '+m[1]+' يوم من الفترة التجريبية.'],
+[/^(\d+) روز از دوره آزمایشی باقی مانده\. برای ادامه، در «تنظیمات» اشتراک را فعال کنید\.$/,(m,e)=>e?m[1]+' day(s) left in your trial. To continue, activate a subscription in Settings.':'متبقٍ '+m[1]+' يوم من الفترة التجريبية. للمتابعة فعّل الاشتراك من الإعدادات.'],
+[/^اشتراک شما (\d+) روز دیگر تمام میشود\. برای تمدید، در «تنظیمات» کد اشتراک را وارد کنید\.$/,(m,e)=>e?'Your subscription ends in '+m[1]+' day(s). To renew, enter a code in Settings.':'ينتهي اشتراكك بعد '+m[1]+' يوم. للتجديد أدخل الرمز من الإعدادات.'],
+[/^لطفاً (\d+) ثانیه صبر کنید\.$/,(m,e)=>e?'Please wait '+m[1]+' seconds.':'يرجى الانتظار '+m[1]+' ثانية.'],
+[/^حذف (.+)$/,(m,e)=>(e?'Delete ':'حذف ')+trCore(m[1])],
+[/^ویرایش (.+)$/,(m,e)=>(e?'Edit ':'تعديل ')+trCore(m[1])],
+[/^([\d.,٫٬]+)م$/,(m,e)=>m[1]+(e?'M':' م')],
+[/^برای خرید اشتراک با این راه ارتباطی تماس بگیرید: (.+)$/,(m,e)=>(e?'To buy a subscription, contact: ':'للشراء تواصل عبر: ')+m[1]]
+];
+function trCore(c){const e=LANG==='en',k=nz(c),r=D[k];if(r!==undefined)return fixD(r[e?0:1]);
+ const a=toLat(k);for(const[re,f]of RULES){const m=a.match(re);if(m)return fixD(dg(f(m,e)))}
+ return fixD(dg(c.split(' ').map(w=>{const t=MT[nz(w)];return t?t[e?0:1]:w}).join(' ')))}
+function trS(s){if(LANG==='fa')return s;const l=s.match(/^\s*/)[0],t=s.match(/\s*$/)[0],c=s.trim();return c?l+trCore(c)+t:s}
+let touched=LANG!=='fa',tmr=0;const PERS=/[\u0600-\u06FF]/;
+const obs=new MutationObserver(()=>{if(touched&&!tmr)tmr=setTimeout(()=>{tmr=0;i18n()},30)});
+const obsOn=()=>obs.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['placeholder','aria-label','title']});
+function i18n(){if(!document.body)return;obs.disconnect();
+ const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+ while(n=w.nextNode()){const p=n.parentNode&&n.parentNode.tagName;if(p==='SCRIPT'||p==='STYLE')continue;
+  const cur=n.nodeValue,rec=n.__r,o=rec&&cur===rec.t?rec.o:cur;if(!rec&&!PERS.test(cur))continue;
+  const t=trS(o);if(t!==cur)n.nodeValue=t;n.__r={o,t}}
+ document.querySelectorAll('[placeholder],[aria-label],[title]').forEach(el=>{['placeholder','aria-label','title'].forEach(at=>{const cur=el.getAttribute(at);if(cur===null)return;el.__a=el.__a||{};const rec=el.__a[at],o=rec&&cur===rec.t?rec.o:cur;if(!rec&&!PERS.test(cur))return;const t=trS(o);if(t!==cur)el.setAttribute(at,t);el.__a[at]={o,t}})});
+ obsOn()}
+function setLang(l){LANG=l;UI.lang=l;saveUI();touched=true;document.documentElement.lang=l;document.documentElement.dir=l==='en'?'ltr':'rtl';
+ fillDate();dInit();setType(type);renderSw();applyUI();render();renderAB();pinUI();if(typeof licApply==='function')licApply();i18n()}
+obsOn();
 const focusEd=()=>{const e=document.querySelector('input[data-ei]');if(e){e.focus();e.select()}};
 function rename(k,i,v,ic){v=v.trim();const old=S.cats[k][i];let nm=old;S.icons=S.icons||{};
  if(v&&v!==old&&!S.cats[k].includes(v)){S.cats[k][i]=v;nm=v;S.tx.forEach(t=>{if(t.t===k&&t.c===old)t.c=v});
@@ -456,16 +718,18 @@ $('bd').onclick=async()=>{const n=new Date(),j=toJ(n.getFullYear(),n.getMonth()+
  $('bm').textContent=ok?'فایل '+name+' آماده شد. اگر در پوشه دانلودها نبود، از «روش جایگزین» استفاده کنید.':'ذخیره فایل لغو شد.'};
 $('bf').onclick=()=>$('bi').click();
 $('bi').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
- r.onload=()=>{try{applyBackup(r.result);$('bm').textContent='بازگردانی انجام شد.'}catch(x){$('bm').textContent='این فایل پشتیبان معتبر نیست.'}};
+ r.onload=()=>{try{applyBackup(r.result);$('bm').textContent='بازیابی انجام شد.'}catch(x){$('bm').textContent='این فایل پشتیبان معتبر نیست.'}};
  r.readAsText(f);e.target.value=''};
 $('bs').onclick=()=>{$('bk').value=JSON.stringify(S);$('bk').select()};
-$('br').onclick=()=>{try{let o=JSON.parse($('bk').value);o=o.data||o;if(!Array.isArray(o.tx)||!o.cats||!Array.isArray(o.cats.e)||!Array.isArray(o.cats.i))throw 0;S=o;S.dues=S.dues||[];save();fillCats();render();$('bk').value='بازگردانی انجام شد.'}catch(e){$('bk').value='متن پشتیبان معتبر نیست.'}};
+$('br').onclick=()=>{try{let o=JSON.parse($('bk').value);o=o.data||o;if(!Array.isArray(o.tx)||!o.cats||!Array.isArray(o.cats.e)||!Array.isArray(o.cats.i))throw 0;S=o;S.dues=S.dues||[];save();fillCats();render();$('bk').value='بازیابی انجام شد.'}catch(e){$('bk').value='متن پشتیبان معتبر نیست.'}};
 document.querySelectorAll('[data-ic]').forEach(e=>{e.innerHTML=svg(e.dataset.ic)});
 document.querySelectorAll('[data-tab]>details').forEach(d=>d.addEventListener('toggle',()=>{if(!d.open)d.open=true}));
 $('rmn').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('rmn').onchange=()=>{rm=+$('rmn').value;renderYear()};
+document.documentElement.lang=LANG;document.documentElement.dir=LANG==='en'?'ltr':'rtl';$('lang').value=LANG;$('lang').onchange=()=>setLang($('lang').value);
+try{if(!localStorage.getItem('dk_gh'))$('ghb').hidden=false}catch(e){}
 pinUI();checkAB();pinLock();autoUpd();
 dInit();renderSw();applyUI();showTab('home');['dy','dyy'].forEach(i=>$(i).addEventListener('input',e=>{e.target.value=pd(toLat(e.target.value))}));
-fillDate();setType('e');render();
+fillDate();setType('e');render();setTimeout(i18n,60);
 licApply();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{});
 </script>
