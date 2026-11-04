@@ -209,6 +209,9 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
   border:1px solid rgba(255,255,255,.85);
 }
 
+.tx-period{grid-template-columns:1fr 1fr;margin:10px 0 12px}
+.tx-period select{min-width:0}
+
 /* وسط‌چین کردن عنوان ماه بین دو فلش */
 .nav{position:relative;justify-content:space-between}
 .nav b{
@@ -223,6 +226,16 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
   pointer-events:none;
 }
 
+
+
+/* حاشیه سفید کاملاً مشخص برای کادرهای ماه، مانده، درآمد و هزینه */
+.nav,
+.sum .bal,
+.sum .bal-main,
+.sum .bal .stat{
+  border:2px solid #fff !important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.28) !important;
+}
 </style>
 </head>
 <body>
@@ -242,7 +255,7 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 <button class="add" id="add">ثبت هزینه</button>
 </div>
 
-<div class="card" data-tab="transactions"><h2><span class="tl" id="tt">تراکنش‌های ماه جاری</span></h2><div id="grp"></div></div>
+<div class="card" data-tab="transactions"><h2><span class="tl" id="tt">تراکنش‌های ماه جاری</span></h2><div class="row tx-period"><select id="txMonth" aria-label="انتخاب ماه"></select><select id="txYear" aria-label="انتخاب سال"></select></div><div id="grp"></div></div>
 <div class="card" id="dues" data-tab="dues"><details id="dsec" open><summary class="st"><span><i class="ii" data-ic="swap"></i><span class="tl">مطالبات و دیون</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div>
 <div class="seg"><button id="dtr" class="on" data-dt="r">مطالبات (طلب من)</button><button id="dtp" data-dt="p">دیون (بدهی من)</button></div>
 <div class="ys" style="grid-template-columns:1fr 1fr" id="dsm"></div>
@@ -320,7 +333,7 @@ let S;try{S=JSON.parse(localStorage.getItem('dk1'))}catch(e){}
 let FIRST=false;if(!S||!S.tx){S={tx:[],cats:DEF};FIRST=true}
 S.dues=S.dues||[];
 const save=()=>{try{localStorage.setItem('dk1',JSON.stringify(S))}catch(e){}};
-let type='e',vy=T[0],vm=T[1];const open=new Set();let editing=null;let ry=T[0];
+let type='e',vy=T[0],vm=T[1],tvy=T[0],tvm=T[1];const open=new Set();let editing=null;let ry=T[0];
 
 const toLat=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
 const pd=s=>String(s).replace(/\d/g,d=>({en:'0123456789',ar:'٠١٢٣٤٥٦٧٨٩',fa:'۰۱۲۳۴۵۶۷۸۹'}[LANG])[d]);
@@ -410,6 +423,22 @@ function groups(kind,tx,total){
   const id=kind+':'+k,o=open.has(id),a=by[k],s=sm(a);
   return `<div class="g k${kind}${o?' open':''}"><button class="gh" data-g="${esc(id)}" aria-expanded="${o}"><span class="gi">${ico(k)}</span><span class="gn">${esc(k)}<small>${fa(a.length)} تراکنش</small></span><b>${fa(s)}</b><span class="chev">⌄</span></button><div class="bar"><i style="width:${Math.max(3,Math.round(s/total*100))}%"></i></div><div class="gb">${editRow(kind,k)}${a.sort((x,y)=>y.d-x.d||y.id-x.id).map(t=>`<div class="it"><div class="m"><b>${fa(t.d)} ${MN[t.m-1]}</b>${t.n?`<span>${esc(t.n)}</span>`:''}</div><div class="a ${kind==='i'?'inc':'exp'}">${fa(t.a)}</div><button class="x" data-del="${t.id}">حذف</button></div>`).join('')}</div></div>`}).join('')+(ks.length>7?`<button class="more" data-more="${kind}">${showAll[kind]?'نمایش کمتر':'مشاهده همه تراکنش‌ها ('+fa(ks.length)+' سرفصل)'}</button>`:'')}
 
+function renderTransactionsTab(){
+ const ms=$('txMonth'),ys=$('txYear');
+ if(!ms||!ys)return;
+ ms.innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');ms.value=String(tvm);
+ const years=new Set([T[0],tvy,...S.tx.map(t=>Number(t.y)).filter(Number.isFinite)]);
+ const lo=Math.min(...years)-1,hi=Math.max(...years)+1;
+ for(let y=lo;y<=hi;y++)years.add(y);
+ ys.innerHTML=[...years].sort((a,b)=>b-a).map(y=>`<option value="${y}">${pd(y)}</option>`).join('');ys.value=String(tvy);
+ const tx=S.tx.filter(t=>Number(t.y)===tvy&&Number(t.m)===tvm);
+ const I=tx.filter(t=>t.t==='i').reduce((a,t)=>a+t.a,0),E=tx.filter(t=>t.t==='e').reduce((a,t)=>a+t.a,0);
+ $('tt').textContent='تراکنش‌های '+MN[tvm-1]+' '+pd(tvy);
+ $('grp').innerHTML=tx.length?groups('e',tx,E)+groups('i',tx,I):'<div class="empty">برای این ماه تراکنشی ثبت نشده است.</div>';
+}
+$('txMonth').addEventListener('change',e=>{tvm=+e.target.value;renderTransactionsTab()});
+$('txYear').addEventListener('change',e=>{tvy=+e.target.value;renderTransactionsTab()});
+
 function render(){
  $('mt').textContent=MN[vm-1]+' '+pd(vy);
  const tx=S.tx.filter(t=>t.y===vy&&t.m===vm);
@@ -417,14 +446,14 @@ function render(){
  $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده این ماه (تومان)</small><b>${fa(I-E)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;
  {const dm=S.tx.some(t=>t.demo)||S.dues.some(d=>d.demo);$('dmb').hidden=!dm;if(dm)$('dmb').innerHTML='داده‌های نمونه نمایش داده می‌شود. برای شروع واقعی آن‌ها را حذف کنید. <button class="eb" data-cd="1">حذف داده‌های نمونه</button>'}
  $('tt').textContent=(vy===T[0]&&vm===T[1])?'تراکنش\u200cهای ماه جاری':'تراکنش\u200cهای '+MN[vm-1]+' '+pd(vy);
- renderYear();renderList();renderDues();$('grp').innerHTML=tx.length?groups('e',tx,E)+groups('i',tx,I):'<div class="empty">هنوز چیزی برای این ماه ثبت نشده. از فرم بالا شروع کنید.</div>';
+ renderYear();renderList();renderDues();renderTransactionsTab();
  ['e','i'].forEach(k=>$('c'+k).innerHTML=S.cats[k].map((c,i)=>`${editing===k+':'+i?`<span class="chip ed"><input data-ei value="${esc(c)}" aria-label="نام سرفصل"><input class="ie" data-ej value="${esc((S.icons&&S.icons[c])||'')}" placeholder="ایموجی" maxlength="12" aria-label="ایموجی سرفصل"><button data-ok="${k}:${i}">✓</button></span>${pk()}${epk()}`:`<span class="chip"><button class="cn" data-ed="${k}:${i}" aria-label="ویرایش ${esc(c)}">${esc(c)} ${ic('pen')}</button><button data-rc="${k}:${i}" aria-label="حذف ${esc(c)}">×</button></span>`}`).join(''))}
 
 $('amt').addEventListener('input',e=>{const n=num(e.target.value);e.target.value=n?fa(n):''});
 $('add').onclick=()=>{const a=num($('amt').value);if(!a){$('amt').focus();return}
  const y=num($('dy').value)||vy;
  S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});
- save();vy=y;vm=+$('dm').value;$('amt').value='';$('note').value='';render()};
+ save();vy=y;vm=+$('dm').value;tvy=y;tvm=+$('dm').value;$('amt').value='';$('note').value='';render()};
 $('dm').onchange=()=>fillDays();$('dy').onchange=()=>fillDays();
 $('te').onclick=()=>setType('e');$('ti').onclick=()=>setType('i');
 $('nx').onclick=()=>{vm--;if(vm<1){vm=12;vy--}fillDate();render()};
@@ -990,13 +1019,3 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(r
 </script>
 </body>
 </html>
-
-
-/* حاشیه سفید کاملاً مشخص برای کادرهای ماه، مانده، درآمد و هزینه */
-.nav,
-.sum .bal,
-.sum .bal-main,
-.sum .bal .stat{
-  border:2px solid #fff !important;
-  box-shadow:0 0 0 1px rgba(255,255,255,.28) !important;
-}
