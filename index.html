@@ -34,7 +34,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .sum small{color:var(--mut);display:block}
 .sum b{font-weight:600;font-size:17px}
 .sum .bal{grid-column:1/-1;width:100%;min-width:0;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--acx);border-color:var(--ac);padding:20px;border-radius:22px}
-.sum .bal:after{content:"";position:absolute;left:-30px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.sum .bal:after{display:none}
 .sum .bal small{color:inherit;opacity:.85}
 .sum .bal b{font-size:32px;font-weight:600}.sum .bal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.sum .bal-main{grid-column:1/-1;position:relative;z-index:1}.sum .bal .stat{min-width:0;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:9px 11px;box-shadow:none}.sum .bal .stat small{font-size:13px;opacity:.85}.sum .bal .stat b{font-size:19px;display:block;overflow-wrap:anywhere}.sum .bal .stat .inc,.sum .bal .stat .exp{color:inherit}
 .inc{color:var(--inc)}.exp{color:var(--exp)}
@@ -88,31 +88,32 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 .sum .bal .stat b{font-size:15px;line-height:1.45}
 .sum .bal:after{width:112px;height:112px;left:-28px;top:-35px}
 
-/* Monthly header + balance panel: aligned with the approved HESAB design */
+/* Monthly header: coordinated with the app's card and accent colors */
 .nav{
   margin:8px 0 0;
   padding:7px 10px;
   min-height:58px;
-  background:#ffed00;
-  color:#155e50;
-  border:1px solid #f0df00;
+  background:linear-gradient(135deg,var(--ac),var(--ac2));
+  color:var(--acx);
+  border:1px solid var(--ac);
   border-bottom:0;
   border-radius:20px 20px 0 0;
   box-shadow:none;
 }
-.nav b{font-size:16px;font-weight:600;color:#155e50}
+.nav b{font-size:16px;font-weight:600;color:var(--acx)}
 .nav button{
   width:38px;height:38px;flex:none;
   display:grid;place-items:center;
   border-radius:50%;
-  background:rgba(255,255,255,.78);
-  color:#167967;
+  background:color-mix(in srgb,var(--acx) 14%,transparent);
+  color:var(--acx);
 }
-.nav .chev{border-color:#167967}
+.nav .chev{border-color:var(--acx)}
 .sum{margin-top:0;margin-bottom:14px;gap:0}
 .sum .bal{
+  background:var(--ac);
+  border:1px solid var(--ac);
   border-radius:0 0 20px 20px;
-  border-top:0;
   padding:14px;
   gap:9px;
 }
@@ -125,7 +126,11 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
   text-align:right;
   width:100%;
   min-width:0;
-  padding:2px 4px 8px;
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:14px;
+  background:transparent;
+  box-shadow:none;
 }
 .sum .bal-main small{flex:0 0 auto;text-align:right}
 .sum .bal-main b{min-width:0;max-width:65%;text-align:left;overflow-wrap:anywhere}
@@ -136,6 +141,8 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
   display:flex;
   align-items:center;
   justify-content:space-between;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.28);
   gap:8px;
   padding:9px 11px;
 }
@@ -152,6 +159,43 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
   .sum .bal .stat small,.sum .bal .stat b{font-size:13px}
 }
 
+
+/* یکدست‌سازی کادر ماه، مانده، درآمد و هزینه با پس‌زمینه پیش‌فرض برنامه */
+.nav{
+  background:var(--bg);
+  color:var(--tx);
+  border-color:var(--bd);
+}
+.nav b{color:var(--tx)}
+.nav button{
+  background:var(--chip);
+  color:var(--tx);
+}
+.nav .chev:after{border-color:var(--tx)}
+.sum .bal{
+  background:var(--bg);
+  color:var(--tx);
+  border-color:var(--bd);
+}
+.sum .bal-main,
+.sum .bal .stat{
+  background:var(--bg);
+  color:var(--tx);
+  border-color:var(--bd);
+}
+.sum .bal small,
+.sum .bal .stat small{color:var(--mut);opacity:1}
+.sum .bal .stat .inc{color:var(--inc)}
+.sum .bal .stat .exp{color:var(--exp)}
+
+/* پررنگ‌تر کردن نوشته‌های کادر ماه، مانده، درآمد و هزینه */
+.nav b,
+.sum .bal-main small,
+.sum .bal-main b,
+.sum .bal .stat small,
+.sum .bal .stat b{
+  font-weight:700;
+}
 </style>
 </head>
 <body>
@@ -261,7 +305,27 @@ function fillDate(){
 function fillDays(sel){const y=num($('dy').value)||vy,m=+$('dm').value,n=dim(y,m);
  $('dd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');
  $('dd').value=Math.min(sel||+$('dd').value||1,n)}
-function fillCats(){const c=S.cats[type];$('cat').innerHTML=c.length?c.map(x=>`<option>${esc(x)}</option>`).join(''):'<option value="">(سرفصلی نیست)</option>'}
+let selectedCat='';
+const ADD_CAT_VALUE='__hesab_add_category__';
+function fillCats(selected){
+ const c=S.cats[type];
+ const wanted=selected!==undefined?selected:(c.includes(selectedCat)?selectedCat:(c[0]||''));
+ $('cat').innerHTML=(c.length?c.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join(''):'<option value="">(سرفصلی نیست)</option>')+`<option value="${ADD_CAT_VALUE}">افزودن سرفصل جدید</option>`;
+ $('cat').value=wanted;
+ selectedCat=$('cat').value;
+}
+$('cat').addEventListener('change',()=>{
+ const v=$('cat').value;
+ if(v===ADD_CAT_VALUE){
+  const previous=selectedCat;
+  fillCats(previous);
+  showTab('settings');
+  const target=$(type==='e'?'ne':'ni');
+  setTimeout(()=>{target.scrollIntoView({behavior:'smooth',block:'center'});target.focus()},80);
+  return;
+ }
+ selectedCat=v;
+});
 function setType(t){type=t;$('frm').classList.remove('t-e','t-i');$('frm').classList.add('t-'+t);$('te').classList.toggle('on',t==='e');$('ti').classList.toggle('on',t==='i');
  $('add').textContent=t==='e'?'ثبت هزینه':'ثبت درآمد';fillCats()}
 
