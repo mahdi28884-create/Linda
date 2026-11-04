@@ -36,7 +36,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .sum .bal{grid-column:1/-1;width:100%;min-width:0;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--acx);border-color:var(--ac);padding:20px;border-radius:22px}
 .sum .bal:after{content:"";position:absolute;left:-30px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
 .sum .bal small{color:inherit;opacity:.85}
-.sum .bal b{font-size:32px;font-weight:600}
+.sum .bal b{font-size:32px;font-weight:600}.sum .bal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.sum .bal-main{grid-column:1/-1;position:relative;z-index:1}.sum .bal .stat{min-width:0;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:9px 11px;box-shadow:none}.sum .bal .stat small{font-size:13px;opacity:.85}.sum .bal .stat b{font-size:19px;display:block;overflow-wrap:anywhere}.sum .bal .stat .inc,.sum .bal .stat .exp{color:inherit}
 .inc{color:var(--inc)}.exp{color:var(--exp)}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:12px;background:var(--chip);padding:4px;border-radius:15px}
 .seg button{padding:9px;background:transparent;border-radius:11px}
@@ -76,6 +76,17 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 .chip button{padding:0 8px;background:none;font-size:16px;color:var(--mut)}
 .addc{display:flex;gap:6px;margin-bottom:14px}.ynav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.ynav b{font-size:16px}.ynav button{width:40px;height:36px;padding:0;font-size:20px}.ys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.ys div{background:var(--bg);border:1px solid var(--bd);border-radius:14px;padding:8px 10px}.ys small{color:var(--mut);display:block;font-size:12px}.ys b{font-size:14px}.chip .cn{color:var(--tx);font-size:14px;padding:0 4px 0 2px}.chip.ed{padding:3px 4px}.chip.ed input{padding:4px 10px;width:150px;border-radius:14px;font-size:14px}.chip.ed button{color:var(--ac);font-weight:600}.chip.ed{flex-wrap:nowrap}.chip.ed input.ie{width:54px;text-align:center;font-size:18px;padding:3px 4px}.er{padding:8px 0 2px}.eb{font-size:13px;padding:5px 12px;color:var(--ac)}
 .addc button{background:var(--ac);color:var(--acx);white-space:nowrap}
+
+/* Compact monthly summary */
+.sum{gap:7px;margin-bottom:10px}
+.sum .bal{padding:13px 14px;border-radius:18px;gap:7px}
+.sum .bal-main{padding:0 2px 3px}
+.sum .bal-main small{font-size:12px}
+.sum .bal-main b{font-size:25px;line-height:1.35}
+.sum .bal .stat{padding:6px 9px;border-radius:11px}
+.sum .bal .stat small{font-size:11px}
+.sum .bal .stat b{font-size:15px;line-height:1.45}
+.sum .bal:after{width:112px;height:112px;left:-28px;top:-35px}
 </style>
 </head>
 <body>
@@ -247,7 +258,7 @@ function render(){
  $('mt').textContent=MN[vm-1]+' '+pd(vy);
  const tx=S.tx.filter(t=>t.y===vy&&t.m===vm);
  const I=tx.filter(t=>t.t==='i').reduce((s,t)=>s+t.a,0),E=tx.filter(t=>t.t==='e').reduce((s,t)=>s+t.a,0);
- $('sum').innerHTML=`<div class="bal"><small>مانده این ماه (تومان)</small><b>${fa(I-E)}</b></div><div><small>درآمد</small><b class="inc">${fa(I)}</b></div><div><small>هزینه</small><b class="exp">${fa(E)}</b></div>`;
+ $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده این ماه (تومان)</small><b>${fa(I-E)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;
  {const dm=S.tx.some(t=>t.demo)||S.dues.some(d=>d.demo);$('dmb').hidden=!dm;if(dm)$('dmb').innerHTML='داده‌های نمونه نمایش داده می‌شود. برای شروع واقعی آن‌ها را حذف کنید. <button class="eb" data-cd="1">حذف داده‌های نمونه</button>'}
  $('tt').textContent=(vy===T[0]&&vm===T[1])?'تراکنش\u200cهای ماه جاری':'تراکنش\u200cهای '+MN[vm-1]+' '+pd(vy);
  renderYear();renderList();renderDues();$('grp').innerHTML=tx.length?groups('e',tx,E)+groups('i',tx,I):'<div class="empty">هنوز چیزی برای این ماه ثبت نشده. از فرم بالا شروع کنید.</div>';
