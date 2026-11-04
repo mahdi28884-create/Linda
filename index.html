@@ -29,7 +29,7 @@ h2:before{content:"";width:4px;height:16px;border-radius:2px;background:var(--ac
 button{font:inherit;cursor:pointer;border:0;border-radius:11px;padding:8px 14px;background:var(--chip);color:var(--tx)}
 .nav button{width:42px;height:38px;padding:0;font-size:20px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.sum{display:grid;width:100%;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.sum{display:grid;width:100%;min-width:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:14px}
 .sum div{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px 14px;box-shadow:var(--sh)}
 .sum small{color:var(--mut);display:block}
 .sum b{font-weight:600;font-size:17px}
@@ -95,7 +95,7 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 <button class="add" id="add">ثبت هزینه</button>
 </div>
 
-<div class="card" data-tab="home"><h2><span class="tl" id="tt">تراکنش‌های ماه جاری</span></h2><div id="grp"></div></div>
+<div class="card" data-tab="transactions"><h2><span class="tl" id="tt">تراکنش‌های ماه جاری</span></h2><div id="grp"></div></div>
 <div class="card" id="dues" data-tab="dues"><details id="dsec" open><summary class="st"><span><i class="ii" data-ic="swap"></i><span class="tl">مطالبات و دیون</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div>
 <div class="seg"><button id="dtr" class="on" data-dt="r">مطالبات (طلب من)</button><button id="dtp" data-dt="p">دیون (بدهی من)</button></div>
 <div class="ys" style="grid-template-columns:1fr 1fr" id="dsm"></div>
@@ -138,7 +138,7 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 <h2 style="margin-top:14px">پشتیبان‌گیری خودکار</h2><select id="abf"><option value="off">خاموش</option><option value="d">روزانه</option><option value="w">هفتگی</option><option value="m">ماهانه</option></select><p class="hint" style="margin-top:8px">مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود (۳ نسخه آخر) و پیامی برای ذخیره فایل می‌آید. اگر اطلاعات را اشتباهی پاک کردید، با «بازیابی این نسخه» به همان زمان برمی‌گردید.</p><div id="snl"></div>
 <h2 style="margin-top:14px">پشتیبان‌گیری</h2><p class="hint">با زدن «پشتیبان‌گیری»، یک فایل با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) ساخته می‌شود و در پوشه دانلودهای دستگاه ذخیره می‌شود. «بازیابی اطلاعات» اطلاعات فعلی را با اطلاعات آن فایل جایگزین می‌کند.</p><div class="bk"><button id="bd">پشتیبان‌گیری</button><button id="bf">بازیابی اطلاعات</button></div><div class="bk" style="margin-top:6px"><button id="xl">خروجی اکسل (همه اطلاعات)</button></div><input type="file" id="bi" accept=".json,application/json" hidden><p class="hint" id="bm" style="margin-top:8px"></p><details class="alt"><summary>روش جایگزین: کپی متن</summary><p class="hint" style="margin-top:8px">اگر فایل ذخیره نشد، متن پشتیبان را کپی و جایی نگه دارید. برای بازیابی، آن را همین‌جا بچسبانید.</p><textarea id="bk" aria-label="متن پشتیبان"></textarea><div class="bk"><button id="bs">نمایش پشتیبان</button><button id="br">بازیابی از متن</button></div></details><h2 style="margin-top:14px">عکس برنامه</h2><p class="hint">برای تغییر عکس، روی عکس بالای صفحه بزنید.</p></details></div>
 </main>
-<nav class="bn"><button data-tb="dues"><i class="ii" data-ic="swap"></i>مطالبات و دیون</button><button data-tb="reports"><i class="ii" data-ic="chart"></i>گزارشات</button><button data-tb="home" class="on ctr"><i class="ii" data-ic="plus"></i>ثبت تراکنش</button><button data-guide="1"><i class="ii" data-ic="file"></i>راهنما</button><button data-tb="settings"><i class="ii" data-ic="sliders"></i>تنظیمات</button></nav>
+<nav class="bn"><button data-tb="dues"><i class="ii" data-ic="swap"></i>مطالبات و دیون</button><button data-tb="reports"><i class="ii" data-ic="chart"></i>گزارشات</button><button data-tb="home" class="on ctr"><i class="ii" data-ic="plus"></i>ثبت تراکنش</button><button data-tb="transactions"><i class="ii" data-ic="file"></i>تراکنش‌ها</button><button data-tb="settings"><i class="ii" data-ic="sliders"></i>تنظیمات</button></nav>
 <div id="gd" hidden><div class="gdc"><div class="gdh"><h2>راهنمای HESAB</h2><button data-gc="1">بستن</button></div><div id="gdb"></div><button class="pbtn" data-gc="1" style="margin-top:8px">بستن راهنما</button></div></div>
 <div id="pl" hidden><div class="pc"><div class="pwel">به نرم‌افزار مدیریت هوشمند دخل و خرج <span class="tl" style="font-size:inherit">حساب</span> خوش آمدید</div>
 <div class="pbox"><div class="lkl"><i class="ii" data-ic="lock"></i></div><h2 style="justify-content:center">رمز ورود را وارد کنید</h2><input id="pi" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••" style="text-align:center;font-size:28px;letter-spacing:10px;direction:ltr"><p class="hint" id="pm"></p><button class="pbtn" id="pf">رمز را فراموش کرده‌ام</button></div>
