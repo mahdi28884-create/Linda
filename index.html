@@ -29,11 +29,11 @@ h2:before{content:"";width:4px;height:16px;border-radius:2px;background:var(--ac
 button{font:inherit;cursor:pointer;border:0;border-radius:11px;padding:8px 14px;background:var(--chip);color:var(--tx)}
 .nav button{width:42px;height:38px;padding:0;font-size:20px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.sum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.sum{display:grid;width:100%;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .sum div{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px 14px;box-shadow:var(--sh)}
 .sum small{color:var(--mut);display:block}
 .sum b{font-weight:600;font-size:17px}
-.sum .bal{grid-column:1/-1;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--acx);border-color:var(--ac);padding:20px;border-radius:22px}
+.sum .bal{grid-column:1/-1;width:100%;min-width:0;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--acx);border-color:var(--ac);padding:20px;border-radius:22px}
 .sum .bal:after{content:"";position:absolute;left:-30px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
 .sum .bal small{color:inherit;opacity:.85}
 .sum .bal b{font-size:32px;font-weight:600}
