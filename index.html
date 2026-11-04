@@ -119,12 +119,16 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 .sum .bal-main{
   display:flex;
   align-items:center;
-  justify-content:center;
-  flex-wrap:wrap;
+  justify-content:space-between;
+  flex-wrap:nowrap;
   gap:8px 14px;
-  text-align:center;
+  text-align:right;
+  width:100%;
+  min-width:0;
   padding:2px 4px 8px;
 }
+.sum .bal-main small{flex:0 0 auto;text-align:right}
+.sum .bal-main b{min-width:0;max-width:65%;text-align:left;overflow-wrap:anywhere}
 .sum .bal-main small,
 .sum .bal-main b{font-size:16px;line-height:1.6}
 .sum .bal-main b{font-weight:600}
