@@ -87,6 +87,67 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 .sum .bal .stat small{font-size:11px}
 .sum .bal .stat b{font-size:15px;line-height:1.45}
 .sum .bal:after{width:112px;height:112px;left:-28px;top:-35px}
+
+/* Monthly header + balance panel: aligned with the approved HESAB design */
+.nav{
+  margin:8px 0 0;
+  padding:7px 10px;
+  min-height:58px;
+  background:#ffed00;
+  color:#155e50;
+  border:1px solid #f0df00;
+  border-bottom:0;
+  border-radius:20px 20px 0 0;
+  box-shadow:none;
+}
+.nav b{font-size:16px;font-weight:600;color:#155e50}
+.nav button{
+  width:38px;height:38px;flex:none;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.78);
+  color:#167967;
+}
+.nav .chev{border-color:#167967}
+.sum{margin-top:0;margin-bottom:14px;gap:0}
+.sum .bal{
+  border-radius:0 0 20px 20px;
+  border-top:0;
+  padding:14px;
+  gap:9px;
+}
+.sum .bal-main{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px 14px;
+  text-align:center;
+  padding:2px 4px 8px;
+}
+.sum .bal-main small,
+.sum .bal-main b{font-size:16px;line-height:1.6}
+.sum .bal-main b{font-weight:600}
+.sum .bal .stat{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:9px 11px;
+}
+.sum .bal .stat small,
+.sum .bal .stat b{
+  display:inline;
+  font-size:15px;
+  line-height:1.6;
+  white-space:nowrap;
+}
+.sum .bal .stat b{font-weight:600}
+@media(max-width:380px){
+  .sum .bal .stat{padding:7px 8px;gap:5px}
+  .sum .bal .stat small,.sum .bal .stat b{font-size:13px}
+}
+
 </style>
 </head>
 <body>
