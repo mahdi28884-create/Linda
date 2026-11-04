@@ -196,6 +196,33 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 .sum .bal .stat b{
   font-weight:700;
 }
+
+/* افزایش اندازه نوشته‌های درآمد و هزینه و حاشیه سفید ظریف کادرهای خلاصه */
+.sum .bal .stat small,
+.sum .bal .stat b{
+  font-size:16px;
+}
+.nav,
+.sum .bal,
+.sum .bal-main,
+.sum .bal .stat{
+  border:1px solid rgba(255,255,255,.85);
+}
+
+/* وسط‌چین کردن عنوان ماه بین دو فلش */
+.nav{position:relative;justify-content:space-between}
+.nav b{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 110px);
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  pointer-events:none;
+}
+
 </style>
 </head>
 <body>
@@ -963,3 +990,13 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(r
 </script>
 </body>
 </html>
+
+
+/* حاشیه سفید کاملاً مشخص برای کادرهای ماه، مانده، درآمد و هزینه */
+.nav,
+.sum .bal,
+.sum .bal-main,
+.sum .bal .stat{
+  border:2px solid #fff !important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.28) !important;
+}
