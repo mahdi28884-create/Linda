@@ -228,14 +228,24 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 
 
 
-/* حاشیه سفید کاملاً مشخص برای کادرهای ماه، مانده، درآمد و هزینه */
-.nav,
-.sum .bal,
-.sum .bal-main,
-.sum .bal .stat{
-  border:2px solid #fff !important;
-  box-shadow:0 0 0 1px rgba(255,255,255,.28) !important;
+
+/* Contrast-aware outline for the month and monthly summary cards */
+:root{--sum-outline:#78998D;--sum-outline-glow:rgba(21,48,43,.10)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--sum-outline:#fff;--sum-outline-glow:rgba(255,255,255,.22)}
 }
+:root[data-theme="dark"]{--sum-outline:#fff;--sum-outline-glow:rgba(255,255,255,.22)}
+:root[data-theme="light"]{--sum-outline:#78998D;--sum-outline-glow:rgba(21,48,43,.10)}
+.settings-group{display:block;background:var(--card);border:1px solid var(--bd);border-radius:15px;padding:10px 12px;margin:9px 0;box-shadow:var(--sh);overflow:hidden}
+.settings-group>summary{cursor:pointer;list-style:none}
+.settings-group>summary::-webkit-details-marker{display:none}
+.settings-group[open]>.st{margin-bottom:10px}
+.settings-group .st{font-size:15px}
+.nav,.sum .bal,.sum .bal-main,.sum .bal .stat{
+  border:2px solid var(--sum-outline)!important;
+  box-shadow:0 0 0 1px var(--sum-outline-glow)!important
+}
+
 </style>
 </head>
 <body>
@@ -280,21 +290,21 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 <p class="hint" style="margin:6px 2px 2px">تا تاریخ</p><div class="row r3"><select id="ltd" aria-label="روز"></select><select id="ltm" aria-label="ماه"></select><input id="lty" inputmode="numeric" aria-label="سال"></div>
 <div class="row"><select id="ltp"><option value="a">همه تراکنش‌ها</option><option value="e">فقط هزینه‌ها</option><option value="i">فقط درآمدها</option></select></div>
 <div id="lsm"></div><div id="lout"></div>
-<button class="add" id="lxl" style="margin-top:10px">خروجی اکسل این لیست</button>
+
 </div></details></div>
 
-<div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><button class="pbtn" data-guide="1" style="margin-top:12px">راهنمای کار با برنامه</button><h2 style="margin-top:14px">اشتراک</h2><p class="hint" id="lst"></p><div id="lbuy" hidden><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p><p class="hint">برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید: <b dir="ltr">09361239027</b></p></div>
-<p class="hint">برای عوض کردن اسم یا آیکن یک سرفصل، روی علامت مداد کنار آن بزنید. در کادر کوچک، ایموجی را با کیبورد گوشی بزنید؛ خالی بگذارید تا خودکار انتخاب شود.</p><h2 style="margin-top:14px">سرفصل‌های هزینه</h2>
+<div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><details class="settings-group"><summary class="st">راهنمای کار با برنامه <span class="chev"></span></summary><button class="pbtn" data-guide="1" style="margin-top:12px">راهنمای کار با برنامه</button></details><details class="settings-group"><summary class="st">اشتراک <span class="chev"></span></summary><p class="hint" id="lst"></p><div id="lbuy" hidden><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p><p class="hint">برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید: <b dir="ltr">09361239027</b></p></div>
+<p class="hint">برای عوض کردن اسم یا آیکن یک سرفصل، روی علامت مداد کنار آن بزنید. در کادر کوچک، ایموجی را با کیبورد گوشی بزنید؛ خالی بگذارید تا خودکار انتخاب شود.</p></details><details class="settings-group"><summary class="st">سرفصل‌های هزینه <span class="chev"></span></summary>
 <div class="addc"><input id="ne" placeholder="سرفصل جدید هزینه"><button id="ae">افزودن</button></div>
 <div class="chips" id="ce"></div>
-<h2 style="margin-top:14px">سرفصل‌های درآمد</h2>
+</details><details class="settings-group"><summary class="st">سرفصل‌های درآمد <span class="chev"></span></summary>
 <div class="addc"><input id="ni" placeholder="سرفصل جدید درآمد"><button id="ai">افزودن</button></div>
 <div class="chips" id="ci"></div>
-<h2 style="margin-top:14px">رمز ورود (۴ رقمی)</h2><p class="hint" id="pst"></p><div class="addc"><input id="pn1" type="password" inputmode="numeric" maxlength="4" placeholder="رمز جدید" style="direction:ltr"><input id="pn2" type="password" inputmode="numeric" maxlength="4" placeholder="تکرار رمز" style="direction:ltr"><button id="psv">ذخیره</button></div><button class="eb" id="prm" hidden>غیرفعال کردن رمز</button><p class="hint" id="pmsg"></p><p class="hint">این رمز فقط قفل صفحه است و اطلاعات را رمزنگاری نمی‌کند. اگر رمز را فراموش کنید، فقط با پاک شدن اطلاعات (و بازیابی اطلاعات پشتیبان) وارد می‌شوید.</p>
-<h2 style="margin-top:14px">درباره برنامه و پشتیبانی</h2><p class="hint">سازنده: <b dir="ltr">MORAD_DARVISHPOR</b><br>پشتیبانی: <a href="tel:09361239027" dir="ltr" style="color:var(--ac)"><b>09361239027</b></a></p>
-<h2 style="margin-top:14px">اطلاعات برنامه</h2><p class="hint">«پاک کردن همه اطلاعات» همه تراکنش‌ها، مطالبات و دیون را پاک می‌کند و سرفصل‌ها را به حالت اولیه برمی‌گرداند. اشتراک شما پاک نمی‌شود. قبلش پشتیبان بگیرید.</p><div class="bk"><button data-rs="1">پاک کردن همه اطلاعات</button></div>
-<h2 style="margin-top:14px">پشتیبان‌گیری خودکار</h2><select id="abf"><option value="off">خاموش</option><option value="d">روزانه</option><option value="w">هفتگی</option><option value="m">ماهانه</option></select><p class="hint" style="margin-top:8px">مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود (۳ نسخه آخر) و پیامی برای ذخیره فایل می‌آید. اگر اطلاعات را اشتباهی پاک کردید، با «بازیابی این نسخه» به همان زمان برمی‌گردید.</p><div id="snl"></div>
-<h2 style="margin-top:14px">پشتیبان‌گیری</h2><p class="hint">با زدن «پشتیبان‌گیری»، یک فایل با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) ساخته می‌شود و در پوشه دانلودهای دستگاه ذخیره می‌شود. «بازیابی اطلاعات» اطلاعات فعلی را با اطلاعات آن فایل جایگزین می‌کند.</p><div class="bk"><button id="bd">پشتیبان‌گیری</button><button id="bf">بازیابی اطلاعات</button></div><div class="bk" style="margin-top:6px"><button id="xl">خروجی اکسل (همه اطلاعات)</button></div><input type="file" id="bi" accept=".json,application/json" hidden><p class="hint" id="bm" style="margin-top:8px"></p><details class="alt"><summary>روش جایگزین: کپی متن</summary><p class="hint" style="margin-top:8px">اگر فایل ذخیره نشد، متن پشتیبان را کپی و جایی نگه دارید. برای بازیابی، آن را همین‌جا بچسبانید.</p><textarea id="bk" aria-label="متن پشتیبان"></textarea><div class="bk"><button id="bs">نمایش پشتیبان</button><button id="br">بازیابی از متن</button></div></details><h2 style="margin-top:14px">عکس برنامه</h2><p class="hint">برای تغییر عکس، روی عکس بالای صفحه بزنید.</p></details></div>
+</details><details class="settings-group"><summary class="st">رمز ورود (۴ رقمی) <span class="chev"></span></summary><p class="hint" id="pst"></p><div class="addc"><input id="pn1" type="password" inputmode="numeric" maxlength="4" placeholder="رمز جدید" style="direction:ltr"><input id="pn2" type="password" inputmode="numeric" maxlength="4" placeholder="تکرار رمز" style="direction:ltr"><button id="psv">ذخیره</button></div><button class="eb" id="prm" hidden>غیرفعال کردن رمز</button><p class="hint" id="pmsg"></p><p class="hint">این رمز فقط قفل صفحه است و اطلاعات را رمزنگاری نمی‌کند. اگر رمز را فراموش کنید، فقط با پاک شدن اطلاعات (و بازیابی اطلاعات پشتیبان) وارد می‌شوید.</p>
+</details><details class="settings-group"><summary class="st">درباره برنامه و پشتیبانی <span class="chev"></span></summary><p class="hint">سازنده: <b dir="ltr">MORAD_DARVISHPOR</b><br>پشتیبانی: <a href="tel:09361239027" dir="ltr" style="color:var(--ac)"><b>09361239027</b></a></p>
+</details><details class="settings-group"><summary class="st">اطلاعات برنامه <span class="chev"></span></summary><p class="hint">«پاک کردن همه اطلاعات» همه تراکنش‌ها، مطالبات و دیون را پاک می‌کند و سرفصل‌ها را به حالت اولیه برمی‌گرداند. اشتراک شما پاک نمی‌شود. قبلش پشتیبان بگیرید.</p><div class="bk"><button data-rs="1">پاک کردن همه اطلاعات</button></div>
+</details><details class="settings-group"><summary class="st">پشتیبان‌گیری خودکار <span class="chev"></span></summary><select id="abf"><option value="off">خاموش</option><option value="d">روزانه</option><option value="w">هفتگی</option><option value="m">ماهانه</option></select><p class="hint" style="margin-top:8px">مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود (۳ نسخه آخر) و پیامی برای ذخیره فایل می‌آید. اگر اطلاعات را اشتباهی پاک کردید، با «بازیابی این نسخه» به همان زمان برمی‌گردید.</p><div id="snl"></div>
+</details><details class="settings-group"><summary class="st">پشتیبان‌گیری <span class="chev"></span></summary><p class="hint">با زدن «پشتیبان‌گیری»، یک فایل با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) ساخته می‌شود و در پوشه دانلودهای دستگاه ذخیره می‌شود. «بازیابی اطلاعات» اطلاعات فعلی را با اطلاعات آن فایل جایگزین می‌کند.</p><div class="bk"><button id="bd">پشتیبان‌گیری</button><button id="bf">بازیابی اطلاعات</button></div><input type="file" id="bi" accept=".json,application/json" hidden><p class="hint" id="bm" style="margin-top:8px"></p><details class="alt"><summary>روش جایگزین: کپی متن</summary><p class="hint" style="margin-top:8px">اگر فایل ذخیره نشد، متن پشتیبان را کپی و جایی نگه دارید. برای بازیابی، آن را همین‌جا بچسبانید.</p><textarea id="bk" aria-label="متن پشتیبان"></textarea><div class="bk"><button id="bs">نمایش پشتیبان</button><button id="br">بازیابی از متن</button></div></details></details><details class="settings-group"><summary class="st">عکس برنامه <span class="chev"></span></summary><p class="hint">برای تغییر عکس، روی عکس بالای صفحه بزنید.</p></details></details></div>
 </main>
 <nav class="bn"><button data-tb="dues"><i class="ii" data-ic="swap"></i>مطالبات و دیون</button><button data-tb="reports"><i class="ii" data-ic="chart"></i>گزارشات</button><button data-tb="home" class="on ctr"><i class="ii" data-ic="plus"></i>ثبت تراکنش</button><button data-tb="transactions"><i class="ii" data-ic="file"></i>تراکنش‌ها</button><button data-tb="settings"><i class="ii" data-ic="sliders"></i>تنظیمات</button></nav>
 <div id="gd" hidden><div class="gdc"><div class="gdh"><h2>راهنمای HESAB</h2><button data-gc="1">بستن</button></div><div id="gdb"></div><button class="pbtn" data-gc="1" style="margin-top:8px">بستن راهنما</button></div></div>
@@ -987,7 +997,7 @@ function exportXlsx(all){const n=new Date(),j=toJ(n.getFullYear(),n.getMonth()+1
    {name:'خلاصه ماهانه',rows:[['ماه','درآمد','هزینه','مانده'],...Object.keys(mo).sort().map(k=>[k,mo[k].i,mo[k].e,mo[k].i-mo[k].e])]},
    {name:'سرفصل\u200cها',rows:[['نوع','سرفصل','جمع مبلغ','تعداد'],...Object.keys(ct).sort().map(k=>{const [t,c]=k.split('|');return [TYN(t),c,ct[k].s,ct[k].n]})]}]}
  saveFile('HESAB-Excel-'+stamp+'.xlsx',xlsxB(sheets))}
-$('xla').onclick=()=>exportXlsx(true);$('xl').onclick=()=>exportXlsx(true);$('lxl').onclick=()=>exportXlsx(false);
+$('xla').onclick=()=>exportXlsx(true);
 const focusEd=()=>{const e=document.querySelector('input[data-ei]');if(e){e.focus();e.select()}};
 function rename(k,i,v,ic){v=v.trim();const old=S.cats[k][i];let nm=old;S.icons=S.icons||{};
  if(v&&v!==old&&!S.cats[k].includes(v)){S.cats[k][i]=v;nm=v;S.tx.forEach(t=>{if(t.t===k&&t.c===old)t.c=v});
