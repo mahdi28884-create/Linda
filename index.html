@@ -264,7 +264,7 @@ body{background-image:none!important}
 .guide-app-image img{width:116px;height:116px;object-fit:cover;border-radius:22px;border:1px solid var(--bd)}
 .backup-tools{margin-top:8px}
 
-/* ===== v23: حالت روشن هم‌ظاهر با حالت تیره (کادر پررنگ، فیلدهای رنگی، دکمه ملایم) ===== */
+/* ===== v24: حالت روشن هم‌ظاهر با حالت تیره (کادر پررنگ، فیلدهای رنگی، دکمه ملایم) ===== */
 :root[data-theme="light"]{--card2:#F3F8F2;--lbd:#C3D5C9;--fe-bg:#F7E6E2;--fe-bd:#E3BFB7;--fi-bg:#E0F1E6;--fi-bd:#B0D6BD}
 @media (prefers-color-scheme:light){:root:not([data-theme]){--card2:#F3F8F2;--lbd:#C3D5C9;--fe-bg:#F7E6E2;--fe-bd:#E3BFB7;--fi-bg:#E0F1E6;--fi-bd:#B0D6BD}}
 :root[data-theme="light"] body{background:var(--bg)}
@@ -305,6 +305,20 @@ body{background-image:none!important}
 @media (prefers-color-scheme:light){:root:not([data-theme]) header p{color:#5E766A}}
 :root[data-theme="light"] .ib,:root[data-theme="light"] #lang{background:#E1ECE4;border-color:var(--lbd)}
 @media (prefers-color-scheme:light){:root:not([data-theme]) .ib,:root:not([data-theme]) #lang{background:#E1ECE4;border-color:var(--lbd)}}
+
+/* تب و دکمه ثبت: هزینه قرمز، درآمد سبز */
+#frm #te,#frm #ti{font-weight:700}
+#frm #te{color:#D32F2F!important}
+#frm #ti{color:#1E9E4A!important}
+#frm #te.on{background:rgba(211,47,47,.14)!important;box-shadow:inset 0 0 0 1.5px #D32F2F!important}
+#frm #ti.on{background:rgba(30,158,74,.14)!important;box-shadow:inset 0 0 0 1.5px #1E9E4A!important}
+#frm.t-e .add{background:#E0746C!important;color:#fff!important}
+#frm.t-i .add{background:#1E9E4A!important;color:#fff!important}
+
+/* ارقام مانده، درآمد و هزینه همیشه داخل کادر بمانند (اندازه با JS تنظیم می‌شود) */
+.sum .bal-main b{white-space:nowrap!important;overflow-wrap:normal!important;max-width:70%!important;font-variant-numeric:tabular-nums}
+.sum .bal .stat{overflow:hidden!important}
+.sum .bal .stat b{white-space:nowrap!important;min-width:0}
 </style>
 </head>
 <body data-active-tab="home">
@@ -536,7 +550,7 @@ function render(){
  $('mt').textContent=MN[vm-1]+' '+pd(vy);
  const tx=S.tx.filter(t=>t.y===vy&&t.m===vm);
  const I=tx.filter(t=>t.t==='i').reduce((s,t)=>s+t.a,0),E=tx.filter(t=>t.t==='e').reduce((s,t)=>s+t.a,0);
- $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده این ماه (تومان)</small><b>${fa(I-E)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;$('sum').querySelectorAll('.stat b').forEach(el=>{const n=el.textContent.replace(/[^0-9۰-۹٠-٩]/g,'').length;const scale=[.85,.92,1,1.12,1.25][UI.fs??2];const px=n>14?11:n>12?12:n>10?13:n>8?14:16;el.style.fontSize=(px/scale)+'px'});
+ $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده این ماه (تومان)</small><b>${fa(I-E)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;fitSum();
  {const dm=S.tx.some(t=>t.demo)||S.dues.some(d=>d.demo);$('dmb').hidden=!dm;if(dm)$('dmb').innerHTML='داده‌های نمونه نمایش داده می‌شود. برای شروع واقعی آن‌ها را حذف کنید. <button class="eb" data-cd="1">حذف داده‌های نمونه</button>'}
  $('tt').textContent=(vy===T[0]&&vm===T[1])?'تراکنش\u200cهای ماه جاری':'تراکنش\u200cهای '+MN[vm-1]+' '+pd(vy);
  renderYear();renderList();renderDues();renderTransactionsTab();
@@ -609,7 +623,7 @@ function applyUI(){const r=document.documentElement;
   if(dark){r.style.setProperty('--card',mixc('#fff',c,7));r.style.setProperty('--chip',mixc('#fff',c,12));r.style.setProperty('--bd',mixc('#fff',c,16))}
   else{r.style.setProperty('--chip',mixc('#000',c,6));r.style.setProperty('--bd',mixc('#000',c,10))}}
  
- const scale=[.85,.92,1,1.12,1.25][UI.fs??2];document.body.style.zoom=scale;const header=document.querySelector('header');if(header)header.style.zoom=1/scale;const amount=$('amt');if(amount)amount.style.fontSize=(15/scale)+'px';
+ const scale=[.85,.92,1,1.12,1.25][UI.fs??2];document.body.style.zoom=scale;setTimeout(()=>{try{fitSum()}catch(e){}},0);const header=document.querySelector('header');if(header)header.style.zoom=1/scale;const amount=$('amt');if(amount)amount.style.fontSize=(15/scale)+'px';
  document.querySelectorAll('[data-m]').forEach(x=>x.classList.toggle('on',x.dataset.m===UI.mode));
  document.querySelectorAll('[data-bg]').forEach(x=>x.classList.toggle('on',+x.dataset.bg===UI.bg))}
 if(mq.addEventListener)mq.addEventListener('change',applyUI);
@@ -719,6 +733,14 @@ function renderYear(){
  const cat=k=>{const by={};tx.filter(t=>t.t===k).forEach(t=>{const n=t.c||'بدون سرفصل';by[n]=(by[n]||0)+t.a});return Object.entries(by).sort((a,b)=>b[1]-a[1])};
  h+=`<div class="ch">${donut(cat('e'),E,'هزینه\u200cها','exp')}${donut(cat('i'),I,'درآمدها','inc')}</div>`;
  $('yr').innerHTML=h}
+function fitSum(){
+ const fit=(el,box)=>{el.style.fontSize='';let sz=parseFloat(getComputedStyle(el).fontSize)||16,n=0;
+  while(n++<40&&sz>7&&(box.scrollWidth>box.clientWidth+1||el.scrollWidth>el.clientWidth+1)){sz-=.5;el.style.fontSize=sz+'px'}};
+ document.querySelectorAll('#sum .bal-main b').forEach(el=>fit(el,el));
+ document.querySelectorAll('#sum .stat b').forEach(el=>fit(el,el.parentElement));
+}
+window.addEventListener('resize',()=>fitSum());
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
 const APP_VER='1.3.3';
 async function latestVer(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
