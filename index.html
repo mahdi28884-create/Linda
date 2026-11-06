@@ -230,12 +230,12 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 
 
 /* Contrast-aware outline for the month and monthly summary cards */
-:root{--sum-outline:#78998D;--sum-outline-glow:rgba(21,48,43,.10)}
+:root{--sum-outline:#203A30;--sum-outline-glow:rgba(32,58,48,.14)}
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){--sum-outline:#fff;--sum-outline-glow:rgba(255,255,255,.22)}
 }
 :root[data-theme="dark"]{--sum-outline:#fff;--sum-outline-glow:rgba(255,255,255,.22)}
-:root[data-theme="light"]{--sum-outline:#78998D;--sum-outline-glow:rgba(21,48,43,.10)}
+:root[data-theme="light"]{--sum-outline:#203A30;--sum-outline-glow:rgba(32,58,48,.14)}
 .settings-group{display:block;background:var(--card);border:1px solid var(--bd);border-radius:15px;padding:10px 12px;margin:9px 0;box-shadow:var(--sh);overflow:hidden}
 .settings-group>summary{cursor:pointer;list-style:none}
 .settings-group>summary::-webkit-details-marker{display:none}
@@ -263,10 +263,48 @@ body{background-image:none!important}
 .guide-app-image{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px;margin:8px 0 14px;border:1px solid var(--bd);border-radius:16px;background:var(--bg)}
 .guide-app-image img{width:116px;height:116px;object-fit:cover;border-radius:22px;border:1px solid var(--bd)}
 .backup-tools{margin-top:8px}
-/* فرم ثبت تراکنش: سطح سبز-خاکستری ملایم، بدون ته‌رنگ صورتی غالب */
-:root:not([data-theme="dark"]) #frm{background:linear-gradient(145deg,#E0EAE1,#DCE7DE)!important;border-color:#C1D2C5!important}
-:root:not([data-theme="dark"]) .t-e input,:root:not([data-theme="dark"]) .t-e select{background:#E5E9E1!important;border-color:#C9D2C6!important}
-:root:not([data-theme="dark"]) .t-e .add{background:#B96F63!important;color:#FFF5F0!important}
+
+/* ===== v23: حالت روشن هم‌ظاهر با حالت تیره (کادر پررنگ، فیلدهای رنگی، دکمه ملایم) ===== */
+:root[data-theme="light"]{--card2:#F3F8F2;--lbd:#C3D5C9;--fe-bg:#F7E6E2;--fe-bd:#E3BFB7;--fi-bg:#E0F1E6;--fi-bd:#B0D6BD}
+@media (prefers-color-scheme:light){:root:not([data-theme]){--card2:#F3F8F2;--lbd:#C3D5C9;--fe-bg:#F7E6E2;--fe-bd:#E3BFB7;--fi-bg:#E0F1E6;--fi-bd:#B0D6BD}}
+:root[data-theme="light"] body{background:var(--bg)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) body{background:var(--bg)}}
+:root[data-theme="light"] .sum .bal small,:root[data-theme="light"] .sum .bal .stat small{color:var(--tx)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .sum .bal small,:root:not([data-theme]) .sum .bal .stat small{color:var(--tx)}}
+:root[data-theme="light"] .sum .bal-main b{color:var(--tx)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .sum .bal-main b{color:var(--tx)}}
+:root[data-theme="light"] .nav b{color:var(--tx)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .nav b{color:var(--tx)}}
+:root[data-theme="light"] .nav button{background:#D2E1D6;color:var(--tx)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .nav button{background:#D2E1D6;color:var(--tx)}}
+:root[data-theme="light"] #frm{background:var(--card2)!important;border:1px solid var(--lbd)!important;box-shadow:0 1px 2px rgba(25,55,42,.05),0 10px 26px rgba(25,55,42,.08)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) #frm{background:var(--card2)!important;border:1px solid var(--lbd)!important;box-shadow:0 1px 2px rgba(25,55,42,.05),0 10px 26px rgba(25,55,42,.08)}}
+:root[data-theme="light"] .seg{background:#DCE8DF}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .seg{background:#DCE8DF}}
+:root[data-theme="light"] .seg button.on{background:#FAFCF9;box-shadow:0 1px 3px rgba(25,55,42,.14)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .seg button.on{background:#FAFCF9;box-shadow:0 1px 3px rgba(25,55,42,.14)}}
+:root[data-theme="light"] #te.on{color:#A5443A}
+@media (prefers-color-scheme:light){:root:not([data-theme]) #te.on{color:#A5443A}}
+:root[data-theme="light"] #ti.on{color:#1E7A4D}
+@media (prefers-color-scheme:light){:root:not([data-theme]) #ti.on{color:#1E7A4D}}
+:root[data-theme="light"] .t-e input,:root[data-theme="light"] .t-e select{background:var(--fe-bg)!important;border:1px solid var(--fe-bd)!important;color:var(--tx)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .t-e input,:root:not([data-theme]) .t-e select{background:var(--fe-bg)!important;border:1px solid var(--fe-bd)!important;color:var(--tx)}}
+:root[data-theme="light"] .t-i input,:root[data-theme="light"] .t-i select{background:var(--fi-bg)!important;border:1px solid var(--fi-bd)!important;color:var(--tx)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .t-i input,:root:not([data-theme]) .t-i select{background:var(--fi-bg)!important;border:1px solid var(--fi-bd)!important;color:var(--tx)}}
+:root[data-theme="light"] .t-e input::placeholder{color:#9A7D77}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .t-e input::placeholder{color:#9A7D77}}
+:root[data-theme="light"] .t-i input::placeholder{color:#6F8F7B}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .t-i input::placeholder{color:#6F8F7B}}
+:root[data-theme="light"] .t-e .add{background:#F0C8C0!important;color:#8B2F23!important}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .t-e .add{background:#F0C8C0!important;color:#8B2F23!important}}
+:root[data-theme="light"] .t-i .add{background:#BEE2CA!important;color:#17543A!important}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .t-i .add{background:#BEE2CA!important;color:#17543A!important}}
+:root[data-theme="light"] .bn{background:var(--card2);border-top:1px solid var(--lbd);box-shadow:0 -4px 16px rgba(25,55,42,.08)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .bn{background:var(--card2);border-top:1px solid var(--lbd);box-shadow:0 -4px 16px rgba(25,55,42,.08)}}
+:root[data-theme="light"] header p{color:#5E766A}
+@media (prefers-color-scheme:light){:root:not([data-theme]) header p{color:#5E766A}}
+:root[data-theme="light"] .ib,:root[data-theme="light"] #lang{background:#E1ECE4;border-color:var(--lbd)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .ib,:root:not([data-theme]) #lang{background:#E1ECE4;border-color:var(--lbd)}}
 </style>
 </head>
 <body data-active-tab="home">
