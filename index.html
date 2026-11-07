@@ -368,6 +368,20 @@ body{background-image:none!important}
 .pforgot{margin-top:26px;background:none;color:var(--mut);font-size:13px;text-decoration:underline;padding:6px 10px}
 .gbtn{width:100%;background:none;border:0;padding:0;text-align:start;font:inherit;cursor:pointer}.settings-group>.gbtn .chev{transform:none}.abt{margin:4px 2px 6px;font-weight:600;color:var(--tx)}
 #rtb{--rx:var(--inc);background:transparent;padding:0;gap:8px}#rtb button{background:transparent;color:var(--mut);font-weight:500;box-shadow:inset 0 0 0 1.5px var(--bd);opacity:.85}#rtb button.on{background:var(--card);color:var(--rx);font-weight:700;box-shadow:inset 0 0 0 2px var(--rx);opacity:1}
+
+
+/* ===== v27: polish requested for default theme, summary outlines and readable form ===== */
+:root[data-theme="light"]{--sum-outline:#A8C98D;--sum-outline-glow:rgba(168,201,141,.24)}
+@media (prefers-color-scheme:light){:root:not([data-theme]){--sum-outline:#A8C98D;--sum-outline-glow:rgba(168,201,141,.24)}}
+:root[data-theme="light"] .nav,:root[data-theme="light"] .sum .bal,:root[data-theme="light"] .sum .bal-main,:root[data-theme="light"] .sum .bal .stat{border-color:#A8C98D!important}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .nav,:root:not([data-theme]) .sum .bal,:root:not([data-theme]) .sum .bal-main,:root:not([data-theme]) .sum .bal .stat{border-color:#A8C98D!important}}
+:root[data-theme="light"] .nav b,:root[data-theme="light"] .sum .bal small,:root[data-theme="light"] .sum .bal .stat small,:root[data-theme="light"] .sum .bal b{font-weight:700}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .nav b,:root:not([data-theme]) .sum .bal small,:root:not([data-theme]) .sum .bal .stat small,:root:not([data-theme]) .sum .bal b{font-weight:700}}
+#frm{box-sizing:border-box;min-width:0;overflow:visible}
+#frm input,#frm select,#frm button,#frm textarea{box-sizing:border-box;min-width:0;max-width:100%}
+#frm .add{white-space:normal;min-height:44px}
+.guide-app-image .hint{font-size:inherit;line-height:1.6}
+body{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body data-active-tab="home">
@@ -658,8 +672,8 @@ $('lf').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileRead
   c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)*.2,s,s,0,0,128,128);
   const u=c.toDataURL('image/jpeg',.85);LI.src=u;try{localStorage.setItem(LK,u)}catch(x){}};im.src=r.result};
  r.readAsDataURL(f);e.target.value=''};
-const BG=[['پیش‌فرض',null,null,'#EDF6F3','#0C1A17'],['آسمانی','#EAF2FA','#0E1824'],['صورتی','#FBEEF1','#1D1118'],['کرم','#F8F3E8','#1A1710'],['بنفش','#F0EEFA','#14121F'],['خاکستری','#EFEFEF','#121212'],['ساده','#FFFFFF','#000000']];
-let UI={mode:'auto',bg:6,fs:2};try{Object.assign(UI,JSON.parse(localStorage.getItem('dk_ui'))||{})}catch(e){}if(UI.v!==33){UI.bg=6;UI.v=33;try{localStorage.setItem('dk_ui',JSON.stringify(UI))}catch(e){}}
+const BG=[['مغز پسته‌ای',null,null,'#EDF6F3','#0C1A17'],['آسمانی','#EAF2FA','#0E1824'],['صورتی','#FBEEF1','#1D1118'],['کرم','#F8F3E8','#1A1710'],['بنفش','#F0EEFA','#14121F'],['خاکستری','#EFEFEF','#121212'],['پیش‌فرض','#FFFFFF','#000000']];
+let UI={mode:'auto',bg:6,fs:2};try{Object.assign(UI,JSON.parse(localStorage.getItem('dk_ui'))||{})}catch(e){}if(UI.v!==34){UI.bg=6;UI.fs=2;UI.v=34;try{localStorage.setItem('dk_ui',JSON.stringify(UI))}catch(e){}}
 const mq=matchMedia('(prefers-color-scheme: dark)');
 function saveUI(){try{localStorage.setItem('dk_ui',JSON.stringify(UI))}catch(e){}}
 function renderSw(){$('sw').innerHTML=BG.map((b,i)=>`<button class="swb" data-bg="${i}" aria-label="${b[0]}"><i style="--a:${b[1]||b[3]};--b:${b[2]||b[4]}"></i>${b[0]}</button>`).join('')}
@@ -835,7 +849,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.12';$('appv').textContent=APP_VER;
+const APP_VER='1.3.13';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
