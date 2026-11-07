@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hesab-shell-v7';
+const CACHE_NAME = 'hesab-shell-v8';
 const APP_FILES = [
   './',
   './index.html',
@@ -35,42 +35,121 @@ self.addEventListener('fetch', event => {
 
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Always provide the app shell for page navigations when the device is offline.
+  // Page navigations: serve the cached app shell immediately (works with VPN,
+  // slow or no network), and refresh the cache in the background.
   if (request.mode === 'navigate') {
     event.respondWith((async () => {
-      try {
-        const response = await fetch(request);
-        if (response && response.ok) {
-          const cache = await caches.open(CACHE_NAME);
-          await cache.put('./index.html', response.clone());
-        }
-        return response;
-      } catch (error) {
-        return (await caches.match('./index.html')) ||
-               (await caches.match('./')) ||
-               new Response('برای اجرای برنامه، یک‌بار آن را در حالت آنلاین باز کنید.', {
-                 status: 503,
-                 headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-               });
+      const cache = await caches.open(CACHE_NAME);
+      const cached = (await cache.match('./index.html')) || (await cache.match('./'));
+
+      const network = fetch(request)
+        .then(response => {
+          if (response && response.ok) {
+            cache.put('./index.html', response.clone());
+          }
+          return response;
+        })
+        .catch(() => null);
+
+      if (cached) {
+        event.waitUntil(network);
+        return cached;
       }
+
+      // First run with no cache yet: wait for the network.
+      const response = await network;
+      return response ||
+        new Response('برای اجرای برنامه، یک‌بار آن را در حالت آنلاین باز کنید.', {
+          status: 503,
+          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+        });
     })());
     return;
   }
 
-  // Serve installed app resources from cache first; refresh the cache in the background.
+  // Other app resources: cache first, refresh the cache in the background.
   event.respondWith((async () => {
     const cached = await caches.match(request, { ignoreSearch: true });
-    if (cached) return cached;
 
-    try {
-      const response = await fetch(request);
-      if (response && response.ok) {
-        const cache = await caches.open(CACHE_NAME);
-        await cache.put(request, response.clone());
-      }
-      return response;
-    } catch (error) {
-      return new Response('', { status: 504, statusText: 'Offline' });
+    const refresh = fetch(request)
+      .then(async response => {
+        if (response && response.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, response.clone());
+        }
+        return response;
+      })
+      .catch(() => null);
+
+    if (cached) {
+      event.waitUntil(refresh);
+      return cached;
     }
+
+    const response = await refresh;
+    return response || new Response('', { status: 504, statusText: 'Offline' });
   })());
+});
+
+/* ---------- هشدار سررسید در پس‌زمینه (Android/Chrome، برنامهٔ نصب‌شده) ---------- */
+
+function hesabReadDues() {
+  return new Promise(resolve => {
+    try {
+      const open = indexedDB.open('hesab-alarm', 1);
+      open.onupgradeneeded = () => open.result.createObjectStore('kv');
+      open.onerror = () => resolve([]);
+      open.onsuccess = () => {
+        try {
+          const db = open.result;
+          const get = db.transaction('kv').objectStore('kv').get('dues');
+          get.onsuccess = () => { db.close(); resolve(get.result || []); };
+          get.onerror = () => { db.close(); resolve([]); };
+        } catch (e) {
+          resolve([]);
+        }
+      };
+    } catch (e) {
+      resolve([]);
+    }
+  });
+}
+
+async function hesabCheckDue() {
+  const list = await hesabReadDues();
+  const n = new Date();
+  const today = Date.UTC(n.getFullYear(), n.getMonth(), n.getDate());
+
+  for (const x of list) {
+    const left = Math.round((x.g - today) / 864e5);
+    if (left <= 0 || left <= x.rem) {
+      const title = (x.k === 'r' ? 'سررسید طلب از ' : 'سررسید بدهی به ') + x.who;
+      const existing = await self.registration.getNotifications({ tag: 'hesab-' + x.id });
+      if (existing.length) continue;
+
+      const when = left < 0 ? (-left) + ' روز گذشته'
+                 : left === 0 ? 'امروز'
+                 : left + ' روز مانده';
+
+      await self.registration.showNotification(title, {
+        body: x.a.toLocaleString('fa-IR') + ' تومان · ' + when,
+        tag: 'hesab-' + x.id,
+        requireInteraction: true,
+        vibrate: [300, 150, 300, 150, 300]
+      });
+    }
+  }
+}
+
+self.addEventListener('periodicsync', event => {
+  if (event.tag === 'hesab-due') event.waitUntil(hesabCheckDue());
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window' }).then(list =>
+      list.length ? list[0].focus() : clients.openWindow('./')
+    )
+  );
 });
