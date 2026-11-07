@@ -342,6 +342,16 @@ body{background-image:none!important}
 #al .alb{display:block;width:100%;text-align:start;margin-bottom:4px}
 .ed{background:none;color:var(--ac2);padding:4px 8px;font-size:13px}
 .cnl{width:100%;background:transparent!important;color:var(--mut)!important;border:1px solid var(--bd)!important;font-size:14px;padding:10px;border-radius:14px;margin-top:6px}
+
+/* ===== فقط فرم هزینه: فیلدهای خنثی مثل درآمد، تب و دکمه‌ی قرمز تمیز ===== */
+#frm.t-e{--xe:#D93A35;--xe-bg:#FBD9D6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #frm.t-e{--xe:#F0615C;--xe-bg:rgba(217,58,53,.24)}}
+:root[data-theme="dark"] #frm.t-e{--xe:#F0615C;--xe-bg:rgba(217,58,53,.24)}
+#frm.t-e input,#frm.t-e select{background:var(--fi-bg)!important;border:1px solid var(--fi-bd)!important;color:var(--tx)!important}
+#frm.t-e input::placeholder{color:var(--mut)!important;opacity:1}
+#frm.t-e #te{color:var(--xe)!important}
+#frm.t-e #te.on{background:var(--xe-bg)!important;box-shadow:inset 0 0 0 2px var(--xe)!important}
+#frm.t-e .add{background:#D93A35!important;color:#fff!important}
 </style>
 </head>
 <body data-active-tab="home">
@@ -636,7 +646,7 @@ $('lf').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileRead
   const u=c.toDataURL('image/jpeg',.85);LI.src=u;try{localStorage.setItem(LK,u)}catch(x){}};im.src=r.result};
  r.readAsDataURL(f);e.target.value=''};
 const BG=[['پیش‌فرض',null,null,'#EDF6F3','#0C1A17'],['آسمانی','#EAF2FA','#0E1824'],['صورتی','#FBEEF1','#1D1118'],['کرم','#F8F3E8','#1A1710'],['بنفش','#F0EEFA','#14121F'],['خاکستری','#EFEFEF','#121212'],['ساده','#FFFFFF','#000000']];
-let UI={mode:'auto',bg:0,fs:2};try{Object.assign(UI,JSON.parse(localStorage.getItem('dk_ui'))||{})}catch(e){}
+let UI={mode:'auto',bg:6,fs:2};try{Object.assign(UI,JSON.parse(localStorage.getItem('dk_ui'))||{})}catch(e){}if(UI.v!==33){UI.bg=6;UI.v=33;try{localStorage.setItem('dk_ui',JSON.stringify(UI))}catch(e){}}
 const mq=matchMedia('(prefers-color-scheme: dark)');
 function saveUI(){try{localStorage.setItem('dk_ui',JSON.stringify(UI))}catch(e){}}
 function renderSw(){$('sw').innerHTML=BG.map((b,i)=>`<button class="swb" data-bg="${i}" aria-label="${b[0]}"><i style="--a:${b[1]||b[3]};--b:${b[2]||b[4]}"></i>${b[0]}</button>`).join('')}
@@ -1256,4 +1266,3 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(r
 </script>
 </body>
 </html>
-
