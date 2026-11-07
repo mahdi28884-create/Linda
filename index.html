@@ -352,21 +352,6 @@ body{background-image:none!important}
 #frm.t-e #te{color:var(--xe)!important}
 #frm.t-e #te.on{background:var(--xe-bg)!important;box-shadow:inset 0 0 0 2px var(--xe)!important}
 #frm.t-e .add{background:#D93A35!important;color:#fff!important}
-
-#pl .pk{max-width:340px;display:flex;flex-direction:column;align-items:center}
-.pkt{font-size:20px;font-weight:500;margin:0 0 34px;color:var(--tx);justify-content:center}.pkt:before{display:none}
-.pdots{display:flex;gap:16px;direction:ltr;margin-bottom:10px}
-.pdots i{width:20px;height:20px;border-radius:50%;border:2px solid var(--ac);box-sizing:border-box;transition:background .12s}
-.pdots i.on{background:var(--ac)}
-#pi{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;border:0;padding:0;margin:0}
-.pkm{min-height:22px;margin:4px 0 14px;color:var(--exp)}
-.pgrid{display:grid;grid-template-columns:repeat(3,76px);gap:16px 24px;direction:ltr;justify-content:center}
-.pgrid button{width:76px;height:76px;border-radius:50%;padding:0;font-size:30px;font-weight:500;display:grid;place-items:center;background:var(--card);color:var(--ac);border:1px solid var(--bd);box-shadow:var(--sh);-webkit-tap-highlight-color:transparent;transition:transform .08s}
-.pgrid button:active{transform:scale(.92);background:var(--chip)}
-.pgrid button.pt{background:none;border:0;box-shadow:none;font-size:20px;font-weight:600}
-.pgrid button.px{color:var(--exp)}
-.pforgot{margin-top:26px;background:none;color:var(--mut);font-size:13px;text-decoration:underline;padding:6px 10px}
-.gbtn{width:100%;background:none;border:0;padding:0;text-align:start;font:inherit;cursor:pointer}.settings-group>.gbtn .chev{transform:rotate(-90deg)}.abt{margin:4px 2px 6px;font-weight:600;color:var(--tx)}
 </style>
 </head>
 <body data-active-tab="home">
@@ -414,7 +399,7 @@ body{background-image:none!important}
 
 </div></details></div>
 
-<div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><div class="settings-group"><button class="st gbtn" data-guide="1">راهنمای کار با برنامه <span class="chev"></span></button></div><details class="settings-group" hidden><summary class="st">اشتراک <span class="chev"></span></summary><p class="hint" id="lst"></p><div id="lbuy" hidden><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p><p class="hint">برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید: <b dir="ltr">09361239027</b></p></div>
+<div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><details class="settings-group"><summary class="st">راهنمای کار با برنامه <span class="chev"></span></summary><button class="pbtn" data-guide="1" style="margin-top:12px">راهنمای کار با برنامه</button></details><details class="settings-group" hidden><summary class="st">اشتراک <span class="chev"></span></summary><p class="hint" id="lst"></p><div id="lbuy" hidden><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p><p class="hint">برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید: <b dir="ltr">09361239027</b></p></div>
 </details><details class="settings-group"><summary class="st">سرفصل‌های هزینه <span class="chev"></span></summary>
 <div class="addc"><input id="ne" placeholder="سرفصل جدید هزینه"><button id="ae">افزودن</button></div>
 <div class="chips" id="ce"></div><p class="hint">برای عوض کردن اسم یا آیکن یک سرفصل، روی علامت مداد کنار آن بزنید. در کادر کوچک، ایموجی را با کیبورد گوشی بزنید؛ خالی بگذارید تا خودکار انتخاب شود.</p>
@@ -423,13 +408,16 @@ body{background-image:none!important}
 <div class="chips" id="ci"></div><p class="hint">برای عوض کردن اسم یا آیکن یک سرفصل، روی علامت مداد کنار آن بزنید. در کادر کوچک، ایموجی را با کیبورد گوشی بزنید؛ خالی بگذارید تا خودکار انتخاب شود.</p>
 </details><details class="settings-group"><summary class="st">رمز ورود (۴ رقمی) <span class="chev"></span></summary><p class="hint" id="pst"></p><div class="addc"><input id="pn1" type="password" autocomplete="new-password" inputmode="numeric" maxlength="4" placeholder="رمز جدید" style="direction:ltr"><input id="pn2" type="password" autocomplete="new-password" inputmode="numeric" maxlength="4" placeholder="تکرار رمز" style="direction:ltr"><button id="psv">ذخیره</button></div><button class="eb" id="prm" hidden>غیرفعال کردن رمز</button><p class="hint" id="pmsg"></p><p class="hint">این رمز فقط قفل صفحه است و اطلاعات را رمزنگاری نمی‌کند. اگر رمز را فراموش کنید، فقط با پاک شدن اطلاعات (و بازیابی اطلاعات پشتیبان) وارد می‌شوید.</p>
 </details><details class="settings-group"><summary class="st">ارتباط با ما <span class="chev"></span></summary><p class="hint">سازنده: <b dir="ltr">MORAD_DARVISHPOR</b><br>پشتیبانی: <a href="tel:09361239027" dir="ltr" style="color:var(--ac)"><b>09361239027</b></a></p>
-</details><details class="settings-group"><summary class="st">خام نمودن اطلاعات برنامه <span class="chev"></span></summary><p class="hint">«پاک کردن همه اطلاعات» همه تراکنش‌ها، مطالبات و دیون را پاک می‌کند و سرفصل‌ها را به حالت اولیه برمی‌گرداند. اشتراک شما پاک نمی‌شود. قبلش پشتیبان بگیرید.</p><div class="bk"><button data-rs="1">پاک کردن همه اطلاعات</button></div>
-</details><details class="settings-group"><summary class="st">پشتیبان‌گیری و بازیابی اطلاعات <span class="chev"></span></summary><p class="hint abt">فعال‌سازی پشتیبان‌گیری خودکار</p><select id="abf"><option value="off">خاموش</option><option value="d">روزانه</option><option value="w">هفتگی</option><option value="m">ماهانه</option></select><p class="hint" style="margin-top:8px">مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود و پیامی برای ذخیره فایل می‌آید.</p><div class="backup-tools"><p class="hint">با زدن «ذخیره روی موبایل»، فایلی با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) در پوشه دانلودهای دستگاه ذخیره می‌شود. با «اشتراک‌گذاری» می‌توانید همان فایل را در تلگرام، واتس‌اپ، ایتا، ایمیل و … بفرستید. «بازیابی اطلاعات» اطلاعات فعلی را با اطلاعات فایل پشتیبان جایگزین می‌کند.</p><div class="bk"><button id="bd">ذخیره روی موبایل</button><button id="bsh">اشتراک‌گذاری</button></div><div class="bk"><button id="bf">بازیابی اطلاعات</button></div><input type="file" id="bi" accept=".json,application/json" hidden><p class="hint" id="bm" style="margin-top:8px"></p></div></details></details></div>
+</details><details class="settings-group"><summary class="st">اطلاعات برنامه <span class="chev"></span></summary><p class="hint">«پاک کردن همه اطلاعات» همه تراکنش‌ها، مطالبات و دیون را پاک می‌کند و سرفصل‌ها را به حالت اولیه برمی‌گرداند. اشتراک شما پاک نمی‌شود. قبلش پشتیبان بگیرید.</p><div class="bk"><button data-rs="1">پاک کردن همه اطلاعات</button></div>
+</details><details class="settings-group"><summary class="st">پشتیبان‌گیری و بازیابی اطلاعات <span class="chev"></span></summary><select id="abf"><option value="off">خاموش</option><option value="d">روزانه</option><option value="w">هفتگی</option><option value="m">ماهانه</option></select><p class="hint" style="margin-top:8px">مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود (۳ نسخه آخر) و پیامی برای ذخیره فایل می‌آید. اگر اطلاعات را اشتباهی پاک کردید، با «بازیابی این نسخه» به همان زمان برمی‌گردید.</p><div id="snl"></div><div class="backup-tools"><p class="hint">با زدن «پشتیبان‌گیری»، یک فایل با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) ساخته می‌شود و در پوشه دانلودهای دستگاه ذخیره می‌شود. «بازیابی اطلاعات» اطلاعات فعلی را با اطلاعات آن فایل جایگزین می‌کند.</p><div class="bk"><button id="bd">پشتیبان‌گیری</button><button id="bf">بازیابی اطلاعات</button></div><input type="file" id="bi" accept=".json,application/json" hidden><p class="hint" id="bm" style="margin-top:8px"></p><details class="alt"><summary>روش جایگزین: کپی متن</summary><p class="hint" style="margin-top:8px">اگر فایل ذخیره نشد، متن پشتیبان را کپی و جایی نگه دارید. برای بازیابی، آن را همین‌جا بچسبانید.</p><textarea id="bk" aria-label="متن پشتیبان"></textarea><div class="bk"><button id="bs">نمایش پشتیبان</button><button id="br">بازیابی از متن</button></div></details></div></details></details></div>
 </main>
 <nav class="bn"><button data-tb="dues"><i class="ii" data-ic="swap"></i>مطالبات و دیون</button><button data-tb="reports"><i class="ii" data-ic="chart"></i>گزارشات</button><button data-tb="home" class="on ctr"><i class="ii" data-ic="plus"></i>ثبت تراکنش</button><button data-tb="transactions"><i class="ii" data-ic="file"></i>تراکنش‌ها</button><button data-tb="settings"><i class="ii" data-ic="sliders"></i>تنظیمات</button></nav>
 <div id="toast" role="status" aria-live="polite" hidden></div>
 <div id="gd" hidden><div class="gdc"><div class="gdh"><h2>راهنمای HESAB</h2><button data-gc="1">بستن</button></div><div id="gdb"></div><button class="pbtn" data-gc="1" style="margin-top:8px">بستن راهنما</button></div></div>
-<div id="pl" hidden><div class="pc pk"><h2 class="pkt">رمز عبور را وارد نمایید:</h2><div class="pdots" id="pdots"><i></i><i></i><i></i><i></i></div><input id="pi" type="password" inputmode="none" readonly maxlength="4" autocomplete="off" aria-hidden="true" tabindex="-1"><p class="hint pkm" id="pm"></p><div class="pgrid" id="pgrid"></div><button class="pforgot" id="pf">رمز را فراموش کرده‌ام</button></div></div>
+<div id="pl" hidden><div class="pc"><div class="pwel">به نرم‌افزار مدیریت هوشمند دخل و خرج <span class="tl" style="font-size:inherit">حساب</span> خوش آمدید</div>
+<div class="pbox"><div class="lkl"><i class="ii" data-ic="lock"></i></div><h2 style="justify-content:center">رمز ورود را وارد کنید</h2><input id="pi" type="password" inputmode="numeric" maxlength="4" autocomplete="new-password" placeholder="••••" style="text-align:center;font-size:28px;letter-spacing:10px;direction:ltr"><p class="hint" id="pm"></p><button class="pbtn" id="pf">رمز را فراموش کرده‌ام</button></div>
+<div class="padv"><b>چرا «حساب»؟</b>همه درآمد و هزینه‌ات را هوشمند ثبت و تحلیل کن: نمودارهای رنگی، یادآور سررسید مطالبات و دیون، تقویم شمسی و پشتیبان‌گیری آسان. همین امروز مسیر مالی خانه‌ات را منظم کن.</div>
+<div class="pft">سازنده: <span dir="ltr">MORAD_DARVISHPOR</span> · پشتیبانی: <a href="tel:09361239027" dir="ltr">09361239027</a></div></div></div>
 <div id="lk" hidden><div class="lkc"><div class="lkl"><i class="ii" data-ic="lock"></i></div><h2>دوره آزمایشی به پایان رسید</h2>
 <p>برای ادامه استفاده از HESAB اشتراک تهیه کنید. اطلاعات شما سر جایش هست و بعد از فعال‌سازی اشتراک دوباره در دسترس می‌شود.</p>
 <a id="pay" class="add pay" target="_blank" rel="noopener" hidden>خرید اشتراک</a>
@@ -775,24 +763,17 @@ $('lact').onclick=()=>activate($('lcode').value,$('lmsg'));
 $('lact2').onclick=()=>activate($('lcode2').value,$('lmsg2'));
 $('lbk').onclick=()=>$('bd').click();
 let tab='home';const showAll={e:false,i:false};
-function showTab(t){tab=t;if(t!=='dues')focusId=null;document.body.dataset.activeTab=t;document.querySelectorAll('[data-tab]').forEach(e=>e.classList.toggle('tabhid',e.dataset.tab!==t));document.querySelectorAll('.bn button').forEach(b=>b.classList.toggle('on',b.dataset.tb===t));if(t!=='settings')document.querySelectorAll('.settings-group[open]').forEach(d=>d.open=false);window.scrollTo(0,0)}
+function showTab(t){tab=t;if(t!=='dues')focusId=null;document.body.dataset.activeTab=t;document.querySelectorAll('[data-tab]').forEach(e=>e.classList.toggle('tabhid',e.dataset.tab!==t));document.querySelectorAll('.bn button').forEach(b=>b.classList.toggle('on',b.dataset.tb===t));window.scrollTo(0,0)}
 let PIN=null;try{PIN=JSON.parse(localStorage.getItem('dk_pin'))}catch(e){}
 async function hashPin(p,s){const d=new TextEncoder().encode(s+p);if(window.crypto&&crypto.subtle){const b=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('')}let h=5381;for(const c of s+p)h=(h*33^c.charCodeAt(0))>>>0;return 'x'+h}
 const pinFail=()=>{try{return JSON.parse(localStorage.getItem('dk_pf'))||{n:0,until:0}}catch(e){return{n:0,until:0}}};
 function pinUI(){$('pst').textContent=PIN?'رمز ورود فعال است.':'رمز ورود غیرفعال است.';$('prm').hidden=!PIN}
-
-function setPi(v){$('pi').value=v;document.querySelectorAll('#pdots i').forEach((d,i)=>d.classList.toggle('on',i<v.length))}
-function buildPad(){const g=$('pgrid');const k=['1','2','3','4','5','6','7','8','9','x','0','d'];g.innerHTML=k.map(c=>c==='x'?'<button class="pt px" data-k="x">خروج</button>':c==='d'?'<button class="pt" data-k="d">حذف</button>':'<button data-k="'+c+'">'+pd(c)+'</button>').join('')}
-$('pgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const c=b.dataset.k,v=$('pi').value;
- if(c==='x'){window.close();setTimeout(()=>{location.replace('about:blank')},150);return}
- if(c==='d'){setPi(v.slice(0,-1));$('pm').textContent='';return}
- if(v.length>=4)return;$('pm').textContent='';setPi(v+c);if(v.length+1===4)pinTry()});
-document.addEventListener('keydown',e=>{if($('pl').hidden)return;if(/^[0-9]$/.test(e.key)){const v=$('pi').value;if(v.length<4){setPi(v+e.key);if(v.length+1===4)pinTry()}}else if(e.key==='Backspace')setPi($('pi').value.slice(0,-1))});
-function pinLock(){if(!PIN)return;buildPad();$('pl').hidden=false;setPi('');$('pm').textContent='';}
+function pinLock(){if(!PIN)return;$('pl').hidden=false;$('pi').value='';$('pm').textContent='';setTimeout(()=>$('pi').focus(),50)}
 async function pinTry(){const v=$('pi').value;if(v.length<4)return;const f=pinFail();
- if(f.until>Date.now()){$('pm').textContent='لطفاً '+fa(Math.ceil((f.until-Date.now())/1000))+' ثانیه صبر کنید.';setPi('');return}
- if(await hashPin(v,PIN.s)===PIN.h){$('pl').hidden=true;setPi('');try{localStorage.removeItem('dk_pf')}catch(e){}}
- else{f.n++;if(f.n>=5){f.until=Date.now()+3e4;f.n=0}try{localStorage.setItem('dk_pf',JSON.stringify(f))}catch(e){}$('pm').textContent='رمز اشتباه است.';setPi('')}}
+ if(f.until>Date.now()){$('pm').textContent='لطفاً '+fa(Math.ceil((f.until-Date.now())/1000))+' ثانیه صبر کنید.';$('pi').value='';return}
+ if(await hashPin(v,PIN.s)===PIN.h){$('pl').hidden=true;$('pi').value='';try{localStorage.removeItem('dk_pf')}catch(e){}}
+ else{f.n++;if(f.n>=5){f.until=Date.now()+3e4;f.n=0}try{localStorage.setItem('dk_pf',JSON.stringify(f))}catch(e){}$('pm').textContent='رمز اشتباه است.';$('pi').value=''}}
+$('pi').addEventListener('input',e=>{e.target.value=toLat(e.target.value).replace(/\D/g,'').slice(0,4);pinTry()});
 $('psv').onclick=async()=>{const a=toLat($('pn1').value),b=toLat($('pn2').value);if(!/^\d{4}$/.test(a)){$('pmsg').textContent='رمز باید ۴ رقم باشد.';return}if(a!==b){$('pmsg').textContent='دو رمز یکسان نیست.';return}
  const s=Math.random().toString(36).slice(2,10);PIN={s,h:await hashPin(a,s)};try{localStorage.setItem('dk_pin',JSON.stringify(PIN))}catch(e){}$('pn1').value=$('pn2').value='';$('pmsg').textContent='رمز فعال شد.';pinUI()};
 $('prm').onclick=async()=>{const a=toLat($('pn1').value);if(PIN&&await hashPin(a,PIN.s)===PIN.h){PIN=null;try{localStorage.removeItem('dk_pin')}catch(e){}$('pn1').value='';$('pmsg').textContent='رمز غیرفعال شد.';pinUI()}else $('pmsg').textContent='برای غیرفعال کردن، رمز فعلی را در کادر اول بنویسید.'};
@@ -802,7 +783,7 @@ const abSave=()=>{try{localStorage.setItem('dk_ab',JSON.stringify(AB))}catch(e){
 const snaps=()=>{try{return JSON.parse(localStorage.getItem('dk_snaps'))||[]}catch(e){return[]}};
 const jd=ts=>{const d=new Date(ts),j=toJ(d.getFullYear(),d.getMonth()+1,d.getDate());return pd(j[0])+'/'+pd(String(j[1]).padStart(2,'0'))+'/'+pd(String(j[2]).padStart(2,'0'))};
 function renderAB(){const n=$('abn');n.hidden=!(AB.f!=='off'&&AB.pend);if(!n.hidden)n.innerHTML='پشتیبان\u200cگیری زمان\u200cبندی\u200cشده انجام شد. فایل آن را هم ذخیره کنید. <button class="eb" data-abs="1">ذخیره فایل</button>';
- $('abf').value=AB.f;}
+ $('abf').value=AB.f;$('snl').innerHTML=snaps().map((s,i)=>`<div class="it"><div class="m"><b>${jd(s.t)}</b></div><button data-snap="${i}">بازیابی این نسخه</button></div>`).join('')||'<span class="hint">هنوز نسخه خودکاری ساخته نشده.</span>'}
 function checkAB(){if(AB.f!=='off'){const iv={d:864e5,w:6048e5,m:2592e6}[AB.f];if(Date.now()-AB.last>=iv){const a=snaps();a.unshift({t:Date.now(),d:JSON.stringify(S)});try{localStorage.setItem('dk_snaps',JSON.stringify(a.slice(0,3)))}catch(e){}AB.last=Date.now();AB.pend=true;abSave()}}renderAB()}
 $('abf').onchange=()=>{AB.f=$('abf').value;AB.last=0;abSave();checkAB()};
 let hid=0;document.addEventListener('visibilitychange',()=>{if(document.hidden)hid=Date.now();else{autoUpd();if(PIN&&hid&&Date.now()-hid>12e4)pinLock();checkAB();hid=0}});
@@ -1006,10 +987,7 @@ const DICT=`گزارش تراکنش‌ها|Transaction report|تقرير الم�
 خاموش|Off|إيقاف
 روزانه|Daily|يوميًا
 هفتگی|Weekly|أسبوعيًا
-فعال‌سازی پشتیبان‌گیری خودکار|Enable automatic backup|تفعيل النسخ الاحتياطي التلقائي
-ذخیره روی موبایل|Save on phone|حفظ على الهاتف
-اشتراک‌گذاری|Share|مشاركة
-خام نمودن اطلاعات برنامه|Reset app data|تصفير بيانات التطبيق
+نمایش پشتیبان|Show backup text|عرض نص النسخة
 بازیابی از متن|Restore from text|استعادة من النص
 بازیابی اطلاعات|Restore data|استعادة البيانات
 بازیابی این نسخه|Restore this version|استعادة هذه النسخة
@@ -1255,17 +1233,16 @@ async function saveFile(name,text,mime){
  a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);return true}
 function applyBackup(t){let o=JSON.parse(t);o=o.data||o;
  if(!Array.isArray(o.tx)||!o.cats||!Array.isArray(o.cats.e)||!Array.isArray(o.cats.i))throw 0;S=o;S.dues=S.dues||[];save();fillCats();render()}
-const bkInfo=()=>{const n=new Date(),j=toJ(n.getFullYear(),n.getMonth()+1,n.getDate()),p=x=>String(x).padStart(2,'0');return{name:'HESAB'+j[0]+p(j[1])+p(j[2])+'.json',txt:JSON.stringify({app:'HESAB',v:1,date:j[0]+'/'+p(j[1])+'/'+p(j[2]),data:S})}};
-$('bd').onclick=async()=>{try{const{name,txt}=bkInfo();const ok=await saveFile(name,txt);
- $('bm').textContent=ok?'فایل '+name+' آماده شد. اگر در پوشه دانلودها نبود، دوباره تلاش کنید.':'ذخیره فایل لغو شد.';notify(ok?'پشتیبان با موفقیت تهیه شد.':'تهیه پشتیبان انجام نشد.',!ok)}catch(e){$('bm').textContent='خطا در تهیه پشتیبان.';notify('خطا در تهیه پشتیبان.',true)}};
-$('bsh').onclick=async()=>{try{const{name,txt}=bkInfo();const f=new File([txt],name,{type:'application/json'});
- if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});$('bm').textContent='فایل پشتیبان ارسال شد.';notify('فایل پشتیبان برای اشتراک‌گذاری آماده شد.')}
- else{$('bm').textContent='اشتراک‌گذاری در این مرورگر پشتیبانی نمی‌شود؛ از «ذخیره روی موبایل» استفاده کنید.';notify('اشتراک‌گذاری در این دستگاه ممکن نیست.',true)}}
- catch(e){if(e&&e.name==='AbortError')return;$('bm').textContent='خطا در اشتراک‌گذاری.';notify('خطا در اشتراک‌گذاری.',true)}};
+$('bd').onclick=async()=>{try{const n=new Date(),j=toJ(n.getFullYear(),n.getMonth()+1,n.getDate()),p=x=>String(x).padStart(2,'0');
+ const name='HESAB'+j[0]+p(j[1])+p(j[2])+'.json',txt=JSON.stringify({app:'HESAB',v:1,date:j[0]+'/'+p(j[1])+'/'+p(j[2]),data:S});
+ $('bk').value=txt;const ok=await saveFile(name,txt);
+ $('bm').textContent=ok?'فایل '+name+' آماده شد. اگر در پوشه دانلودها نبود، از «روش جایگزین» استفاده کنید.':'ذخیره فایل لغو شد.';notify(ok?'پشتیبان با موفقیت تهیه شد.':'تهیه پشتیبان انجام نشد.',!ok)}catch(e){$('bm').textContent='خطا در تهیه پشتیبان.';notify('خطا در تهیه پشتیبان.',true)}};
 $('bf').onclick=()=>$('bi').click();
 $('bi').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
  r.onload=async()=>{try{applyBackup(r.result);const ok=await verifyPersist();if(!ok)throw new Error('storage');$('bm').textContent='بازیابی انجام شد.';notify('بازیابی اطلاعات با موفقیت انجام شد.')}catch(x){$('bm').textContent='این فایل پشتیبان معتبر نیست یا ذخیره نشد.';notify('خطا در بازیابی اطلاعات؛ فایل پشتیبان را بررسی کنید.',true)}};
  r.readAsText(f);e.target.value=''};
+$('bs').onclick=()=>{$('bk').value=JSON.stringify(S);$('bk').select()};
+$('br').onclick=async()=>{try{let o=JSON.parse($('bk').value);o=o.data||o;if(!Array.isArray(o.tx)||!o.cats||!Array.isArray(o.cats.e)||!Array.isArray(o.cats.i))throw 0;S=o;S.dues=S.dues||[];save();const ok=await verifyPersist();if(!ok)throw new Error('storage');fillCats();render();$('bk').value='بازیابی انجام شد.';notify('بازیابی اطلاعات با موفقیت انجام شد.')}catch(e){$('bk').value='متن پشتیبان معتبر نیست یا ذخیره نشد.';notify('خطا در بازیابی اطلاعات؛ متن پشتیبان را بررسی کنید.',true)}};
 document.querySelectorAll('[data-ic]').forEach(e=>{e.innerHTML=svg(e.dataset.ic)});
 document.querySelectorAll('[data-tab]>details').forEach(d=>d.addEventListener('toggle',()=>{if(!d.open)d.open=true}));
 $('rmn').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('rmn').onchange=()=>{rm=+$('rmn').value;renderYear()};
