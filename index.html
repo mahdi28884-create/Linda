@@ -593,7 +593,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(b.dataset.del){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}
   else{S.tx=S.tx.filter(t=>t.id!=b.dataset.del);save();render();notify('تراکنش حذف شد.')}}
  if(b.dataset.dt){dtab=b.dataset.dt;render()}
- if(b.dataset.dok){const x=S.dues.find(z=>z.id==b.dataset.dok);if(x){x.done=!x.done;save();render();notify(x.done?'وضعیت تسویه ثبت شد.':'وضعیت مورد بازگردانی شد.')}}
+ if(b.dataset.dok){const x=S.dues.find(z=>z.id==b.dataset.dok);if(x){x.done=!x.done;if(!x.done)resetDueFlags(x.id);save();render();notify(x.done?'وضعیت تسویه ثبت شد.':'وضعیت مورد بازگردانی شد.')}}
  if(b.dataset.dcal){const x=S.dues.find(z=>z.id==b.dataset.dcal);if(x)icsFor(x)}
  if(b.dataset.ddel){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}else{S.dues=S.dues.filter(z=>z.id!=b.dataset.ddel);save();render();notify('مورد با موفقیت حذف شد.')}}
  if(b.dataset.edt){startEditTx(b.dataset.edt);return}
@@ -674,6 +674,7 @@ function renderAlert(){const ack=lsGet('dk_alack',{}),dk=dayKey(),it=dueList().f
  $('al').hidden=!it.length;
  if(it.length)$('al').innerHTML=`<button class="alb" data-goall="1">${ic('bell')}<b>${fa(it.length)} مورد نیاز به توجه</b></button>`+it.map(o=>`<button class="alb" data-goid="${o.x.id}"><span class="bstar ${o.x.k}" style="font-size:15px;animation:none">★</span>${o.x.k==='r'?'طلب از':'بدهی به'} ${esc(o.x.who)} — ${fa(o.x.a)} تومان · ${dText(o.n)}</button>`).join('');
  syncAlarmDB()}
+function resetDueFlags(id){['dk_alack','dk_ntf','dk_snd'].forEach(k=>{try{const o=lsGet(k,{});if(o&&(id in o||String(id) in o)){delete o[id];lsSet(k,o)}}catch(e){}})}
 function ackAlert(ids){const a=lsGet('dk_alack',{}),dk=dayKey(),nx={};Object.keys(a).forEach(k=>{if(a[k]===dk)nx[k]=dk});ids.forEach(i=>nx[i]=dk);lsSet('dk_alack',nx)}
 function startEditTx(id){const t=S.tx.find(z=>z.id==id);if(!t)return;editTxId=t.id;showTab('home');
  vy=t.y;vm=t.m;setType(t.t);fillCats(t.c);if($('cat').value!==t.c){const o=document.createElement('option');o.value=o.textContent=t.c;$('cat').insertBefore(o,$('cat').firstChild);$('cat').value=t.c}selectedCat=$('cat').value;
@@ -708,7 +709,7 @@ function syncAlarmDB(){try{const list=S.dues.filter(x=>!x.done&&x.rem>=0).map(x=
 function renderDues(){
  const key=x=>x.y*372+x.m*31+x.d,L=S.dues.filter(x=>x.k===dtab).sort((a,b)=>(a.done-b.done)||key(a)-key(b));
  $('dtr').classList.toggle('on',dtab==='r');{const dc=$('dues').classList;dc.remove('t-e','t-i');dc.add(dtab==='r'?'t-i':'t-e')}$('dtp').classList.toggle('on',dtab==='p');
- $('dnm').placeholder=dtab==='r'?'نام بدهکار':'نام بستانکار';$('dadd').textContent=editDueId?'ذخیره ویرایش':dtab==='r'?'ثبت مطالبه':'ثبت بدهی';
+ $('dnm').placeholder=dtab==='r'?'نام بدهکار':'نام بستانکار';$('dam').placeholder=dtab==='r'?'مبلغ طلب (تومان)':'مبلغ بدهی (تومان)';$('dsb').placeholder=dtab==='r'?'موضوع مطالبه':'موضوع بدهی';$('dadd').textContent=editDueId?'ذخیره ویرایش':dtab==='r'?'ثبت مطالبه':'ثبت بدهی';
  const op=L.filter(x=>!x.done),tot=op.reduce((s,x)=>s+x.a,0),c=dtab==='r'?'inc':'exp';
  $('dsm').innerHTML=`<div><small>${dtab==='r'?'جمع مطالبات باز':'جمع دیون باز'}</small><b class="${c}">${fa(tot)}</b></div><div><small>تعداد موارد باز</small><b>${fa(op.length)}</b></div>`;
  $('dl').innerHTML=L.length?L.map(x=>{const n=daysTo(x.y,x.m,x.d),cl=x.done?'':n<0?'od':(n===0||(x.rem>=0&&n<=x.rem))?'sn':'';
@@ -724,7 +725,7 @@ async function icsFor(x){const g=toG(x.y,x.m,x.d),p=n=>String(n).padStart(2,'0')
 $('dam').addEventListener('input',e=>{const n=num(e.target.value);e.target.value=n?fa(n):''});
 $('dmm').onchange=()=>dDays();$('dyy').onchange=()=>dDays();
 $('dadd').onclick=async()=>{const who=$('dnm').value.trim(),a=num($('dam').value);if(!who){$('dnm').focus();notify('نام شخص را وارد کنید.',true);return}if(!a){$('dam').focus();notify('مبلغ را به‌درستی وارد کنید.',true);return}
- const wasEditD=!!editDueId,dv={k:dtab,who,ph:$('dph').value.trim(),a,subj:$('dsb').value.trim(),y:num($('dyy').value)||T[0],m:+$('dmm').value,d:+$('ddd').value,rem:+$('drm').value};const d0=wasEditD?S.dues.find(z=>z.id==editDueId):null;if(d0)Object.assign(d0,dv);else S.dues.push({id:Date.now(),...dv,done:false});editDueId=null;$('dcan').hidden=true;
+ const wasEditD=!!editDueId,dv={k:dtab,who,ph:$('dph').value.trim(),a,subj:$('dsb').value.trim(),y:num($('dyy').value)||T[0],m:+$('dmm').value,d:+$('ddd').value,rem:+$('drm').value};const d0=wasEditD?S.dues.find(z=>z.id==editDueId):null;if(d0){Object.assign(d0,dv);d0.done=false;resetDueFlags(d0.id)}else S.dues.push({id:Date.now(),...dv,done:false});editDueId=null;$('dcan').hidden=true;
  save();const ok=await verifyPersist();['dnm','dph','dam','dsb'].forEach(i=>$(i).value='');$('dform').open=false;render();notify(ok?(wasEditD?'تغییرات ذخیره شد.':dtab==='r'?'مطالبه با موفقیت ثبت شد.':'بدهی با موفقیت ثبت شد.'):'خطا در ذخیره اطلاعات؛ فضای ذخیره‌سازی را بررسی کنید.',!ok)};
 const TRIAL=45,PAY_URL='',CONTACT='09361239027 (MORAD_DARVISHPOR)',DAY=864e5,PUB={"kty":"EC","crv":"P-256","x":"saXn4qWSxqRqvUUC_H8NX-xUOyyAAgcjNmZIMR8tB_8","y":"16O_2pcImT6T3qqIvXSyKIswP_ERqIo9x0gjTjXJET8"};
 let LIC={first:0,last:0,code:''};try{Object.assign(LIC,JSON.parse(localStorage.getItem('dk_lic'))||{})}catch(e){}
@@ -879,6 +880,8 @@ const DICT=`گزارش تراکنش‌ها|Transaction report|تقرير الم�
 شماره تماس (اختیاری)|Phone (optional)|رقم الهاتف (اختياري)
 مبلغ بدهی (تومان)|Debt amount (Toman)|مبلغ الدين (تومان)
 موضوع بدهی|Debt subject|موضوع الدين
+مبلغ طلب (تومان)|Receivable amount (Toman)|مبلغ المستحق (تومان)
+موضوع مطالبه|Receivable subject|موضوع المستحق
 تاریخ سررسید|Due date|تاريخ الاستحقاق
 یادآوری|Reminder|التذكير
 بدون یادآوری|No reminder|بدون تذكير
@@ -1253,3 +1256,4 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(r
 </script>
 </body>
 </html>
+
