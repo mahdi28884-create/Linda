@@ -319,6 +319,29 @@ body{background-image:none!important}
 .sum .bal-main b{white-space:nowrap!important;overflow-wrap:normal!important;max-width:70%!important;font-variant-numeric:tabular-nums}
 .sum .bal .stat{overflow:hidden!important}
 .sum .bal .stat b{white-space:nowrap!important;min-width:0}
+
+/* مطالبات و دیون: مطالبه سبز، بدهی قرمز (مانند ثبت تراکنش) */
+#dues .seg button{font-weight:700}
+#dues #dtr{color:#1E9E4A!important}
+#dues #dtp{color:#D32F2F!important}
+#dues #dtr.on{background:rgba(30,158,74,.14)!important;box-shadow:inset 0 0 0 1.5px #1E9E4A!important}
+#dues #dtp.on{background:rgba(211,47,47,.14)!important;box-shadow:inset 0 0 0 1.5px #D32F2F!important}
+#dues.t-i{background-image:linear-gradient(var(--inca),var(--inca))!important}
+#dues.t-e{background-image:linear-gradient(var(--expa),var(--expa))!important}
+#dues.t-e .add{background:#E0746C!important;color:#fff!important}
+#dues.t-i .add{background:#1E9E4A!important;color:#fff!important}
+#dues.t-e input,#dues.t-e select{background:var(--fe-bg)!important;border:1px solid var(--fe-bd)!important}
+#dues.t-i input,#dues.t-i select{background:var(--fi-bg)!important;border:1px solid var(--fi-bd)!important}
+/* ستاره چشمک‌زن مورد انتخاب‌شده از آلارم */
+.bstar{display:inline-block;font-size:22px;line-height:1;margin-inline-end:6px;animation:bstb .9s ease-in-out infinite}
+.bstar.r{color:#1E9E4A;text-shadow:0 0 8px rgba(30,158,74,.7)}
+.bstar.p{color:#D32F2F;text-shadow:0 0 8px rgba(211,47,47,.7)}
+@keyframes bstb{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.12;transform:scale(.8)}}
+.dli.fcs{outline:2px solid;border-radius:14px}
+.dli.fcs.r{outline-color:#1E9E4A}.dli.fcs.p{outline-color:#D32F2F}
+#al .alb{display:block;width:100%;text-align:start;margin-bottom:4px}
+.ed{background:none;color:var(--ac2);padding:4px 8px;font-size:13px}
+.cnl{width:100%;background:transparent!important;color:var(--mut)!important;border:1px solid var(--bd)!important;font-size:14px;padding:10px;border-radius:14px;margin-top:6px}
 </style>
 </head>
 <body data-active-tab="home">
@@ -335,7 +358,7 @@ body{background-image:none!important}
 <div class="row"><select id="cat" aria-label="سرفصل"></select></div>
 <div class="row r3"><select id="dd" aria-label="روز"></select><select id="dm" aria-label="ماه"></select><select id="dy" aria-label="سال"></select></div>
 <div class="row"><input id="note" name="transaction-note" autocomplete="off" autocapitalize="sentences" placeholder="توضیحات (اختیاری)"></div>
-<button class="add" id="add">ثبت هزینه</button>
+<button class="add" id="add">ثبت هزینه</button><button class="cnl" id="ecan" hidden>انصراف از ویرایش</button>
 </div>
 
 <div class="card" data-tab="transactions"><h2><span class="tl" id="tt">تراکنش‌های ماه جاری</span></h2><div class="row tx-period"><select id="txMonth" aria-label="انتخاب ماه"></select><select id="txYear" aria-label="انتخاب سال"></select></div><div id="grp"></div></div>
@@ -352,7 +375,7 @@ body{background-image:none!important}
 <div class="row r3"><select id="ddd" aria-label="روز"></select><select id="dmm" aria-label="ماه"></select><select id="dyy" aria-label="سال"></select></div>
 <p class="hint" style="margin:4px 2px 6px">یادآوری</p>
 <div class="row"><select id="drm" aria-label="یادآوری"><option value="-1">بدون یادآوری</option><option value="0">همان روز سررسید</option><option value="1">۱ روز قبل</option><option value="3">۳ روز قبل</option><option value="7" selected>۷ روز قبل</option></select></div>
-<button class="add" id="dadd">ثبت مطالبه</button>
+<button class="add" id="dadd">ثبت مطالبه</button><button class="cnl" id="dcan" hidden>انصراف از ویرایش</button>
 <p class="hint" style="margin-top:10px">برای اینکه حتی وقتی برنامه بسته است زنگ بزند، روی هر مورد «افزودن به تقویم» را بزنید تا یادآور در تقویم گوشی ثبت شود. سررسیدهای نزدیک و گذشته هم هنگام باز کردن برنامه بالای صفحه نمایش داده می‌شود.</p>
 </details></details></div>
 <div class="card" data-tab="reports"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">گزارشات</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div><div class="seg3" id="rtb" style="grid-template-columns:1fr 1fr"><button data-rt="an" class="on">تحلیل سرفصل‌ها</button><button data-rt="ls">گزارش تراکنش‌ها</button></div><div class="bk" style="margin:0 0 10px"><button id="xla">خروجی اکسل (همه اطلاعات)</button></div>
@@ -451,7 +474,7 @@ function fillDate(){
 function fillDays(sel){const y=num($('dy').value)||vy,m=+$('dm').value,n=dim(y,m);
  $('dd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');
  $('dd').value=Math.min(sel||+$('dd').value||1,n)}
-let selectedCat='';
+let selectedCat='',editTxId=null,editDueId=null;
 const ADD_CAT_VALUE='__hesab_add_category__';
 function fillCats(selected){
  const c=S.cats[type];
@@ -474,7 +497,7 @@ $('cat').addEventListener('change',()=>{
  selectedCat=v;
 });
 function setType(t){type=t;$('frm').classList.remove('t-e','t-i');$('frm').classList.add('t-'+t);$('te').classList.toggle('on',t==='e');$('ti').classList.toggle('on',t==='i');
- $('add').textContent=t==='e'?'ثبت هزینه':'ثبت درآمد';fillCats()}
+ $('add').textContent=editTxId?'ذخیره ویرایش':t==='e'?'ثبت هزینه':'ثبت درآمد';fillCats()}
 
 const SV={grad:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/>',
 home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
@@ -528,7 +551,7 @@ function groups(kind,tx,total){
  if(!ks.length)return '';
  return `<div class="sub"><span>${kind==='e'?'هزینه‌ها':'درآمدها'}</span><b class="${kind==='e'?'exp':'inc'}">${fa(total)}</b></div>`+(showAll[kind]?ks:ks.slice(0,7)).map(k=>{
   const id=kind+':'+k,o=open.has(id),a=by[k],s=sm(a);
-  return `<div class="g k${kind}${o?' open':''}"><button class="gh" data-g="${esc(id)}" aria-expanded="${o}"><span class="gi">${ico(k)}</span><span class="gn">${esc(k)}<small>${fa(a.length)} تراکنش</small></span><b>${fa(s)}</b><span class="chev">⌄</span></button><div class="bar"><i style="width:${Math.max(3,Math.round(s/total*100))}%"></i></div><div class="gb">${editRow(kind,k)}${a.sort((x,y)=>y.d-x.d||y.id-x.id).map(t=>`<div class="it"><div class="m"><b>${fa(t.d)} ${MN[t.m-1]}</b>${t.n?`<span>${esc(t.n)}</span>`:''}</div><div class="a ${kind==='i'?'inc':'exp'}">${fa(t.a)}</div><button class="x" data-del="${t.id}">حذف</button></div>`).join('')}</div></div>`}).join('')+(ks.length>7?`<button class="more" data-more="${kind}">${showAll[kind]?'نمایش کمتر':'مشاهده همه تراکنش‌ها ('+fa(ks.length)+' سرفصل)'}</button>`:'')}
+  return `<div class="g k${kind}${o?' open':''}"><button class="gh" data-g="${esc(id)}" aria-expanded="${o}"><span class="gi">${ico(k)}</span><span class="gn">${esc(k)}<small>${fa(a.length)} تراکنش</small></span><b>${fa(s)}</b><span class="chev">⌄</span></button><div class="bar"><i style="width:${Math.max(3,Math.round(s/total*100))}%"></i></div><div class="gb">${editRow(kind,k)}${a.sort((x,y)=>y.d-x.d||y.id-x.id).map(t=>`<div class="it"><div class="m"><b>${fa(t.d)} ${MN[t.m-1]}</b>${t.n?`<span>${esc(t.n)}</span>`:''}</div><div class="a ${kind==='i'?'inc':'exp'}">${fa(t.a)}</div><button class="ed" data-edt="${t.id}">ویرایش</button><button class="x" data-del="${t.id}">حذف</button></div>`).join('')}</div></div>`}).join('')+(ks.length>7?`<button class="more" data-more="${kind}">${showAll[kind]?'نمایش کمتر':'مشاهده همه تراکنش‌ها ('+fa(ks.length)+' سرفصل)'}</button>`:'')}
 
 function renderTransactionsTab(){
  const ms=$('txMonth'),ys=$('txYear');
@@ -559,8 +582,8 @@ function render(){
 $('amt').addEventListener('input',e=>{const n=num(e.target.value);e.target.value=n?fa(n):''});
 $('add').onclick=async()=>{const a=num($('amt').value);if(!a){$('amt').focus();notify('مبلغ را به‌درستی وارد کنید.',true);return}
  const y=num($('dy').value)||vy;
- S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});
- save();const ok=await verifyPersist();vy=y;vm=+$('dm').value;tvy=y;tvm=+$('dm').value;$('amt').value='';$('note').value='';render();notify(ok?'تراکنش با موفقیت ثبت شد.':'خطا در ذخیره تراکنش؛ فضای ذخیره‌سازی را بررسی کنید.',!ok)};
+ const wasEdit=!!editTxId;if(wasEdit){const t0=S.tx.find(z=>z.id==editTxId);if(t0)Object.assign(t0,{t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});else S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()})}else S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});editTxId=null;$('ecan').hidden=true;$('add').textContent=type==='e'?'ثبت هزینه':'ثبت درآمد';
+ save();const ok=await verifyPersist();vy=y;vm=+$('dm').value;tvy=y;tvm=+$('dm').value;$('amt').value='';$('note').value='';render();notify(ok?(wasEdit?'تغییرات تراکنش ذخیره شد.':'تراکنش با موفقیت ثبت شد.'):'خطا در ذخیره تراکنش؛ فضای ذخیره‌سازی را بررسی کنید.',!ok)};
 $('dm').onchange=()=>fillDays();$('dy').onchange=()=>fillDays();
 $('te').onclick=()=>setType('e');$('ti').onclick=()=>setType('i');
 $('nx').onclick=()=>{vm--;if(vm<1){vm=12;vy--}fillDate();render()};
@@ -573,7 +596,10 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(b.dataset.dok){const x=S.dues.find(z=>z.id==b.dataset.dok);if(x){x.done=!x.done;save();render();notify(x.done?'وضعیت تسویه ثبت شد.':'وضعیت مورد بازگردانی شد.')}}
  if(b.dataset.dcal){const x=S.dues.find(z=>z.id==b.dataset.dcal);if(x)icsFor(x)}
  if(b.dataset.ddel){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}else{S.dues=S.dues.filter(z=>z.id!=b.dataset.ddel);save();render();notify('مورد با موفقیت حذف شد.')}}
- if(b.dataset.go)showTab('dues');
+ if(b.dataset.edt){startEditTx(b.dataset.edt);return}
+ if(b.dataset.dedit){startEditDue(b.dataset.dedit);return}
+ if(b.dataset.goid){goDue(b.dataset.goid);return}
+ if(b.dataset.goall){ackAlert(dueList().map(o=>o.x.id));showTab('dues');render()}
  if(b.dataset.pk){document.querySelectorAll('input[data-ej]').forEach(i=>{i.value='svg:'+b.dataset.pk})}
  if(b.dataset.tb)showTab(b.dataset.tb);
  if(b.dataset.more){showAll[b.dataset.more]=!showAll[b.dataset.more];render()}
@@ -639,19 +665,56 @@ function daysTo(y,m,d){const g=toG(y,m,d),n=new Date();return Math.round((Date.U
 function dDays(sel){const y=num($('dyy').value)||T[0],m=+$('dmm').value,n=dim(y,m);
  $('ddd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('ddd').value=Math.min(sel||+$('ddd').value||1,n)}
 function dInit(){$('dmm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('dmm').value=T[1];fillYearSelect($('dyy'),T[0]);$('dyy').value=String(T[0]);dDays(T[2])}
-function renderAlert(){const it=S.dues.filter(x=>!x.done).map(x=>({x,n:daysTo(x.y,x.m,x.d)})).filter(o=>o.n<=0||(o.x.rem>=0&&o.n<=o.x.rem)).sort((a,b)=>a.n-b.n);
+let focusId=null;
+const dayKey=()=>{const n=new Date();return n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate()};
+const lsGet=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+function dueList(){return S.dues.filter(x=>!x.done).map(x=>({x,n:daysTo(x.y,x.m,x.d)})).filter(o=>o.n<=0||(o.x.rem>=0&&o.n<=o.x.rem)).sort((a,b)=>a.n-b.n)}
+function renderAlert(){const ack=lsGet('dk_alack',{}),dk=dayKey(),it=dueList().filter(o=>ack[o.x.id]!==dk);
  $('al').hidden=!it.length;
- if(it.length)$('al').innerHTML=`<button class="alb" data-go="1">${ic('bell')}<b>${fa(it.length)} مورد نیاز به توجه</b>${it.slice(0,3).map(o=>`<br>${o.x.k==='r'?'طلب از':'بدهی به'} ${esc(o.x.who)} — ${fa(o.x.a)} تومان · ${dText(o.n)}`).join('')}</button>`}
+ if(it.length)$('al').innerHTML=`<button class="alb" data-goall="1">${ic('bell')}<b>${fa(it.length)} مورد نیاز به توجه</b></button>`+it.map(o=>`<button class="alb" data-goid="${o.x.id}"><span class="bstar ${o.x.k}" style="font-size:15px;animation:none">★</span>${o.x.k==='r'?'طلب از':'بدهی به'} ${esc(o.x.who)} — ${fa(o.x.a)} تومان · ${dText(o.n)}</button>`).join('');
+ syncAlarmDB()}
+function ackAlert(ids){const a=lsGet('dk_alack',{}),dk=dayKey(),nx={};Object.keys(a).forEach(k=>{if(a[k]===dk)nx[k]=dk});ids.forEach(i=>nx[i]=dk);lsSet('dk_alack',nx)}
+function startEditTx(id){const t=S.tx.find(z=>z.id==id);if(!t)return;editTxId=t.id;showTab('home');
+ vy=t.y;vm=t.m;setType(t.t);fillCats(t.c);if($('cat').value!==t.c){const o=document.createElement('option');o.value=o.textContent=t.c;$('cat').insertBefore(o,$('cat').firstChild);$('cat').value=t.c}selectedCat=$('cat').value;
+ $('amt').value=fa(t.a);$('note').value=t.n||'';fillYearSelect($('dy'),t.y);$('dy').value=String(t.y);$('dm').value=t.m;fillDays(t.d);
+ $('add').textContent='ذخیره ویرایش';$('ecan').hidden=false;setTimeout(()=>{$('frm').scrollIntoView({behavior:'smooth',block:'center'});$('amt').focus()},100)}
+function startEditDue(id){const x=S.dues.find(z=>z.id==id);if(!x)return;editDueId=x.id;dtab=x.k;render();
+ $('dnm').value=x.who;$('dph').value=x.ph||'';$('dam').value=fa(x.a);$('dsb').value=x.subj||'';fillYearSelect($('dyy'),x.y);$('dyy').value=String(x.y);$('dmm').value=x.m;dDays(x.d);$('drm').value=String(x.rem);
+ $('dadd').textContent='ذخیره ویرایش';$('dcan').hidden=false;$('dform').open=true;setTimeout(()=>$('dform').scrollIntoView({behavior:'smooth',block:'center'}),100)}
+$('ecan').onclick=()=>{editTxId=null;$('ecan').hidden=true;$('amt').value='';$('note').value='';setType(type)};
+$('dcan').onclick=()=>{editDueId=null;$('dcan').hidden=true;['dnm','dph','dam','dsb'].forEach(i=>$(i).value='');$('dform').open=false;render()};
+function goDue(id){const x=S.dues.find(z=>z.id==id);if(!x)return;ackAlert([x.id]);dtab=x.k;focusId=x.id;showTab('dues');
+ const ds=$('dsec');if(ds)ds.open=true;render();
+ setTimeout(()=>{const el=document.querySelector('[data-did="'+x.id+'"]');if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},150)}
+/* ---- هشدار صوتی و اعلان سیستم (روزی یک‌بار برای هر مورد) ---- */
+let actx=null,pendingSnd=false;
+function beep(){return new Promise(res=>{try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();
+ const go=()=>{if(actx.state!=='running')return res(false);
+  [0,.4,.8,1.2].forEach((t,k)=>{const o=actx.createOscillator(),g=actx.createGain(),st=actx.currentTime+t;o.type='sine';o.frequency.value=k%2?1175:880;o.connect(g);g.connect(actx.destination);g.gain.setValueAtTime(0,st);g.gain.linearRampToValueAtTime(.6,st+.03);g.gain.linearRampToValueAtTime(0,st+.32);o.start(st);o.stop(st+.35)});
+  try{navigator.vibrate&&navigator.vibrate([300,150,300,150,300])}catch(e){}res(true)};
+ if(actx.state==='running')go();else{actx.resume().then(go).catch(()=>res(false));setTimeout(()=>res(false),500)}}catch(e){res(false)}})}
+async function notifyDue(it){if(!('Notification' in window)||Notification.permission!=='granted')return;const nd=lsGet('dk_ntf',{}),dk=dayKey(),nx={};Object.keys(nd).forEach(k=>{if(nd[k]===dk)nx[k]=dk});
+ for(const o of it){if(nx[o.x.id]===dk)continue;nx[o.x.id]=dk;const title=(o.x.k==='r'?'سررسید طلب از ':'سررسید بدهی به ')+o.x.who,opt={body:fa(o.x.a)+' تومان · '+dText(o.n),tag:'hesab-'+o.x.id,requireInteraction:true,vibrate:[300,150,300]};
+  try{const r=await navigator.serviceWorker.ready;await r.showNotification(title,opt)}catch(e){try{new Notification(title,opt)}catch(e2){}}}
+ lsSet('dk_ntf',nx)}
+async function checkDueSound(){if(!S||!S.dues)return;const dk=dayKey(),dn=lsGet('dk_snd',{}),it=dueList().filter(o=>dn[o.x.id]!==dk);if(!it.length)return;
+ notifyDue(it);const ok=await beep();
+ if(ok){const nx={};Object.keys(dn).forEach(k=>{if(dn[k]===dk)nx[k]=dk});it.forEach(o=>nx[o.x.id]=dk);lsSet('dk_snd',nx);pendingSnd=false}else pendingSnd=true}
+/* ذخیره فهرست سررسیدها برای سرویس‌ورکر (هشدار وقتی برنامه بسته است) */
+function syncAlarmDB(){try{const list=S.dues.filter(x=>!x.done&&x.rem>=0).map(x=>{const g=toG(x.y,x.m,x.d);return{id:x.id,k:x.k,who:x.who,a:x.a,g:Date.UTC(g[0],g[1]-1,g[2]),rem:x.rem}});
+ const rq=indexedDB.open('hesab-alarm',1);rq.onupgradeneeded=()=>rq.result.createObjectStore('kv');
+ rq.onsuccess=()=>{const db=rq.result,t=db.transaction('kv','readwrite');t.objectStore('kv').put(list,'dues');t.oncomplete=()=>db.close()}}catch(e){}}
 function renderDues(){
  const key=x=>x.y*372+x.m*31+x.d,L=S.dues.filter(x=>x.k===dtab).sort((a,b)=>(a.done-b.done)||key(a)-key(b));
- $('dtr').classList.toggle('on',dtab==='r');$('dtp').classList.toggle('on',dtab==='p');
- $('dnm').placeholder=dtab==='r'?'نام بدهکار':'نام بستانکار';$('dadd').textContent=dtab==='r'?'ثبت مطالبه':'ثبت بدهی';
+ $('dtr').classList.toggle('on',dtab==='r');{const dc=$('dues').classList;dc.remove('t-e','t-i');dc.add(dtab==='r'?'t-i':'t-e')}$('dtp').classList.toggle('on',dtab==='p');
+ $('dnm').placeholder=dtab==='r'?'نام بدهکار':'نام بستانکار';$('dadd').textContent=editDueId?'ذخیره ویرایش':dtab==='r'?'ثبت مطالبه':'ثبت بدهی';
  const op=L.filter(x=>!x.done),tot=op.reduce((s,x)=>s+x.a,0),c=dtab==='r'?'inc':'exp';
  $('dsm').innerHTML=`<div><small>${dtab==='r'?'جمع مطالبات باز':'جمع دیون باز'}</small><b class="${c}">${fa(tot)}</b></div><div><small>تعداد موارد باز</small><b>${fa(op.length)}</b></div>`;
  $('dl').innerHTML=L.length?L.map(x=>{const n=daysTo(x.y,x.m,x.d),cl=x.done?'':n<0?'od':(n===0||(x.rem>=0&&n<=x.rem))?'sn':'';
-  return `<div class="dli${x.done?' done':''}"><div class="dtop"><span class="gi" style="background:var(--chip)">${svg(x.k==='r'?'down':'up')}</span><div class="m"><b>${esc(x.who)}</b><span>${esc(x.subj||'بدون موضوع')}${x.ph?' · '+esc(x.ph):''}</span></div><div class="dam2 ${c}">${fa(x.a)}</div></div>
+  const fc=x.id===focusId;return `<div class="dli${x.done?' done':''}${fc?' fcs '+x.k:''}" data-did="${x.id}"><div class="dtop">${fc?`<span class="bstar ${x.k}">★</span>`:''}<span class="gi" style="background:var(--chip)">${svg(x.k==='r'?'down':'up')}</span><div class="m"><b>${esc(x.who)}</b><span>${esc(x.subj||'بدون موضوع')}${x.ph?' · '+esc(x.ph):''}</span></div><div class="dam2 ${c}">${fa(x.a)}</div></div>
 <div class="dtop"><span class="bdg ${cl}">${x.done?'تسویه شد':dText(n)}</span><span class="hint" style="margin:0">سررسید ${fa(x.d)} ${MN[x.m-1]} ${pd(x.y)} · ${x.rem<0?'بدون یادآوری':'یادآوری: '+rmTxt(x.rem)}</span></div>
-<div class="dact"><button data-dcal="${x.id}">${ic('bell')}افزودن به تقویم</button><button data-dok="${x.id}">${x.done?'↩ بازگشت':'✓ تسویه شد'}</button><button class="x" data-ddel="${x.id}">حذف</button></div></div>`}).join(''):'<div class="empty">موردی ثبت نشده است.</div>';
+<div class="dact"><button data-dcal="${x.id}">${ic('bell')}افزودن به تقویم</button><button data-dok="${x.id}">${x.done?'↩ بازگشت':'✓ تسویه شد'}</button><button data-dedit="${x.id}">ویرایش</button><button class="x" data-ddel="${x.id}">حذف</button></div></div>`}).join(''):'<div class="empty">موردی ثبت نشده است.</div>';
  renderAlert()}
 async function icsFor(x){const g=toG(x.y,x.m,x.d),p=n=>String(n).padStart(2,'0'),ds=g[0]+p(g[1])+p(g[2]);
  const now=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''),e2=s=>String(s).replace(/[\\;,]/g,'\\$&').replace(/\n/g,' ');
@@ -661,8 +724,8 @@ async function icsFor(x){const g=toG(x.y,x.m,x.d),p=n=>String(n).padStart(2,'0')
 $('dam').addEventListener('input',e=>{const n=num(e.target.value);e.target.value=n?fa(n):''});
 $('dmm').onchange=()=>dDays();$('dyy').onchange=()=>dDays();
 $('dadd').onclick=async()=>{const who=$('dnm').value.trim(),a=num($('dam').value);if(!who){$('dnm').focus();notify('نام شخص را وارد کنید.',true);return}if(!a){$('dam').focus();notify('مبلغ را به‌درستی وارد کنید.',true);return}
- S.dues.push({id:Date.now(),k:dtab,who,ph:$('dph').value.trim(),a,subj:$('dsb').value.trim(),y:num($('dyy').value)||T[0],m:+$('dmm').value,d:+$('ddd').value,rem:+$('drm').value,done:false});
- save();const ok=await verifyPersist();['dnm','dph','dam','dsb'].forEach(i=>$(i).value='');$('dform').open=false;render();notify(ok?(dtab==='r'?'مطالبه با موفقیت ثبت شد.':'بدهی با موفقیت ثبت شد.'):'خطا در ذخیره اطلاعات؛ فضای ذخیره‌سازی را بررسی کنید.',!ok)};
+ const wasEditD=!!editDueId,dv={k:dtab,who,ph:$('dph').value.trim(),a,subj:$('dsb').value.trim(),y:num($('dyy').value)||T[0],m:+$('dmm').value,d:+$('ddd').value,rem:+$('drm').value};const d0=wasEditD?S.dues.find(z=>z.id==editDueId):null;if(d0)Object.assign(d0,dv);else S.dues.push({id:Date.now(),...dv,done:false});editDueId=null;$('dcan').hidden=true;
+ save();const ok=await verifyPersist();['dnm','dph','dam','dsb'].forEach(i=>$(i).value='');$('dform').open=false;render();notify(ok?(wasEditD?'تغییرات ذخیره شد.':dtab==='r'?'مطالبه با موفقیت ثبت شد.':'بدهی با موفقیت ثبت شد.'):'خطا در ذخیره اطلاعات؛ فضای ذخیره‌سازی را بررسی کنید.',!ok)};
 const TRIAL=45,PAY_URL='',CONTACT='09361239027 (MORAD_DARVISHPOR)',DAY=864e5,PUB={"kty":"EC","crv":"P-256","x":"saXn4qWSxqRqvUUC_H8NX-xUOyyAAgcjNmZIMR8tB_8","y":"16O_2pcImT6T3qqIvXSyKIswP_ERqIo9x0gjTjXJET8"};
 let LIC={first:0,last:0,code:''};try{Object.assign(LIC,JSON.parse(localStorage.getItem('dk_lic'))||{})}catch(e){}
 const lnow=()=>Math.max(Date.now(),LIC.last||0);
@@ -689,7 +752,7 @@ $('lact').onclick=()=>activate($('lcode').value,$('lmsg'));
 $('lact2').onclick=()=>activate($('lcode2').value,$('lmsg2'));
 $('lbk').onclick=()=>$('bd').click();
 let tab='home';const showAll={e:false,i:false};
-function showTab(t){tab=t;document.body.dataset.activeTab=t;document.querySelectorAll('[data-tab]').forEach(e=>e.classList.toggle('tabhid',e.dataset.tab!==t));document.querySelectorAll('.bn button').forEach(b=>b.classList.toggle('on',b.dataset.tb===t));window.scrollTo(0,0)}
+function showTab(t){tab=t;if(t!=='dues')focusId=null;document.body.dataset.activeTab=t;document.querySelectorAll('[data-tab]').forEach(e=>e.classList.toggle('tabhid',e.dataset.tab!==t));document.querySelectorAll('.bn button').forEach(b=>b.classList.toggle('on',b.dataset.tb===t));window.scrollTo(0,0)}
 let PIN=null;try{PIN=JSON.parse(localStorage.getItem('dk_pin'))}catch(e){}
 async function hashPin(p,s){const d=new TextEncoder().encode(s+p);if(window.crypto&&crypto.subtle){const b=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('')}let h=5381;for(const c of s+p)h=(h*33^c.charCodeAt(0))>>>0;return 'x'+h}
 const pinFail=()=>{try{return JSON.parse(localStorage.getItem('dk_pf'))||{n:0,until:0}}catch(e){return{n:0,until:0}}};
@@ -786,6 +849,9 @@ const DICT=`گزارش تراکنش‌ها|Transaction report|تقرير الم�
 سرفصل|Category|الفئة
 توضیحات (اختیاری)|Notes (optional)|ملاحظات (اختياري)
 ثبت هزینه|Add expense|تسجيل مصروف
+ویرایش|Edit|تعديل
+ذخیره ویرایش|Save changes|حفظ التعديلات
+انصراف از ویرایش|Cancel editing|إلغاء التعديل
 ثبت درآمد|Add income|تسجيل دخل
 تراکنش‌های ماه جاری|Transactions this month|معاملات الشهر الحالي
 هنوز چیزی برای این ماه ثبت نشده. از فرم بالا شروع کنید.|Nothing recorded this month yet. Start with the form above.|لم يُسجَّل شيء لهذا الشهر بعد. ابدأ بالنموذج أعلاه.
@@ -1173,6 +1239,15 @@ renderGuide();pinUI();checkAB();pinLock();autoUpd();
 lFill();dInit();renderSw();applyUI();showTab('home');['dy','dyy'].forEach(i=>$(i).addEventListener('input',e=>{e.target.value=pd(toLat(e.target.value))}));
 fillDate();setType('e');render();setTimeout(i18n,60);
 licApply();
+/* هشدار صوتی/اعلان: هنگام باز شدن، برگشت به برنامه و هر دقیقه (برای تغییر روز) */
+document.addEventListener('pointerdown',function f(){
+ try{if('Notification' in window&&Notification.permission==='default'&&S.dues.some(x=>!x.done&&x.rem>=0))Notification.requestPermission().then(()=>checkDueSound())}catch(e){}
+ if(pendingSnd)checkDueSound();
+},{once:true});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();checkDueSound()}});
+setInterval(()=>{if(!document.hidden){renderAlert();checkDueSound()}},60000);
+setTimeout(checkDueSound,1200);
+if('serviceWorker' in navigator)navigator.serviceWorker.ready.then(r=>{if(r.periodicSync)r.periodicSync.register('hesab-due',{minInterval:6*36e5}).catch(()=>{})}).catch(()=>{});
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{});
 })();
 </script>
