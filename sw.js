@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hesab-shell-v11';
+const CACHE_NAME = 'hesab-shell-v12';
 const APP_FILES = [
   './',
   './index.html',
@@ -11,7 +11,7 @@ const APP_FILES = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_FILES))
+      .then(cache => Promise.all(APP_FILES.map(f => cache.add(new Request(f, { cache: 'reload' })))))
       .then(() => self.skipWaiting())
   );
 });
@@ -45,7 +45,9 @@ self.addEventListener('fetch', event => {
       const cache = await caches.open(CACHE_NAME);
       const cached = (await cache.match('./index.html')) || (await cache.match('./'));
 
-      const network = fetch(request)
+      // Network first (bypasses the HTTP cache) so new versions arrive at once;
+      // fall back to the cached shell if the network is slow or offline.
+      const network = fetch(request.url, { cache: 'reload' })
         .then(response => {
           if (response && response.ok) {
             cache.put('./index.html', response.clone());
@@ -55,11 +57,12 @@ self.addEventListener('fetch', event => {
         .catch(() => null);
 
       if (cached) {
+        const timeout = new Promise(resolve => setTimeout(() => resolve(null), 3000));
+        const fresh = await Promise.race([network, timeout]);
         event.waitUntil(network);
-        return cached;
+        return fresh || cached;
       }
 
-      // First run with no cache yet: wait for the network.
       const response = await network;
       return response ||
         new Response('برای اجرای برنامه، یک‌بار آن را در حالت آنلاین باز کنید.', {
