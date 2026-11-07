@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hesab-shell-v10';
+const CACHE_NAME = 'hesab-shell-v11';
 const APP_FILES = [
   './',
   './index.html',
@@ -34,6 +34,9 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
 
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+
+  // Version check requests (?v=...) must always reach the network.
+  if (url.searchParams.has('v')) return;
 
   // Page navigations: serve the cached app shell immediately (works with VPN,
   // slow or no network), and refresh the cache in the background.

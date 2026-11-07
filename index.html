@@ -367,7 +367,7 @@ body{background-image:none!important}
 .pgrid button.px{color:var(--exp)}
 .pforgot{margin-top:26px;background:none;color:var(--mut);font-size:13px;text-decoration:underline;padding:6px 10px}
 .gbtn{width:100%;background:none;border:0;padding:0;text-align:start;font:inherit;cursor:pointer}.settings-group>.gbtn .chev{transform:none}.abt{margin:4px 2px 6px;font-weight:600;color:var(--tx)}
-#rtb{background:var(--chip)}#rtb button{color:var(--ac);font-weight:600;box-shadow:inset 0 0 0 2px var(--ac)}#rtb button.on{background:var(--aca);box-shadow:inset 0 0 0 2px var(--ac)}
+#rtb{background:transparent;padding:0;gap:8px}#rtb button{background:transparent;color:var(--mut);font-weight:500;box-shadow:inset 0 0 0 1.5px var(--bd);opacity:.8}#rtb button.on{background:var(--ac);color:var(--acx);font-weight:700;box-shadow:inset 0 0 0 2px var(--ac),var(--sh);opacity:1}
 </style>
 </head>
 <body data-active-tab="home">
@@ -835,10 +835,10 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.5';$('appv').textContent=APP_VER;
+const APP_VER='1.3.7';$('appv').textContent=APP_VER;
 async function latestVer(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
-async function autoUpd(){try{if(Date.now()-(+localStorage.getItem('dk_uc')||0)<18e5)return;localStorage.setItem('dk_uc',Date.now())}catch(e){}
+async function autoUpd(){
  const v=await latestVer();if(v&&v!==APP_VER){$('upb').hidden=false;$('upb').innerHTML='نسخه جدید نرم\u200cافزار در دسترس است. <button class="eb" data-upd="1">تأیید به\u200cروزرسانی</button>'}}
 const DICT=`گزارش تراکنش‌ها|Transaction report|تقرير المعاملات
 پشتیبان‌گیری و بازیابی اطلاعات|Backup and restore data|النسخ الاحتياطي واستعادة البيانات
