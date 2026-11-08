@@ -477,7 +477,7 @@ body.c3 #frm .seg button{padding:4px}
 
 <div class="card" data-tab="transactions"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">تراکنش‌ها</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div>
 <div class="seg" id="txview"><button data-txview="an" class="on">گزارش سرفصل‌ها</button><button data-txview="detail">ریز تراکنش‌ها</button></div>
-<div id="txanalysis"><div class="seg3" id="rsc"><button data-rs2="y" class="on">سالانه</button><button data-rs2="m">ماهانه</button><button data-rs2="a">همه</button></div><select id="rmn" hidden aria-label="ماه" style="margin-bottom:10px"></select><div class="ynav" id="ynav"><button id="yp" aria-label="سال قبل"><span class="chev" style="transform:rotate(-90deg)"></span></button><b id="yt"></b><button id="yn" aria-label="سال بعد"><span class="chev" style="transform:rotate(90deg)"></span></button></div><div id="yr"></div></div>
+<div id="txanalysis"><div class="row tx-period"><select id="txMonth" aria-label="انتخاب ماه"></select><select id="txYear" aria-label="انتخاب سال"></select></div><div id="grp"></div></div>
 <div id="txdetail" hidden><div id="rls">
 <p class="hint" style="margin:6px 2px 2px">از تاریخ</p><div class="row r3"><select id="lfd" aria-label="روز"></select><select id="lfm" aria-label="ماه"></select><select id="lfy" aria-label="سال"></select></div>
 <p class="hint" style="margin:6px 2px 2px">تا تاریخ</p><div class="row r3"><select id="ltd" aria-label="روز"></select><select id="ltm" aria-label="ماه"></select><select id="lty" aria-label="سال"></select></div>
@@ -676,18 +676,18 @@ function renderTransactionsTab(){
  ys.innerHTML=[...years].sort((a,b)=>b-a).map(y=>`<option value="${y}">${pd(y)}</option>`).join('');ys.value=String(tvy);
  const tx=S.tx.filter(t=>Number(t.y)===tvy&&Number(t.m)===tvm);
  const I=tx.filter(t=>t.t==='i').reduce((a,t)=>a+t.a,0),E=tx.filter(t=>t.t==='e').reduce((a,t)=>a+t.a,0);
- $('tt').textContent='تراکنش‌های '+MN[tvm-1]+' '+pd(tvy);
  $('grp').innerHTML=tx.length?groups('e',tx,E)+groups('i',tx,I):'<div class="empty">برای این ماه تراکنشی ثبت نشده است.</div>';
 }
 
 
+$('txMonth').addEventListener('change',e=>{tvm=+e.target.value;renderTransactionsTab()});
+$('txYear').addEventListener('change',e=>{tvy=+e.target.value;renderTransactionsTab()});
 function render(){
  $('mt').textContent=MN[vm-1]+' '+pd(vy);
  const tx=S.tx.filter(t=>t.y===vy&&t.m===vm);
  const I=tx.filter(t=>t.t==='i').reduce((s,t)=>s+t.a,0),E=tx.filter(t=>t.t==='e').reduce((s,t)=>s+t.a,0);
  $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده این ماه (تومان)</small><b>${fa(I-E)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;fitSum();
  {const dm=S.tx.some(t=>t.demo)||S.dues.some(d=>d.demo);$('dmb').hidden=!dm;if(dm)$('dmb').innerHTML='داده‌های نمونه نمایش داده می‌شود. برای شروع واقعی آن‌ها را حذف کنید. <button class="eb" data-cd="1">حذف داده‌های نمونه</button>'}
- $('tt').textContent=(vy===T[0]&&vm===T[1])?'تراکنش\u200cهای ماه جاری':'تراکنش\u200cهای '+MN[vm-1]+' '+pd(vy);
  renderYear();renderList();renderDues();renderTransactionsTab();
  ['e','i'].forEach(k=>$('c'+k).innerHTML=S.cats[k].map((c,i)=>`${editing===k+':'+i?`<span class="chip ed"><input data-ei value="${esc(c)}" aria-label="نام سرفصل"><input class="ie" data-ej value="${esc((S.icons&&S.icons[c])||'')}" placeholder="ایموجی" maxlength="12" aria-label="ایموجی سرفصل"><button data-ok="${k}:${i}">✓</button></span>${pk()}${epk()}`:`<span class="chip"><button class="cn" data-ed="${k}:${i}" aria-label="ویرایش ${esc(c)}">${esc(c)} ${ic('pen')}</button><button data-rc="${k}:${i}" aria-label="حذف ${esc(c)}">×</button></span>`}`).join(''))}
 
@@ -737,7 +737,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(b.dataset.rc){const[k,i]=b.dataset.rc.split(':');S.cats[k].splice(+i,1);editing=null;save();fillCats();render()}});
 [['e','ne'],['i','ni']].forEach(([k,id])=>$('a'+k).onclick=()=>{const v=$(id).value.trim();
  if(v&&!S.cats[k].includes(v)){S.cats[k].push(v);save();$(id).value='';if(type===k)fillCats();render()}});
-['yp','ryp'].forEach(id=>$(id).onclick=()=>{ry--;renderYear()});['yn','rynxt'].forEach(id=>$(id).onclick=()=>{ry++;renderYear()});
+$('ryp').onclick=()=>{ry--;renderYear()};$('rynxt').onclick=()=>{ry++;renderYear()};
 const LK='dk_logo',LI=document.querySelector('.logo img'),DL=LI.src;
 try{const l=localStorage.getItem(LK);if(l)LI.src=l}catch(e){}
 $('lg').onclick=()=>$('lf').click();
@@ -914,17 +914,17 @@ function bars(g){const n=g.length,mx=Math.max(1,...g.map(x=>Math.max(x.i,x.e))),
  return `<svg viewBox="0 0 360 112" class="bch">${bs}</svg><div class="bl2" style="grid-template-columns:repeat(${n},1fr)">${g.map(x=>`<span>${x.l}</span>`).join('')}</div>`}
 function renderYear(){
  const inS=t=>rscope==='a'||(t.y===ry&&(rscope==='y'||t.m===rm)),sm=a=>a.reduce((s,t)=>s+t.a,0);
- ['yt','ryt'].forEach(id=>$(id).textContent=rscope==='a'?'همه سال\u200cها':pd(ry));['ynav','ryn'].forEach(id=>$(id).hidden=rscope==='a');['rmn','rrmn'].forEach(id=>{ $(id).hidden=rscope!=='m';$(id).value=rm });
+ $('ryt').textContent=rscope==='a'?'همه سال\u200cها':pd(ry);$('ryn').hidden=rscope==='a';$('rrmn').hidden=rscope!=='m';$('rrmn').value=rm;
  document.querySelectorAll('[data-rs2]').forEach(b=>b.classList.toggle('on',b.dataset.rs2===rscope));
  const tx=S.tx.filter(inS),I=sm(tx.filter(t=>t.t==='i')),E=sm(tx.filter(t=>t.t==='e'));
  let h=`<div class="ys"><div><small>درآمد</small><b class="inc">${fa(I)}</b></div><div><small>هزینه</small><b class="exp">${fa(E)}</b></div><div><small>مانده</small><b>${fa(I-E)}</b></div></div>`;
- if(!tx.length){['yr','ryr'].forEach(id=>$(id).innerHTML=h+'<div class="empty">برای این بازه چیزی ثبت نشده.</div>');return}
+ if(!tx.length){$('ryr').innerHTML=h+'<div class="empty">برای این بازه چیزی ثبت نشده.</div>';return}
  const cat=k=>{const by={};tx.filter(t=>t.t===k).forEach(t=>{const n=t.c||'بدون سرفصل';by[n]=(by[n]||0)+t.a});return Object.entries(by).sort((a,b)=>b[1]-a[1])};
  const exCats=cat('e'),inCats=cat('i');
  h+=`<div class="ch">${donut(exCats,E,'هزینه\u200cها','exp')}${donut(inCats,I,'درآمدها','inc')}</div>`;
  const catBars=(items,title,kind)=>{if(!items.length)return '';const max=items[0][1]||1;return `<section class="catbars ${kind}"><h3>${title}</h3>${items.map(([name,val],i)=>`<div class="catbar-row"><div class="catbar-track"><div class="catbar-fill" style="--bar-h:${(i*47+12)%360};width:${Math.max(1,val/max*100)}%"></div><span class="catbar-label">${esc(name)}</span></div><span class="catbar-value">${fa(val)}</span></div>`).join('')}</section>`};
  h+=catBars(exCats,'هزینه‌ها','expense')+catBars(inCats,'درآمدها','income');
- ['yr','ryr'].forEach(id=>$(id).innerHTML=h)}
+ $('ryr').innerHTML=h}
 function fitSum(){
  const fit=(el,box)=>{el.style.fontSize='';let sz=parseFloat(getComputedStyle(el).fontSize)||16,n=0;
   while(n++<40&&sz>7&&(box.scrollWidth>box.clientWidth+1||el.scrollWidth>el.clientWidth+1)){sz-=.5;el.style.fontSize=sz+'px'}};
@@ -933,7 +933,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.14';$('appv').textContent=APP_VER;
+const APP_VER='1.3.15';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
@@ -1316,7 +1316,7 @@ function renderList(){if($('rls').hidden)return;
  $('lout').innerHTML=ks.map(k=>{const r=grp[k];let lab;
   {const t=r[0];lab=fa(t.d)+' '+MN[t.m-1]+' '+pd(t.y)}
   return `<div class="sub"><span>${lab}</span><span><b class="inc">${fa(sm(r,'i'))}</b> / <b class="exp">${fa(sm(r,'e'))}</b></span></div>`+r.map(t=>`<div class="it"><span class="gi k${t.t}">${ico(t.c||'')}</span><div class="m"><b>${esc(t.c||'بدون سرفصل')}</b><span>${t.n?esc(t.n):''}</span></div><div class="a ${t.t==='i'?'inc':'exp'}">${fa(t.a)}</div></div>`).join('')}).join('')+(L.length>400?'<p class="hint">فقط ۴۰۰ تراکنش اول نمایش داده می\u200cشود؛ برای دیدن همه از خروجی اکسل استفاده کنید.</p>':'')}
-function showTxView(t){$('txanalysis').hidden=t!=='an';$('txdetail').hidden=t!=='detail';document.querySelectorAll('[data-txview]').forEach(b=>b.classList.toggle('on',b.dataset.txview===t));if(t==='detail')renderList()}
+function showTxView(t){$('txanalysis').hidden=t!=='an';$('txdetail').hidden=t!=='detail';document.querySelectorAll('[data-txview]').forEach(b=>b.classList.toggle('on',b.dataset.txview===t));if(t==='an')renderTransactionsTab();if(t==='detail')renderList()}
 $('rls').addEventListener('change',e=>{const id=e.target.id;
  if(/^l[ft][dmy]$/.test(id)){const p=id[1],k=id[2],o=p==='f'?LF:LT;o[k]=k==='y'?(num(e.target.value)||o.y):+e.target.value;if(k!=='d')lDays(p);if(k==='y')e.target.value=pd(o.y)}
  else if(id==='ltp')ltp=e.target.value;renderList()});
@@ -1378,7 +1378,7 @@ $('bi').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileRead
  r.readAsText(f);e.target.value=''};
 document.querySelectorAll('[data-ic]').forEach(e=>{e.innerHTML=svg(e.dataset.ic)});
 document.querySelectorAll('[data-tab]>details').forEach(d=>d.addEventListener('toggle',()=>{if(!d.open)d.open=true}));
-['rmn','rrmn'].forEach(id=>{ $(id).innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$(id).onchange=()=>{rm=+$(id).value;renderYear()} });
+$('rrmn').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('rrmn').onchange=()=>{rm=+$('rrmn').value;renderYear()};
 document.documentElement.lang=LANG;document.documentElement.dir=LANG==='en'?'ltr':'rtl';$('lang').value=LANG;$('lang').onchange=()=>setLang($('lang').value);
 try{if(!localStorage.getItem('dk_gh'))$('ghb').hidden=false}catch(e){}
 
