@@ -393,34 +393,41 @@ main{padding-bottom:calc(var(--bnh) + 22px)}
 #frm .addbar{position:sticky;bottom:calc(var(--bnh) + 8px);z-index:5;background:inherit;padding:8px 0 2px;margin-top:2px;border-radius:0 0 16px 16px}
 #frm .addbar .add{margin-top:0}
 #frm .addbar .cnl{margin-top:6px}
-body.c1 header{margin:2px 2px 8px}
-body.c1 .logo{width:40px;height:40px;border-radius:13px}
-body.c1 h1{font-size:23px}
-body.c1 header p{font-size:12px;line-height:1.3}
-body.c1 .nav{min-height:44px;padding:4px 8px;margin-top:2px}
-body.c1 .nav button{width:34px;height:34px}
-body.c1 .sum{margin-bottom:8px}
-body.c1 .sum .bal{padding:8px 10px;gap:6px}
-body.c1 .sum .bal-main{padding:4px 8px}
-body.c1 .sum .bal .stat{padding:4px 8px}
-body.c1 #frm{padding:10px 12px;margin-bottom:8px}
-body.c1 #frm .seg{margin-bottom:8px}
-body.c1 #frm .seg button{padding:6px}
+body.c1 header{margin:4px 2px 12px}
+body.c1 .sum{margin-bottom:10px}
+body.c1 #frm{padding:13px 14px;margin-bottom:10px}
+body.c1 #frm .seg{margin-bottom:9px}
 body.c1 #frm .row{margin-bottom:6px}
-body.c1 #frm input,body.c1 #frm select{padding:7px 10px}
-body.c1 #frm .add{padding:9px;min-height:40px}
-body.c2 header p{display:none}
-body.c2 .logo{width:34px;height:34px;border-radius:11px}
-body.c2 h1{font-size:20px}
-body.c2 .nav{min-height:38px;padding:2px 6px}
-body.c2 .nav button{width:30px;height:30px}
-body.c2 .sum .bal{padding:5px 8px;gap:4px}
-body.c2 .sum .bal-main{padding:2px 6px}
-body.c2 .sum .bal .stat{padding:2px 6px}
-body.c2 #frm{padding:8px 10px}
-body.c2 #frm .row{margin-bottom:4px}
-body.c2 #frm input,body.c2 #frm select{padding:5px 9px}
-body.c2 #frm .seg button{padding:4px}
+body.c1 #frm input,body.c1 #frm select{padding:9px 11px}
+body.c1 #frm .add{padding:11px}
+body.c2 header{margin:2px 2px 8px}
+body.c2 .logo{width:40px;height:40px;border-radius:13px}
+body.c2 h1{font-size:23px}
+body.c2 header p{font-size:12px;line-height:1.3}
+body.c2 .nav{min-height:44px;padding:4px 8px;margin-top:2px}
+body.c2 .nav button{width:34px;height:34px}
+body.c2 .sum{margin-bottom:8px}
+body.c2 .sum .bal{padding:8px 10px;gap:6px}
+body.c2 .sum .bal-main{padding:4px 8px}
+body.c2 .sum .bal .stat{padding:4px 8px}
+body.c2 #frm{padding:10px 12px;margin-bottom:8px}
+body.c2 #frm .seg{margin-bottom:8px}
+body.c2 #frm .seg button{padding:6px}
+body.c2 #frm .row{margin-bottom:6px}
+body.c2 #frm input,body.c2 #frm select{padding:7px 10px}
+body.c2 #frm .add{padding:9px;min-height:40px}
+body.c3 header p{display:none}
+body.c3 .logo{width:34px;height:34px;border-radius:11px}
+body.c3 h1{font-size:20px}
+body.c3 .nav{min-height:38px;padding:2px 6px}
+body.c3 .nav button{width:30px;height:30px}
+body.c3 .sum .bal{padding:5px 8px;gap:4px}
+body.c3 .sum .bal-main{padding:2px 6px}
+body.c3 .sum .bal .stat{padding:2px 6px}
+body.c3 #frm{padding:8px 10px}
+body.c3 #frm .row{margin-bottom:4px}
+body.c3 #frm input,body.c3 #frm select{padding:5px 9px}
+body.c3 #frm .seg button{padding:4px}
 @media (max-width:430px){
  header{gap:8px}
  h1{font-size:25px;letter-spacing:.1em}
@@ -438,6 +445,7 @@ body.c2 #frm .seg button{padding:4px}
 #xo p{margin:4px 0 12px}
 #xo .pbtn.xr{background:#D93A35;color:#fff;box-shadow:none}
 #xo .cnl{margin-top:8px}
+#xo #xno{background:color-mix(in srgb,var(--ac) 10%,var(--bg))!important;color:var(--ac)!important;border:1px solid color-mix(in srgb,var(--ac) 22%,transparent)!important;font-weight:600}
 </style>
 </head>
 <body data-active-tab="home">
@@ -689,7 +697,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(b.dataset.g){const g=b.dataset.g;open.has(g)?open.delete(g):open.add(g);render()}
  if(b.dataset.del){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}
   else{S.tx=S.tx.filter(t=>t.id!=b.dataset.del);save();render();notify('تراکنش حذف شد.')}}
- if(b.dataset.dt){dtab=b.dataset.dt;render()}
+ if(b.dataset.dt){closeDForm();dtab=b.dataset.dt;render()}
  if(b.dataset.dok){const x=S.dues.find(z=>z.id==b.dataset.dok);if(x){x.done=!x.done;if(!x.done)resetDueFlags(x.id);save();render();notify(x.done?'وضعیت تسویه ثبت شد.':'وضعیت مورد بازگردانی شد.')}}
  if(b.dataset.dcal){const x=S.dues.find(z=>z.id==b.dataset.dcal);if(x)icsFor(x)}
  if(b.dataset.ddel){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}else{S.dues=S.dues.filter(z=>z.id!=b.dataset.ddel);save();render();notify('مورد با موفقیت حذف شد.')}}
@@ -1365,6 +1373,7 @@ document.documentElement.lang=LANG;document.documentElement.dir=LANG==='en'?'ltr
 try{if(!localStorage.getItem('dk_gh'))$('ghb').hidden=false}catch(e){}
 
 /* ---- v28: خروج از برنامه ---- */
+function closeDForm(){try{if(editDueId)$('dcan').onclick();else $('dform').open=false}catch(e){}}
 function xoShow(s){$('xs0').hidden=!!s;$('xs1').hidden=!s;$('xop').hidden=!PIN;$('xo').hidden=false}
 $('xit').onclick=()=>xoShow(0);
 $('xno').onclick=()=>{$('xo').hidden=true};
@@ -1377,12 +1386,12 @@ function fitHome(){try{syncBnh();const b=document.body;b.classList.remove('c1','
  const f=$('frm'),n=document.querySelector('.bn');if(!f||!n)return;
  const sy=window.scrollY;if(sy)window.scrollTo(0,0);
  const over=()=>f.getBoundingClientRect().bottom>n.getBoundingClientRect().top-4;
- if(over()){b.classList.add('c1');if(over())b.classList.add('c2')}
+ for(const c of ['c1','c2','c3']){if(!over())break;b.classList.remove('c1','c2','c3');b.classList.add(c)}
  if(sy)window.scrollTo(0,sy);
  try{fitSum()}catch(e){}}catch(e){}}
 let fitT=0;function schedFit(){cancelAnimationFrame(fitT);fitT=requestAnimationFrame(()=>setTimeout(fitHome,40))}
 render=(function(r){return function(){const v=r.apply(this,arguments);schedFit();return v}})(render);
-showTab=(function(r){return function(){const v=r.apply(this,arguments);schedFit();return v}})(showTab);
+showTab=(function(r){return function(){closeDForm();const v=r.apply(this,arguments);schedFit();return v}})(showTab);
 applyUI=(function(r){return function(){const v=r.apply(this,arguments);schedFit();return v}})(applyUI);
 window.addEventListener('resize',schedFit);window.addEventListener('orientationchange',schedFit);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(schedFit);
