@@ -884,10 +884,10 @@ $('pgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
  if(c==='d'){setPi(v.slice(0,-1));$('pm').textContent='';return}
  if(v.length>=4)return;$('pm').textContent='';setPi(v+c);if(v.length+1===4)pinTry()});
 document.addEventListener('keydown',e=>{if($('pl').hidden)return;if(/^[0-9]$/.test(e.key)){const v=$('pi').value;if(v.length<4){setPi(v+e.key);if(v.length+1===4)pinTry()}}else if(e.key==='Backspace')setPi($('pi').value.slice(0,-1))});
-function pinLock(){if(!PIN)return;buildPad();$('pl').hidden=false;setPi('');$('pm').textContent='';}
+function pinLock(force=false){if(!PIN)return;if(!force){try{if(sessionStorage.getItem('dk_pin_open')==='1')return}catch(e){}}buildPad();$('pl').hidden=false;setPi('');$('pm').textContent='';}
 async function pinTry(){const v=$('pi').value;if(v.length<4)return;const f=pinFail();
  if(f.until>Date.now()){$('pm').textContent='لطفاً '+fa(Math.ceil((f.until-Date.now())/1000))+' ثانیه صبر کنید.';setPi('');return}
- if(await hashPin(v,PIN.s)===PIN.h){$('pl').hidden=true;setPi('');try{localStorage.removeItem('dk_pf')}catch(e){}}
+ if(await hashPin(v,PIN.s)===PIN.h){$('pl').hidden=true;setPi('');try{localStorage.removeItem('dk_pf');sessionStorage.setItem('dk_pin_open','1')}catch(e){}}
  else{f.n++;if(f.n>=5){f.until=Date.now()+3e4;f.n=0}try{localStorage.setItem('dk_pf',JSON.stringify(f))}catch(e){}$('pm').textContent='رمز اشتباه است.';setPi('')}}
 $('psv').onclick=async()=>{const a=toLat($('pn1').value),b=toLat($('pn2').value);if(!/^\d{4}$/.test(a)){$('pmsg').textContent='رمز باید ۴ رقم باشد.';return}if(a!==b){$('pmsg').textContent='دو رمز یکسان نیست.';return}
  const s=Math.random().toString(36).slice(2,10);PIN={s,h:await hashPin(a,s)};try{localStorage.setItem('dk_pin',JSON.stringify(PIN))}catch(e){}$('pn1').value=$('pn2').value='';$('pmsg').textContent='رمز فعال شد.';pinUI()};
@@ -1388,7 +1388,7 @@ function xoShow(s){$('xs0').hidden=!!s;$('xs1').hidden=!s;$('xop').hidden=!PIN;$
 $('xit').onclick=()=>xoShow(0);
 $('xno').onclick=()=>{$('xo').hidden=true};
 $('xbk').onclick=()=>{$('xo').hidden=true};
-$('xok').onclick=()=>{try{if(PIN)pinLock()}catch(e){}try{window.close()}catch(e){}setTimeout(()=>xoShow(1),250)};
+$('xok').onclick=()=>{try{if(PIN)pinLock(true)}catch(e){}try{window.close()}catch(e){}setTimeout(()=>xoShow(1),250)};
 /* ---- v28: چیدمان پویا؛ دکمه ثبت همیشه دیده می‌شود ---- */
 function syncBnh(){try{const n=document.querySelector('.bn'),p=$('pbx');if(!n||!p)return;const pr=p.getBoundingClientRect().height,nr=n.getBoundingClientRect().height;if(pr>0&&nr>0)document.documentElement.style.setProperty('--bnh',(100*nr/pr).toFixed(1)+'px')}catch(e){}}
 function fitHome(){try{syncBnh();const b=document.body;b.classList.remove('c1','c2');if(tab!=='home')return;
