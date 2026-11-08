@@ -30,7 +30,13 @@ header{display:flex;align-items:center;gap:12px;margin:8px 2px 18px}
 .catbar-label{position:absolute;inset:0;display:flex;align-items:center;padding:0 10px;font-weight:600;color:var(--tx);text-shadow:0 1px 2px rgba(255,255,255,.7);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .catbar-value{text-align:left;font-weight:600;white-space:nowrap;font-size:13px} 
 #dues #dform input,#dues #dform select,#dues #instform input,#dues #instform select{background:#fff!important;color:#203A30!important;border:1px solid #CBD8CE!important}
-#dues #dadd,#dues #insadd{background:#D32F2F!important;color:#fff!important}
+
+.dsum-button{appearance:none;border:1px solid var(--bd)!important;background:var(--card)!important;color:var(--tx)!important;border-radius:14px!important;padding:8px 10px!important;text-align:start;display:flex;flex-direction:column;gap:3px;min-height:58px}
+.dsum-button small{color:var(--mut);font-size:12px}.dsum-button b{font-size:15px}.dsm-links{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.dsm-links button,.dlist-head button{border:0;background:transparent;color:var(--ac);padding:5px 2px;font-size:13px;text-decoration:underline}
+.dlist-head{display:flex;justify-content:space-between;align-items:center;margin:8px 0 4px;color:var(--ac)}
+#dues.t-i #dadd{background:#1E9E4A!important;color:#fff!important}
+#dues.t-e #dadd,#dues #insadd{background:#D32F2F!important;color:#fff!important}
 .inst-group{border:1px solid var(--bd);border-radius:14px;background:var(--card);margin:8px 0;overflow:hidden}
 .inst-group>summary{cursor:pointer;list-style:none;padding:11px 12px;color:var(--tx);display:flex;flex-wrap:wrap;gap:3px 8px;align-items:center}
 .inst-group>summary::-webkit-details-marker{display:none}
@@ -728,7 +734,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(b.dataset.g){const g=b.dataset.g;open.has(g)?open.delete(g):open.add(g);render()}
  if(b.dataset.del){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}
   else{S.tx=S.tx.filter(t=>t.id!=b.dataset.del);save();render();notify('تراکنش حذف شد.')}}
- if(b.dataset.dt){closeDForm();dtab=b.dataset.dt;render()}
+ if(b.dataset.dt){closeDForm();dtab=b.dataset.dt;duesListMode='';render()}
+ if(b.dataset.dlist){duesListMode=b.dataset.dlist==='close'?'':b.dataset.dlist;renderDues();if(duesListMode)$('dl').scrollIntoView({behavior:'smooth',block:'start'})}
+ if(b.dataset.dnew){const target=b.dataset.dnew==='installments'?'instform':'dform';$(target).open=true;$(target).scrollIntoView({behavior:'smooth',block:'center'})}
  if(b.dataset.dok){const x=S.dues.find(z=>z.id==b.dataset.dok);if(x){x.done=!x.done;if(!x.done)resetDueFlags(x.id);save();render();notify(x.done?'وضعیت تسویه ثبت شد.':'وضعیت مورد بازگردانی شد.')}}
  if(b.dataset.dcal){const x=S.dues.find(z=>z.id==b.dataset.dcal);if(x)icsFor(x)}
  if(b.dataset.ddel){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}else{S.dues=S.dues.filter(z=>z.id!=b.dataset.ddel);save();render();notify('مورد با موفقیت حذف شد.')}}
@@ -794,7 +802,7 @@ function toG(jy,jm,jd){jy+=1595;let d=-355668+365*jy+div(jy,33)*8+div(jy%33+3,4)
  gy+=4*div(d,1461);d%=1461;if(d>365){gy+=div(d-1,365);d=(d-1)%365}
  let gd=d+1;const sa=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31];let gm;
  for(gm=0;gm<13&&gd>sa[gm];gm++)gd-=sa[gm];return[gy,gm,gd]}
-let dtab='r';
+let dtab='r',duesListMode='';
 const rmTxt=r=>r<0?'بدون یادآوری':r===0?'همان روز':fa(r)+' روز قبل';
 const dText=n=>n<0?fa(-n)+' روز گذشته':n===0?'امروز':fa(n)+' روز مانده';
 function daysTo(y,m,d){const g=toG(y,m,d),n=new Date();return Math.round((Date.UTC(g[0],g[1]-1,g[2])-Date.UTC(n.getFullYear(),n.getMonth(),n.getDate()))/864e5)}
@@ -851,23 +859,30 @@ function renderDues(){
  const key=x=>x.y*372+x.m*31+x.d,L=S.dues.filter(x=>x.k===dtab).sort((a,b)=>(a.done-b.done)||key(a)-key(b));
  $('dtr').classList.toggle('on',dtab==='r');{const dc=$('dues').classList;dc.remove('t-e','t-i');dc.add(dtab==='r'?'t-i':'t-e')}$('dtp').classList.toggle('on',dtab==='p');$('instform').hidden=dtab!=='p';
  $('dnm').placeholder=dtab==='r'?'نام بدهکار':'نام بستانکار';$('dam').placeholder=dtab==='r'?'مبلغ طلب (تومان)':'مبلغ بدهی (تومان)';$('dsb').placeholder=dtab==='r'?'موضوع مطالبه':'موضوع بدهی';$('dadd').textContent=editDueId?'ذخیره ویرایش':dtab==='r'?'ثبت مطالبه':'ثبت بدهی';
- const op=L.filter(x=>!x.done),tot=op.reduce((s,x)=>s+x.a,0),c=dtab==='r'?'inc':'exp';
- $('dsm').innerHTML=`<div><small>${dtab==='r'?'جمع مطالبات باز':'جمع دیون باز'}</small><b class="${c}">${fa(tot)}</b></div><div><small>تعداد موارد باز</small><b>${fa(op.length)}</b></div>`;
+ const op=L.filter(x=>!x.done),arch=L.filter(x=>x.done),tot=op.reduce((a,x)=>a+x.a,0),ac=dtab==='r'?'inc':'exp',noun=dtab==='r'?'مطالبه':'بدهی',plural=dtab==='r'?'مطالبات':'دیون';
+ $('dsm').innerHTML=`<div><small>جمع ${plural} باز</small><b class="${ac}">${fa(tot)}</b></div><button class="dsum-button" data-dlist="open"><small>تعداد ${plural} باز · برای مشاهده بزنید</small><b>${fa(op.length)}</b></button><div class="dsm-links"><button data-dnew="single">＋ ثبت ${noun} جدید</button>${dtab==='p'?'<button data-dnew="installments">＋ ثبت اقساط بدهی</button>':''}<button data-dlist="archive">بایگانی ${plural} تسویه‌شده (${fa(arch.length)})</button></div>`;
  const dueCard=x=>{const n=daysTo(x.y,x.m,x.d),cl=(x.done||x.rem<0)?'':n<0?'od':n<=x.rem?'sn':'',fc=x.id===focusId;return `<div class="dli${x.done?' done':''}${fc?' fcs '+x.k:''}" data-did="${x.id}"><div class="dtop">${fc?`<span class="bstar ${x.k}">★</span>`:''}<span class="gi" style="background:var(--chip)">${svg(x.k==='r'?'down':'up')}</span><div class="m"><b>${esc(x.who)}</b><span>${esc(x.subj||'بدون موضوع')}${x.ph?' · '+esc(x.ph):''}</span></div><div class="dam2 ${c}">${fa(x.a)}</div></div>
 <div class="dtop"><span class="bdg ${cl}">${x.done?'تسویه شد':dText(n)}</span><span class="hint" style="margin:0">سررسید ${fa(x.d)} ${MN[x.m-1]} ${pd(x.y)} · ${x.rem<0?'بدون یادآوری':'یادآوری: '+(x.rc?fa(x.rc.d)+' '+MN[x.rc.m-1]+' '+pd(x.rc.y):rmTxt(x.rem))}</span></div>
 <div class="dact"><button data-dcal="${x.id}">${ic('bell')}افزودن به تقویم</button><button data-dok="${x.id}">${x.done?'↩ بازگشت':'✓ تسویه شد'}</button><button data-dedit="${x.id}">ویرایش</button><button data-ddel="${x.id}">حذف</button></div></div>`};
- if(!L.length)$('dl').innerHTML='<div class="empty">موردی ثبت نشده است.</div>';
- else if(dtab!=='p')$('dl').innerHTML=L.map(dueCard).join('');
+
+ const shown=duesListMode==='archive'?arch:duesListMode==='open'?op:[];
+ $('dl').hidden=!duesListMode;
+ if(!duesListMode){$('dl').innerHTML='';}
  else{
-  const groups=new Map(),standalone=[];
-  L.forEach(x=>{if(x.installmentGroup){const k=String(x.installmentGroup);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(x)}else standalone.push(x)});
-  const cards=standalone.map(dueCard);
-  for(const items of groups.values()){
-   const first=items[0],open=items.filter(x=>!x.done),sum=open.reduce((a,x)=>a+x.a,0);
-   const subject=(first.subj||'اقساط').replace(/\s*[—-] قسط \d+ از \d+$/,'');
-   cards.push(`<details class="inst-group"><summary><span class="ig-name">${esc(first.who)}${subject?' · '+esc(subject):''}</span><span class="ig-meta">${fa(items.length)} قسط</span><span class="ig-meta">${fa(open.length)} باز · ${fa(sum)} تومان</span></summary><div class="ig-items">${items.map(dueCard).join('')}</div></details>`);
+  const heading=duesListMode==='archive'?`بایگانی ${plural} تسویه‌شده`:`${plural} باز`;
+  if(!shown.length)$('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close">بستن</button></div><div class="empty">${duesListMode==='archive'?'مورد تسویه‌شده‌ای در بایگانی نیست.':'مورد بازی برای نمایش نیست.'}</div>`;
+  else if(dtab!=='p')$('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close">بستن</button></div>`+shown.map(dueCard).join('');
+  else{
+   const groups=new Map(),standalone=[];
+   shown.forEach(x=>{if(x.installmentGroup){const k=String(x.installmentGroup);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(x)}else standalone.push(x)});
+   const cards=standalone.map(dueCard);
+   for(const items of groups.values()){
+    const first=items[0],openItems=items.filter(x=>!x.done),sum=openItems.reduce((a,x)=>a+x.a,0);
+    const subject=(first.subj||'اقساط').replace(/\s*[—-] قسط \d+ از \d+$/,'');
+    cards.push(`<details class="inst-group"><summary><span class="ig-name">${esc(first.who)}${subject?' · '+esc(subject):''}</span><span class="ig-meta">${fa(items.length)} قسط</span><span class="ig-meta">${duesListMode==='archive'?'تسویه‌شده':fa(openItems.length)+' باز · '+fa(sum)+' تومان'}</span></summary><div class="ig-items">${items.map(dueCard).join('')}</div></details>`);
+   }
+   $('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close">بستن</button></div>`+(cards.join('')||'<div class="empty">موردی برای نمایش نیست.</div>');
   }
-  $('dl').innerHTML=cards.join('')||'<div class="empty">موردی ثبت نشده است.</div>';
  }
  renderAlert()}
 async function icsFor(x){const g=toG(x.y,x.m,x.d),p=n=>String(n).padStart(2,'0'),ds=g[0]+p(g[1])+p(g[2]);
@@ -984,7 +999,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.17';$('appv').textContent=APP_VER;
+const APP_VER='1.3.18';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
