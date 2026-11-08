@@ -389,10 +389,10 @@ body{background-image:none!important}
 .cat-bars-list{display:flex;flex-direction:column;gap:7px}
 .cat-bar-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;min-width:0}
 .cat-bar-track{height:23px;background:var(--chip);border-radius:6px;position:relative;overflow:hidden;min-width:0}
-.cat-bar-fill{height:100%;border-radius:6px;min-width:3px;opacity:.88}
-.cat-bar-fill.inc{background:linear-gradient(90deg,#36B982,#18764F)}
-.cat-bar-fill.exp{background:linear-gradient(90deg,#E58A78,#B94E45)}
-.cat-bar-name{position:absolute;inset:0 7px;display:flex;align-items:center;width:max-content;max-width:calc(100% - 14px);padding:0 7px;box-sizing:border-box;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;font-weight:800;letter-spacing:0;color:#18372B;background:rgba(255,255,255,.9);border-radius:5px;text-shadow:none;line-height:1.2}
+.cat-bar-fill{height:100%;border-radius:6px;min-width:3px;opacity:1}
+.cat-bar-fill.inc{background:var(--bi)}
+.cat-bar-fill.exp{background:var(--be)}
+.cat-bar-name{position:absolute;inset:0 8px;display:flex;align-items:center;justify-content:flex-start;width:auto;max-width:none;padding:0;box-sizing:border-box;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;font-weight:800;letter-spacing:0;color:var(--tx);background:transparent;border-radius:0;text-shadow:0 1px 2px var(--bg),0 0 3px var(--bg);line-height:1.2;pointer-events:none}
 .cat-bar-value{font-size:11px;font-weight:700;color:var(--tx);white-space:nowrap;font-variant-numeric:tabular-nums}
 @media(min-width:600px){.cat-bars-grid{grid-template-columns:1fr 1fr}}
 
