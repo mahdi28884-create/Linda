@@ -396,6 +396,13 @@ body{background-image:none!important}
 .cat-bar-value{font-size:11px;font-weight:700;color:var(--tx);white-space:nowrap;font-variant-numeric:tabular-nums}
 @media(min-width:600px){.cat-bars-grid{grid-template-columns:1fr 1fr}}
 
+/* اصلاح قطعی رنگ نمودار سرفصل‌ها: هم‌رنگ دکمه‌های واقعی ثبت تراکنش */
+.cat-bars .cat-bar-fill.inc{background:#1E9E4A!important;opacity:1!important}
+.cat-bars .cat-bar-fill.exp{background:#D93A35!important;opacity:1!important}
+.cat-bars .cat-bar-track{background:#EDEDED!important}
+.cat-bars .cat-bar-name{z-index:2!important;background:transparent!important;color:#FFFFFF!important;font-weight:800!important;text-shadow:0 1px 2px rgba(0,0,0,.65)!important;padding:0 8px!important;justify-content:flex-start!important}
+.cat-bars .cat-bar-fill{position:absolute;inset:0 auto 0 0;z-index:1;border-radius:6px!important}
+:root[data-theme="dark"] .cat-bars .cat-bar-track{background:#263A34!important}
 </style>
 </head>
 <body data-active-tab="home">
