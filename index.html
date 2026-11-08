@@ -23,9 +23,10 @@ header{display:flex;align-items:center;gap:12px;margin:8px 2px 18px}
 .catbars h3{font-size:15px;margin:0 0 8px;color:var(--exp)}
 .catbars.income h3{color:var(--inc)}
 .catbar-row{display:grid;grid-template-columns:minmax(0,1fr) 80px;gap:10px;align-items:center;margin:8px 0}
-.catbar-track{height:30px;background:var(--fi-bg);border-radius:11px;overflow:hidden;position:relative}
-.catbar-fill{height:100%;margin-inline-start:auto;border-radius:11px;background:#E0443E;min-width:2px}
-.catbars.income .catbar-fill{background:#3DBE7A}
+.catbar-track{height:32px;background:var(--fi-bg);border-radius:11px;overflow:hidden;position:relative;box-shadow:inset 0 2px 5px rgba(20,45,34,.12),inset 0 -1px 2px rgba(255,255,255,.45)}
+.catbar-fill{height:100%;margin-inline-start:auto;min-width:3px;position:relative;border-radius:10px 3px 3px 10px;background:linear-gradient(112deg,hsla(var(--bar-h),92%,75%,.92) 0%,hsla(var(--bar-h),86%,58%,.88) 28%,hsla(var(--bar-h),78%,48%,.94) 58%,hsla(var(--bar-h),92%,66%,.9) 100%);border:1px solid hsla(var(--bar-h),70%,38%,.5);box-shadow:inset 1px 1px 0 rgba(255,255,255,.8),inset -2px -2px 4px rgba(10,25,20,.2),0 2px 4px rgba(20,40,30,.22)}
+.catbar-fill:before{content:"";position:absolute;inset:2px 3px 2px auto;width:24%;border-radius:3px 8px 8px 3px;background:linear-gradient(100deg,rgba(255,255,255,.04),rgba(255,255,255,.62),rgba(255,255,255,.08));clip-path:polygon(25% 0,100% 0,100% 100%,0 100%);pointer-events:none}
+.catbar-fill:after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.38),transparent 42%,rgba(0,0,0,.13));pointer-events:none}
 .catbar-label{position:absolute;inset:0;display:flex;align-items:center;padding:0 10px;font-weight:600;color:var(--tx);text-shadow:0 1px 2px rgba(255,255,255,.7);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .catbar-value{text-align:left;font-weight:600;white-space:nowrap;font-size:13px} 
 h1{font-size:28px;line-height:1.2;font-weight:600;margin:0;letter-spacing:.16em;font-family:Montserrat,Vazirmatn,sans-serif;direction:ltr}
@@ -474,7 +475,14 @@ body.c3 #frm .seg button{padding:4px}
 <div class="addbar"><button class="add" id="add">ثبت هزینه</button><button class="cnl" id="ecan" hidden>انصراف از ویرایش</button></div>
 </div>
 
-<div class="card" data-tab="transactions"><h2><span class="tl" id="tt">تراکنش‌های ماه جاری</span></h2><div class="row tx-period"><select id="txMonth" aria-label="انتخاب ماه"></select><select id="txYear" aria-label="انتخاب سال"></select></div><div id="grp"></div></div>
+<div class="card" data-tab="transactions"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">تراکنش‌ها</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div>
+<div class="seg" id="txview"><button data-txview="an" class="on">گزارش سرفصل‌ها</button><button data-txview="detail">ریز تراکنش‌ها</button></div>
+<div id="txanalysis"><div class="seg3" id="rsc"><button data-rs2="y" class="on">سالانه</button><button data-rs2="m">ماهانه</button><button data-rs2="a">همه</button></div><select id="rmn" hidden aria-label="ماه" style="margin-bottom:10px"></select><div class="ynav" id="ynav"><button id="yp" aria-label="سال قبل"><span class="chev" style="transform:rotate(-90deg)"></span></button><b id="yt"></b><button id="yn" aria-label="سال بعد"><span class="chev" style="transform:rotate(90deg)"></span></button></div><div id="yr"></div></div>
+<div id="txdetail" hidden><div id="rls">
+<p class="hint" style="margin:6px 2px 2px">از تاریخ</p><div class="row r3"><select id="lfd" aria-label="روز"></select><select id="lfm" aria-label="ماه"></select><select id="lfy" aria-label="سال"></select></div>
+<p class="hint" style="margin:6px 2px 2px">تا تاریخ</p><div class="row r3"><select id="ltd" aria-label="روز"></select><select id="ltm" aria-label="ماه"></select><select id="lty" aria-label="سال"></select></div>
+<div class="row"><select id="ltp"><option value="a">همه تراکنش‌ها</option><option value="e">فقط هزینه‌ها</option><option value="i">فقط درآمدها</option></select></div><div id="lsm"></div><div id="lout"></div></div></div>
+</details></div>
 <div class="card" id="dues" data-tab="dues"><details id="dsec" open><summary class="st"><span><i class="ii" data-ic="swap"></i><span class="tl">مطالبات و دیون</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div>
 <div class="seg"><button id="dtr" class="on" data-dt="r">مطالبات (طلب من)</button><button id="dtp" data-dt="p">دیون (بدهی من)</button></div>
 <div class="ys" style="grid-template-columns:1fr 1fr" id="dsm"></div>
@@ -492,16 +500,7 @@ body.c3 #frm .seg button{padding:4px}
 <button class="add" id="dadd">ثبت مطالبه</button><button class="cnl" id="dcan" hidden>انصراف از ویرایش</button>
 <p class="hint" style="margin-top:10px">برای اینکه حتی وقتی برنامه بسته است زنگ بزند، روی هر مورد «افزودن به تقویم» را بزنید تا یادآور در تقویم گوشی ثبت شود. سررسیدهای نزدیک و گذشته هم هنگام باز کردن برنامه بالای صفحه نمایش داده می‌شود.</p>
 </details></details></div>
-<div class="card" data-tab="reports"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">گزارشات</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div><div class="seg3" id="rtb" style="grid-template-columns:1fr 1fr"><button data-rt="an" class="on">تحلیل سرفصل‌ها</button><button data-rt="ls">گزارش تراکنش‌ها</button></div><div class="bk" style="margin:0 0 10px"><button id="xla">خروجی اکسل (همه اطلاعات)</button></div>
-<div id="ran"><div class="seg3" id="rsc"><button data-rs2="y" class="on">سالانه</button><button data-rs2="m">ماهانه</button><button data-rs2="a">همه</button></div><select id="rmn" hidden aria-label="ماه" style="margin-bottom:10px"></select><div class="ynav" id="ynav"><button id="yp" aria-label="سال قبل"><span class="chev" style="transform:rotate(-90deg)"></span></button><b id="yt"></b><button id="yn" aria-label="سال بعد"><span class="chev" style="transform:rotate(90deg)"></span></button></div><div id="yr"></div></div>
-<div id="rls" hidden>
-<p class="hint" style="margin:0 2px 4px">بازه تاریخ (از تاریخ تا تاریخ)</p>
-<p class="hint" style="margin:6px 2px 2px">از تاریخ</p><div class="row r3"><select id="lfd" aria-label="روز"></select><select id="lfm" aria-label="ماه"></select><select id="lfy" aria-label="سال"></select></div>
-<p class="hint" style="margin:6px 2px 2px">تا تاریخ</p><div class="row r3"><select id="ltd" aria-label="روز"></select><select id="ltm" aria-label="ماه"></select><select id="lty" aria-label="سال"></select></div>
-<div class="row"><select id="ltp"><option value="a">همه تراکنش‌ها</option><option value="e">فقط هزینه‌ها</option><option value="i">فقط درآمدها</option></select></div>
-<div id="lsm"></div><div id="lout"></div>
-
-</div></details></div>
+<div class="card" data-tab="reports"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">گزارشات</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div><p class="hint">برای دریافت فایل اکسل از همه اطلاعات برنامه استفاده کنید.</p><div class="bk" style="margin:0 0 10px"><button id="xla">خروجی اکسل (همه اطلاعات)</button></div></details></div>
 
 <div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><div class="settings-group"><button class="st gbtn" data-guide="1">راهنمای کار با برنامه <span class="chev"></span></button></div><details class="settings-group" hidden><summary class="st">اشتراک <span class="chev"></span></summary><p class="hint" id="lst"></p><div id="lbuy" hidden><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p><p class="hint">برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید: <b dir="ltr">09361239027</b></p></div>
 </details><details class="settings-group"><summary class="st">سرفصل‌های هزینه <span class="chev"></span></summary>
@@ -680,8 +679,7 @@ function renderTransactionsTab(){
  $('tt').textContent='تراکنش‌های '+MN[tvm-1]+' '+pd(tvy);
  $('grp').innerHTML=tx.length?groups('e',tx,E)+groups('i',tx,I):'<div class="empty">برای این ماه تراکنشی ثبت نشده است.</div>';
 }
-$('txMonth').addEventListener('change',e=>{tvm=+e.target.value;renderTransactionsTab()});
-$('txYear').addEventListener('change',e=>{tvy=+e.target.value;renderTransactionsTab()});
+
 
 function render(){
  $('mt').textContent=MN[vm-1]+' '+pd(vy);
@@ -727,7 +725,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(b.dataset.guide){$('gd').hidden=false;$('gd').scrollTop=0;$('ghb').hidden=true;try{localStorage.setItem('dk_gh','1')}catch(e){}}
  if(b.dataset.gx){$('ghb').hidden=true;try{localStorage.setItem('dk_gh','1')}catch(e){}}
  if(b.dataset.gc)$('gd').hidden=true;
- if(b.dataset.rt)showRT(b.dataset.rt);
+ if(b.dataset.txview)showTxView(b.dataset.txview);
  if(b.id==='ui')$('up').hidden=!$('up').hidden;
  if(b.id==='dn'){UI.mode=(UI.mode==='dark'||(UI.mode==='auto'&&mq.matches))?'light':'dark';saveUI();applyUI()}
  if(b.dataset.m){UI.mode=b.dataset.m;saveUI();applyUI();$('up').hidden=true}
@@ -924,7 +922,7 @@ function renderYear(){
  const cat=k=>{const by={};tx.filter(t=>t.t===k).forEach(t=>{const n=t.c||'بدون سرفصل';by[n]=(by[n]||0)+t.a});return Object.entries(by).sort((a,b)=>b[1]-a[1])};
  const exCats=cat('e'),inCats=cat('i');
  h+=`<div class="ch">${donut(exCats,E,'هزینه\u200cها','exp')}${donut(inCats,I,'درآمدها','inc')}</div>`;
- const catBars=(items,title,kind)=>{if(!items.length)return '';const max=items[0][1]||1;return `<section class="catbars ${kind}"><h3>${title}</h3>${items.map(([name,val])=>`<div class="catbar-row"><div class="catbar-track"><div class="catbar-fill" style="width:${Math.max(1,val/max*100)}%"></div><span class="catbar-label">${esc(name)}</span></div><span class="catbar-value">${fa(val)}</span></div>`).join('')}</section>`};
+ const catBars=(items,title,kind)=>{if(!items.length)return '';const max=items[0][1]||1;return `<section class="catbars ${kind}"><h3>${title}</h3>${items.map(([name,val],i)=>`<div class="catbar-row"><div class="catbar-track"><div class="catbar-fill" style="--bar-h:${(i*47+12)%360};width:${Math.max(1,val/max*100)}%"></div><span class="catbar-label">${esc(name)}</span></div><span class="catbar-value">${fa(val)}</span></div>`).join('')}</section>`};
  h+=catBars(exCats,'هزینه‌ها','expense')+catBars(inCats,'درآمدها','income');
  $('yr').innerHTML=h}
 function fitSum(){
@@ -935,7 +933,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='103014';$('appv').textContent=APP_VER;
+const APP_VER='1.3.14';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
@@ -1318,7 +1316,7 @@ function renderList(){if($('rls').hidden)return;
  $('lout').innerHTML=ks.map(k=>{const r=grp[k];let lab;
   {const t=r[0];lab=fa(t.d)+' '+MN[t.m-1]+' '+pd(t.y)}
   return `<div class="sub"><span>${lab}</span><span><b class="inc">${fa(sm(r,'i'))}</b> / <b class="exp">${fa(sm(r,'e'))}</b></span></div>`+r.map(t=>`<div class="it"><span class="gi k${t.t}">${ico(t.c||'')}</span><div class="m"><b>${esc(t.c||'بدون سرفصل')}</b><span>${t.n?esc(t.n):''}</span></div><div class="a ${t.t==='i'?'inc':'exp'}">${fa(t.a)}</div></div>`).join('')}).join('')+(L.length>400?'<p class="hint">فقط ۴۰۰ تراکنش اول نمایش داده می\u200cشود؛ برای دیدن همه از خروجی اکسل استفاده کنید.</p>':'')}
-function showRT(t){rtab=t;$('ran').hidden=t!=='an';$('rls').hidden=t!=='ls';document.querySelectorAll('[data-rt]').forEach(b=>b.classList.toggle('on',b.dataset.rt===t));renderList()}
+function showTxView(t){$('txanalysis').hidden=t!=='an';$('txdetail').hidden=t!=='detail';document.querySelectorAll('[data-txview]').forEach(b=>b.classList.toggle('on',b.dataset.txview===t));if(t==='detail')renderList()}
 $('rls').addEventListener('change',e=>{const id=e.target.id;
  if(/^l[ft][dmy]$/.test(id)){const p=id[1],k=id[2],o=p==='f'?LF:LT;o[k]=k==='y'?(num(e.target.value)||o.y):+e.target.value;if(k!=='d')lDays(p);if(k==='y')e.target.value=pd(o.y)}
  else if(id==='ltp')ltp=e.target.value;renderList()});
