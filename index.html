@@ -31,8 +31,8 @@ header{display:flex;align-items:center;gap:12px;margin:8px 2px 18px}
 .catbar-value{text-align:left;font-weight:600;white-space:nowrap;font-size:13px} 
 #dues #dform input,#dues #dform select,#dues #instform input,#dues #instform select{background:#fff!important;color:#203A30!important;border:1px solid #CBD8CE!important}
 
-.dcount-link{border:0!important;background:transparent!important;color:var(--ac)!important;padding:2px 0!important;font-size:16px!important;font-weight:700;text-decoration:underline;cursor:pointer}
-.dlist-head button,.archive-link{border:0!important;background:transparent!important;color:var(--ac)!important;padding:7px 2px!important;font-size:13px;text-decoration:underline;cursor:pointer}
+.dcount-card{width:100%;height:100%;min-height:76px;border:1px solid var(--bd)!important;border-radius:14px!important;background:var(--bg)!important;color:var(--tx)!important;padding:8px 10px!important;text-align:start;display:flex;flex-direction:column;justify-content:space-between;gap:4px;cursor:pointer}.dcount-card small{color:var(--mut);display:block;font-size:12px;font-weight:400}.dcount-card b{font-size:16px;color:var(--tx)}
+.dlist-head button,.archive-link{border:0!important;background:transparent!important;color:var(--ac)!important;padding:7px 2px!important;font-size:14px;text-decoration:underline;cursor:pointer}
 .dues-archive{margin:2px 4px 8px}
 .dlist-head{display:flex;justify-content:space-between;align-items:center;margin:8px 0 4px;color:var(--ac)}
 #dues.t-i #dadd{background:#1E9E4A!important;color:#fff!important}
@@ -860,10 +860,10 @@ function renderDues(){
  $('dtr').classList.toggle('on',dtab==='r');{const dc=$('dues').classList;dc.remove('t-e','t-i');dc.add(dtab==='r'?'t-i':'t-e')}$('dtp').classList.toggle('on',dtab==='p');$('instform').hidden=dtab!=='p';
  $('dnm').placeholder=dtab==='r'?'نام بدهکار':'نام بستانکار';$('dam').placeholder=dtab==='r'?'مبلغ طلب (تومان)':'مبلغ بدهی (تومان)';$('dsb').placeholder=dtab==='r'?'موضوع مطالبه':'موضوع بدهی';$('dadd').textContent=editDueId?'ذخیره ویرایش':dtab==='r'?'ثبت مطالبه':'ثبت بدهی';
  const op=L.filter(x=>!x.done),arch=L.filter(x=>x.done),tot=op.reduce((a,x)=>a+x.a,0),ac=dtab==='r'?'inc':'exp',noun=dtab==='r'?'مطالبه':'بدهی',plural=dtab==='r'?'مطالبات':'دیون';
- $('dsm').innerHTML=`<div><small>جمع ${plural} باز</small><b class="${ac}">${fa(tot)}</b></div><div><small>تعداد ${plural} باز · برای مشاهده روی تعداد بزنید</small><button class="dcount-link" data-dlist="open" aria-label="نمایش ${plural} باز">${fa(op.length)}</button></div>`;
+ $('dsm').innerHTML=`<div><small>جمع ${dtab==='r'?'مطالبات فعال':'بدهی‌های فعال'}</small><b class="${ac}">${fa(tot)}</b></div><button class="dcount-card" data-dlist="open" aria-label="نمایش ${plural} باز"><small>تعداد ${dtab==='r'?'مطالبات فعال':'بدهی‌های فعال'}</small><b>${fa(op.length)}</b></button>`;
  $('dformTitle').textContent=editDueId?'ویرایش مورد':dtab==='r'?'＋ ثبت مطالبه جدید':'＋ ثبت بدهی جدید';
- $('duesArchiveLink').innerHTML=`<button class="archive-link" data-dlist="archive">مشاهده بایگانی ${plural} تسویه‌شده (${fa(arch.length)})</button>`;
- const dueCard=x=>{const n=daysTo(x.y,x.m,x.d),cl=(x.done||x.rem<0)?'':n<0?'od':n<=x.rem?'sn':'',fc=x.id===focusId;return `<div class="dli${x.done?' done':''}${fc?' fcs '+x.k:''}" data-did="${x.id}"><div class="dtop">${fc?`<span class="bstar ${x.k}">★</span>`:''}<span class="gi" style="background:var(--chip)">${svg(x.k==='r'?'down':'up')}</span><div class="m"><b>${esc(x.who)}</b><span>${esc(x.subj||'بدون موضوع')}${x.ph?' · '+esc(x.ph):''}</span></div><div class="dam2 ${c}">${fa(x.a)}</div></div>
+ $('duesArchiveLink').innerHTML=`<button class="archive-link" data-dlist="archive">${plural} تسویه‌شده (${fa(arch.length)})</button>`;
+ const dueCard=x=>{const n=daysTo(x.y,x.m,x.d),cl=(x.done||x.rem<0)?'':n<0?'od':n<=x.rem?'sn':'',fc=x.id===focusId;return `<div class="dli${x.done?' done':''}${fc?' fcs '+x.k:''}" data-did="${x.id}"><div class="dtop">${fc?`<span class="bstar ${x.k}">★</span>`:''}<span class="gi" style="background:var(--chip)">${svg(x.k==='r'?'down':'up')}</span><div class="m"><b>${esc(x.who)}</b><span>${esc(x.subj||'بدون موضوع')}${x.ph?' · '+esc(x.ph):''}</span></div><div class="dam2 ${ac}">${fa(x.a)}</div></div>
 <div class="dtop"><span class="bdg ${cl}">${x.done?'تسویه شد':dText(n)}</span><span class="hint" style="margin:0">سررسید ${fa(x.d)} ${MN[x.m-1]} ${pd(x.y)} · ${x.rem<0?'بدون یادآوری':'یادآوری: '+(x.rc?fa(x.rc.d)+' '+MN[x.rc.m-1]+' '+pd(x.rc.y):rmTxt(x.rem))}</span></div>
 <div class="dact"><button data-dcal="${x.id}">${ic('bell')}افزودن به تقویم</button><button data-dok="${x.id}">${x.done?'↩ بازگشت':'✓ تسویه شد'}</button><button data-dedit="${x.id}">ویرایش</button><button data-ddel="${x.id}">حذف</button></div></div>`};
 
@@ -871,9 +871,9 @@ function renderDues(){
  $('dl').hidden=!duesListMode;
  if(!duesListMode){$('dl').innerHTML='';}
  else{
-  const heading=duesListMode==='archive'?`بایگانی ${plural} تسویه‌شده`:`${plural} باز`;
-  if(!shown.length)$('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close">بستن</button></div><div class="empty">${duesListMode==='archive'?'مورد تسویه‌شده‌ای در بایگانی نیست.':'مورد بازی برای نمایش نیست.'}</div>`;
-  else if(dtab!=='p')$('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close">بستن</button></div>`+shown.map(dueCard).join('');
+  const heading=duesListMode==='archive'?`بایگانی ${plural} تسویه‌شده`:`${dtab==='r'?'مطالبات فعال':'بدهی‌های فعال'}`;
+  if(!shown.length)$('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close" aria-label="بستن فهرست"><span class="chev" style="display:inline-block;transform:rotate(180deg)"></span></button></div><div class="empty">${duesListMode==='archive'?'مورد تسویه‌شده‌ای در بایگانی نیست.':'مورد بازی برای نمایش نیست.'}</div>`;
+  else if(dtab!=='p')$('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close" aria-label="بستن فهرست"><span class="chev" style="display:inline-block;transform:rotate(180deg)"></span></button></div>`+shown.map(dueCard).join('');
   else{
    const groups=new Map(),standalone=[];
    shown.forEach(x=>{if(x.installmentGroup){const k=String(x.installmentGroup);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(x)}else standalone.push(x)});
@@ -883,7 +883,7 @@ function renderDues(){
     const subject=(first.subj||'اقساط').replace(/\s*[—-] قسط \d+ از \d+$/,'');
     cards.push(`<details class="inst-group"><summary><span class="ig-name">${esc(first.who)}${subject?' · '+esc(subject):''}</span><span class="ig-meta">${fa(items.length)} قسط</span><span class="ig-meta">${duesListMode==='archive'?'تسویه‌شده':fa(openItems.length)+' باز · '+fa(sum)+' تومان'}</span></summary><div class="ig-items">${items.map(dueCard).join('')}</div></details>`);
    }
-   $('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close">بستن</button></div>`+(cards.join('')||'<div class="empty">موردی برای نمایش نیست.</div>');
+   $('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close" aria-label="بستن فهرست"><span class="chev" style="display:inline-block;transform:rotate(180deg)"></span></button></div>`+(cards.join('')||'<div class="empty">موردی برای نمایش نیست.</div>');
   }
  }
  renderAlert()}
@@ -1001,7 +1001,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.19';$('appv').textContent=APP_VER;
+const APP_VER='1.3.21';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
