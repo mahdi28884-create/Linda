@@ -381,7 +381,22 @@ body{background-image:none!important}
 .bch{display:block;width:100%;height:84px;margin:0;color:var(--mut)}
 .bl2{display:grid;margin:0;font-size:10px;line-height:1.35;color:var(--mut);text-align:center;gap:0}
 .bl2 span{white-space:nowrap;overflow:hidden;text-overflow:clip}
-\n</style>
+\n
+/* نمودار افقی سرفصل‌ها */
+.cat-bars-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0 12px}
+.cat-bars{background:var(--bg);border:1px solid var(--bd);border-radius:14px;padding:10px 11px;min-width:0}
+.cat-bars> b{display:block;font-size:13px;margin-bottom:8px}
+.cat-bars-list{display:flex;flex-direction:column;gap:7px}
+.cat-bar-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;min-width:0}
+.cat-bar-track{height:23px;background:var(--chip);border-radius:6px;position:relative;overflow:hidden;min-width:0}
+.cat-bar-fill{height:100%;border-radius:6px;min-width:3px;opacity:.88}
+.cat-bar-fill.inc{background:linear-gradient(90deg,#36B982,#18764F)}
+.cat-bar-fill.exp{background:linear-gradient(90deg,#E58A78,#B94E45)}
+.cat-bar-name{position:absolute;inset:0 7px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;font-weight:700;color:var(--tx);text-shadow:0 1px 2px var(--bg)}
+.cat-bar-value{font-size:11px;font-weight:700;color:var(--tx);white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(min-width:600px){.cat-bars-grid{grid-template-columns:1fr 1fr}}
+
+</style>
 </head>
 <body data-active-tab="home">
 <main>
@@ -823,15 +838,12 @@ let hid=0;document.addEventListener('visibilitychange',()=>{if(document.hidden)h
 const EM='🏠 🏡 🏢 💡 🔥 💧 🚿 📞 📱 🌐 📺 🎓 📚 ✏️ 🏫 🔧 🛠️ 🧰 🚗 ⛽ 🚌 🚕 ✈️ 🧳 🏖️ 🍽️ 🍕 🍔 🥗 🍎 🥛 🍞 🛒 🛍️ 👕 👗 👟 💄 💈 🧴 🧼 💊 🩺 🏥 🦷 💰 💵 💳 🏦 🧾 📈 📉 🎁 🎉 🎂 🎬 🎮 🎵 🏋️ ⚽ 🐶 🐱 🌳 🌸 ☕ 🍵 👶 🧸 🍼 👩 👨 👵 👴 👧 👦 🕌 🙏 ❤️ ⭐ 🔔 📅 🛡️ 🔑 🪑 🛏️ 🧹 🧺 📦 💻 🖥️ 🎧 📷 🕯️ 🪙 🏷️'.split(' ');const epk=()=>'<div class="ipk em">'+EM.map(e=>`<button type="button" data-pk2="${e}">${e}</button>`).join('')+'</div>';
 const PAL=['#2E9E8F','#E0443E','#F2A33A','#5B8DEF','#9B6BD6','#3DBE7A','#E57AA7'],SM=['فرو','ارد','خرد','تیر','مرد','شهر','مهر','آبا','آذر','دی','بهم','اسف'];
 let rscope='y',rm=T[1];
-function donut(arr,total,title,cls){if(!total)return `<div class="dn"><b class="${cls}">${title}</b><div class="empty">—</div></div>`;
- const it=arr.slice(0,6),rest=arr.slice(6).reduce((s,x)=>s+x[1],0);if(rest)it.push(['سایر',rest]);let off=25;
- const seg=it.map((x,i)=>{const p=x[1]/total*100,s=`<circle cx="21" cy="21" r="15.915" fill="none" stroke="${PAL[i]}" stroke-width="6" stroke-dasharray="${p} ${100-p}" stroke-dashoffset="${off}"/>`;off-=p;return s}).join('');
- return `<div class="dn"><b class="${cls}">${title}</b><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--chip)" stroke-width="6"/>${seg}<text x="21" y="22.6" text-anchor="middle" font-size="4.2" fill="currentColor" style="font-family:inherit">${fa(Math.round(total/1e5)/10)}م</text></svg><div class="lg">${it.map((x,i)=>`<div><i style="background:${PAL[i]}"></i>${esc(x[0])}<b>${fa(Math.round(x[1]/total*100))}٪</b></div>`).join('')}</div></div>`}
-function bars(g){
- const n=g.length,mx=Math.max(1,...g.map(x=>Math.max(x.i,x.e))),w=360/n,base=76,scale=66/mx,rt=LANG!=='en';
- const bs=g.map((x,k)=>{const kk=rt?n-1-k:k,x0=kk*w+w*.16,bw=Math.max(2,Math.min(13,w*.27)),a=x.i*scale,b=x.e*scale;
-  return `<rect x="${x0}" y="${base-a}" width="${bw}" height="${Math.max(0,a)}" rx="3" fill="url(#barIncome)"/><rect x="${x0+bw+2}" y="${base-b}" width="${bw}" height="${Math.max(0,b)}" rx="3" fill="url(#barExpense)"/>`}).join('');
- return `<svg viewBox="0 0 360 84" class="bch" role="img" aria-label="نمودار مقایسه درآمد و هزینه"><defs><linearGradient id="barIncome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#36B982"/><stop offset="1" stop-color="#18764F"/></linearGradient><linearGradient id="barExpense" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E58A78"/><stop offset="1" stop-color="#B94E45"/></linearGradient></defs><path d="M4 ${base+.5}H356" stroke="var(--bd)" stroke-width="1" opacity=".8"/>${bs}</svg><div class="bl2" style="grid-template-columns:repeat(${n},minmax(0,1fr))">${g.map(x=>`<span>${x.l}</span>`).join('')}</div>`}
+function categoryBars(arr,total,title,cls){
+ if(!total)return `<div class="dn"><b class="${cls}">${title}</b><div class="empty">—</div></div>`;
+ const it=arr.slice(0,12),rest=arr.slice(12).reduce((s,x)=>s+x[1],0);if(rest)it.push(['سایر',rest]);
+ const max=Math.max(1,...it.map(x=>x[1])),color=cls==='inc'?'#239B68':'#CE6659';
+ return `<section class="cat-bars"><b class="${cls}">${title}</b><div class="cat-bars-list">${it.map(([name,val])=>{const w=Math.max(3,val/max*100);return `<div class="cat-bar-row"><div class="cat-bar-track"><div class="cat-bar-fill ${cls}" style="width:${w}%"></div><span class="cat-bar-name">${esc(name)}</span></div><b class="cat-bar-value">${fa(val)}</b></div>`}).join('')}</div></section>`
+}
 function renderYear(){
  const inS=t=>rscope==='a'||(t.y===ry&&(rscope==='y'||t.m===rm)),sm=a=>a.reduce((s,t)=>s+t.a,0);
  $('yt').textContent=rscope==='a'?'همه سال\u200cها':pd(ry);$('ynav').hidden=rscope==='a';$('rmn').hidden=rscope!=='m';$('rmn').value=rm;
@@ -840,17 +852,7 @@ function renderYear(){
  let h=`<div class="ys"><div><small>درآمد</small><b class="inc">${fa(I)}</b></div><div><small>هزینه</small><b class="exp">${fa(E)}</b></div><div><small>مانده</small><b>${fa(I-E)}</b></div></div>`;
  if(!tx.length){$('yr').innerHTML=h+'<div class="empty">برای این بازه چیزی ثبت نشده.</div>';return}
  const cat=k=>{const by={};tx.filter(t=>t.t===k).forEach(t=>{const n=t.c||'بدون سرفصل';by[n]=(by[n]||0)+t.a});return Object.entries(by).sort((a,b)=>b[1]-a[1])};
- let chart=[];
- if(rscope==='y'){
-  chart=MN.map((name,idx)=>{const a=tx.filter(t=>t.m===idx+1);return{l:SM[idx],i:sm(a.filter(t=>t.t==='i')),e:sm(a.filter(t=>t.t==='e'))}});
- }else if(rscope==='m'){
-  chart=Array.from({length:7},(_,idx)=>{const a=tx.filter(t=>Math.min(6,Math.floor((t.d-1)/5))===idx);return{l:['۱–۵','۶–۱۰','۱۱–۱۵','۱۶–۲۰','۲۱–۲۵','۲۶–۳۰','۳۱'][idx],i:sm(a.filter(t=>t.t==='i')),e:sm(a.filter(t=>t.t==='e'))}});
- }else{
-  const years=[...new Set(tx.map(t=>Number(t.y)))].sort((a,b)=>a-b).slice(-8);
-  chart=years.map(y=>{const a=tx.filter(t=>Number(t.y)===y);return{l:pd(String(y).slice(-2)),i:sm(a.filter(t=>t.t==='i')),e:sm(a.filter(t=>t.t==='e'))}});
- }
- h+=`<section class="report-chart"><div class="report-chart-head"><b>مقایسه درآمد و هزینه</b><div class="report-legend"><span><i class="income-dot"></i>درآمد</span><span><i class="expense-dot"></i>هزینه</span></div></div>${bars(chart)}</section>`;
- h+=`<div class="ch">${donut(cat('e'),E,'هزینه\u200cها','exp')}${donut(cat('i'),I,'درآمدها','inc')}</div>`;
+ h+=`<div class="cat-bars-grid">${categoryBars(cat('e'),E,'هزینه‌ها','exp')}${categoryBars(cat('i'),I,'درآمدها','inc')}</div>`;
  $('yr').innerHTML=h}
 function fitSum(){
  const fit=(el,box)=>{el.style.fontSize='';let sz=parseFloat(getComputedStyle(el).fontSize)||16,n=0;
@@ -860,7 +862,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.12';$('appv').textContent=APP_VER;
+const APP_VER='1.3.13';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
