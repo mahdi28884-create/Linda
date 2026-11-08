@@ -35,6 +35,16 @@ header{display:flex;align-items:center;gap:12px;margin:8px 2px 18px}
 .dlist-head button,.archive-link{border:0!important;background:transparent!important;color:var(--ac)!important;padding:7px 2px!important;font-size:14px;text-decoration:underline;cursor:pointer}
 .dues-archive{margin:2px 4px 8px}
 .dlist-head{display:flex;justify-content:space-between;align-items:center;margin:8px 0 4px;color:var(--ac)}
+
+.dues-accordion{margin:10px 0!important;padding:10px 12px!important}
+.dues-accordion>summary.st{display:flex;align-items:center;gap:9px;cursor:pointer}
+.dues-accordion-count{font-size:15px;color:var(--ac);font-weight:700}
+.dues-chevron{width:48px;height:48px;flex:0 0 48px;border-radius:50%;background:#dcebe0;display:grid;place-items:center;margin-inline-start:auto}
+.dues-chevron i{width:32px;height:32px;border-radius:50%;background:#f7f8f7;display:block;position:relative}
+.dues-chevron i:after{content:"";position:absolute;width:9px;height:9px;left:10px;top:8px;border-right:3px solid #176b56;border-bottom:3px solid #176b56;transform:rotate(45deg);transition:transform .18s,top .18s}
+.dues-accordion[open]>.st .dues-chevron i:after{transform:rotate(225deg);top:12px}
+.dues-list-body{padding:0 2px 3px}
+.dues-list-body:empty{display:none}
 #dues.t-i #dadd{background:#1E9E4A!important;color:#fff!important}
 #dues.t-e #dadd,#dues #insadd{background:#D32F2F!important;color:#fff!important}
 .inst-group{border:1px solid var(--bd);border-radius:14px;background:var(--card);margin:8px 0;overflow:hidden}
@@ -502,7 +512,8 @@ body.c3 #frm .seg button{padding:4px}
 </details></div>
 <div class="card" id="dues" data-tab="dues"><details id="dsec" open><summary class="st"><span><i class="ii" data-ic="swap"></i><span class="tl">مطالبات و دیون</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div>
 <div class="seg"><button id="dtr" class="on" data-dt="r">مطالبات (طلب من)</button><button id="dtp" data-dt="p">دیون (بدهی من)</button></div>
-<div class="ys" style="grid-template-columns:1fr 1fr" id="dsm"></div>
+<div class="ys" style="grid-template-columns:1fr" id="dsm"></div>
+<details id="activeDuePanel" class="settings-group dues-accordion"><summary class="st"><span id="activeDueTitle">تعداد مطالبات فعال</span><b id="activeDueCount" class="dues-accordion-count">۰</b><span class="dues-chevron" aria-hidden="true"><i></i></span></summary><div id="dlOpen" class="dues-list-body"></div></details>
 <details id="dform" style="margin-top:12px"><summary class="st"><span id="dformTitle">＋ ثبت مورد جدید</span><span class="chev"></span></summary>
 <div class="row" style="margin-top:12px"><input id="dnm" placeholder="نام بدهکار"></div>
 <div class="row"><input id="dph" inputmode="tel" placeholder="شماره تماس (اختیاری)"></div>
@@ -526,9 +537,11 @@ body.c3 #frm .seg button{padding:4px}
 <p class="hint" style="margin:4px 2px 6px">تاریخ اولین سررسید؛ قسط‌های بعدی هر ماه در همین روز هستند.</p>
 <div class="row r3"><select id="insday" aria-label="روز سررسید ماهانه"></select><select id="insmonth" aria-label="ماه اولین قسط"></select><select id="insyear" aria-label="سال اولین قسط"></select></div>
 <p class="hint" style="margin:4px 2px 6px">یادآوری برای هر قسط</p>
-<div class="row"><select id="insrem" aria-label="یادآوری اقساط"><option value="-1">بدون یادآوری</option><option value="0">همان روز سررسید</option><option value="1">۱ روز قبل</option><option value="3">۳ روز قبل</option><option value="7" selected>۷ روز قبل</option></select></div>
+<div class="row"><select id="insrem" aria-label="یادآوری اقساط"><option value="-1">بدون یادآوری</option><option value="0">همان روز سررسید</option><option value="1">۱ روز قبل</option><option value="3">۳ روز قبل</option><option value="7" selected>۷ روز قبل</option><option value="c">تاریخ دلخواه ماهانه</option></select></div>
+<div id="insrcrow" hidden><p class="hint" style="margin:4px 2px 6px">تاریخ یادآوری قسط اول؛ برای قسط‌های بعدی همین روز در ماه‌های بعد ثبت می‌شود.</p><div class="row r3"><select id="insrcd" aria-label="روز یادآوری قسط اول"></select><select id="insrcm" aria-label="ماه یادآوری قسط اول"></select><select id="insrcy" aria-label="سال یادآوری قسط اول"></select></div></div>
 <button class="add" id="insadd">ثبت همه اقساط</button><p class="hint" id="insmsg" aria-live="polite"></p>
-</details><div id="duesArchiveLink" class="dues-archive"></div><div id="dl" hidden></div>
+</details>
+<details id="archiveDuePanel" class="settings-group dues-accordion"><summary class="st"><span id="archiveDueTitle">مطالبات تسویه‌شده</span><b id="archiveDueCount" class="dues-accordion-count">۰</b><span class="dues-chevron" aria-hidden="true"><i></i></span></summary><div id="dlArchive" class="dues-list-body"></div></details>
 </details></div>
 <div class="card" data-tab="reports"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">گزارشات</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div><div class="seg3" id="rrsc"><button data-rs2="y" class="on">سالانه</button><button data-rs2="m">ماهانه</button><button data-rs2="a">همه</button></div><select id="rrmn" hidden aria-label="ماه" style="margin-bottom:10px"></select><div class="ynav" id="ryn"><button id="ryp" aria-label="سال قبل"><span class="chev" style="transform:rotate(-90deg)"></span></button><b id="ryt"></b><button id="rynxt" aria-label="سال بعد"><span class="chev" style="transform:rotate(90deg)"></span></button></div><div id="ryr"></div><div class="bk" style="margin:10px 0"><button id="xla">خروجی اکسل (همه اطلاعات)</button></div></details></div>
 
@@ -730,11 +743,12 @@ $('dm').onchange=()=>fillDays();$('dy').onchange=()=>fillDays();
 $('te').onclick=()=>setType('e');$('ti').onclick=()=>setType('i');
 $('nx').onclick=()=>{vm--;if(vm<1){vm=12;vy--}fillDate();render()};
 $('pv').onclick=()=>{vm++;if(vm>12){vm=1;vy++}fillDate();render()};
+document.addEventListener('toggle',e=>{const t=e.target;if(!(t instanceof HTMLDetailsElement)||!t.open)return;const root=document.getElementById('dues');if(!root||!root.contains(t))return;const keep=new Set([t]);for(let p=t.parentElement;p;p=p.parentElement)if(p instanceof HTMLDetailsElement)keep.add(p);root.querySelectorAll('details[open]').forEach(d=>{if(d.id!=='dsec'&&!keep.has(d))d.open=false})},true);
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
  if(b.dataset.g){const g=b.dataset.g;open.has(g)?open.delete(g):open.add(g);render()}
  if(b.dataset.del){if(!b.dataset.s){b.dataset.s=1;b.textContent='مطمئنید؟';setTimeout(()=>{b.dataset.s='';b.textContent='حذف'},2500)}
   else{S.tx=S.tx.filter(t=>t.id!=b.dataset.del);save();render();notify('تراکنش حذف شد.')}}
- if(b.dataset.dt){closeDForm();dtab=b.dataset.dt;duesListMode='';render()}
+ if(b.dataset.dt){closeDForm();dtab=b.dataset.dt;duesListMode='';document.querySelectorAll('#dues details').forEach(d=>{if(d.id!=='dsec')d.open=false});render()}
  if(b.dataset.dlist){duesListMode=b.dataset.dlist==='close'?'':b.dataset.dlist;renderDues();if(duesListMode)$('dl').scrollIntoView({behavior:'smooth',block:'start'})}
  if(b.dataset.dnew){const target=b.dataset.dnew==='installments'?'instform':'dform';$(target).open=true;$(target).scrollIntoView({behavior:'smooth',block:'center'})}
  if(b.dataset.dok){const x=S.dues.find(z=>z.id==b.dataset.dok);if(x){x.done=!x.done;if(!x.done)resetDueFlags(x.id);save();render();notify(x.done?'وضعیت تسویه ثبت شد.':'وضعیت مورد بازگردانی شد.')}}
@@ -808,7 +822,11 @@ const dText=n=>n<0?fa(-n)+' روز گذشته':n===0?'امروز':fa(n)+' روز
 function daysTo(y,m,d){const g=toG(y,m,d),n=new Date();return Math.round((Date.UTC(g[0],g[1]-1,g[2])-Date.UTC(n.getFullYear(),n.getMonth(),n.getDate()))/864e5)}
 function dDays(sel){const y=num($('dyy').value)||T[0],m=+$('dmm').value,n=dim(y,m);
  $('ddd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('ddd').value=Math.min(sel||+$('ddd').value||1,n)}
-function dInit(){$('dmm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('dmm').value=T[1];fillYearSelect($('dyy'),T[0]);$('dyy').value=String(T[0]);dDays(T[2]);$('insday').innerHTML=Array.from({length:31},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('insday').value=String(T[2]);$('insmonth').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('insmonth').value=String(T[1]);fillYearSelect($('insyear'),T[0]);$('insyear').value=String(T[0]);try{rcKeep()}catch(e){}}
+function dInit(){$('dmm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('dmm').value=T[1];fillYearSelect($('dyy'),T[0]);$('dyy').value=String(T[0]);dDays(T[2]);$('insday').innerHTML=Array.from({length:31},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('insday').value=String(T[2]);$('insmonth').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('insmonth').value=String(T[1]);fillYearSelect($('insyear'),T[0]);$('insyear').value=String(T[0]);$('insrcm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('insrcm').value=String(T[1]);fillYearSelect($('insrcy'),T[0]);$('insrcy').value=String(T[0]);insRcDays(T[2]);try{rcKeep()}catch(e){}}
+function insRcDays(sel){const y=num($('insrcy').value)||T[0],m=+$('insrcm').value||1,n=dim(y,m),keep=sel||+$('insrcd').value||1;$('insrcd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('insrcd').value=Math.min(keep,n)}
+function monthStep(y,m,delta){const ix=y*12+(m-1)+delta;return {y:Math.floor(ix/12),m:((ix%12)+12)%12+1}}
+function insRcShow(){const on=$('insrem').value==='c';$('insrcrow').hidden=!on;if(on&&!$('insrcrow').dataset.i){$('insrcrow').dataset.i='1';const dt=monthStep(num($('insyear').value)||T[0],+$('insmonth').value||T[1],-1);$('insrcy').value=String(dt.y);$('insrcm').value=String(dt.m);insRcDays(Math.min(+$('insday').value||T[2],dim(dt.y,dt.m)))}}
+$('insrem').onchange=insRcShow;$('insrcm').onchange=()=>insRcDays();$('insrcy').onchange=()=>insRcDays();
 function rcDays(sel){const y=num($('rcy').value)||T[0],m=+$('rcm').value||1,n=dim(y,m);$('rcd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('rcd').value=Math.min(sel||+$('rcd').value||1,n)}
 function rcInit(y,m,d){$('rcm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');fillYearSelect($('rcy'),y);$('rcy').value=String(y);$('rcm').value=m;rcDays(d)}
 function rcKeep(){if(!$('rcrow').dataset.i)return;rcInit(num($('rcy').value)||T[0],+$('rcm').value||1,+$('rcd').value||1)}
@@ -859,34 +877,28 @@ function renderDues(){
  const key=x=>x.y*372+x.m*31+x.d,L=S.dues.filter(x=>x.k===dtab).sort((a,b)=>(a.done-b.done)||key(a)-key(b));
  $('dtr').classList.toggle('on',dtab==='r');{const dc=$('dues').classList;dc.remove('t-e','t-i');dc.add(dtab==='r'?'t-i':'t-e')}$('dtp').classList.toggle('on',dtab==='p');$('instform').hidden=dtab!=='p';
  $('dnm').placeholder=dtab==='r'?'نام بدهکار':'نام بستانکار';$('dam').placeholder=dtab==='r'?'مبلغ طلب (تومان)':'مبلغ بدهی (تومان)';$('dsb').placeholder=dtab==='r'?'موضوع مطالبه':'موضوع بدهی';$('dadd').textContent=editDueId?'ذخیره ویرایش':dtab==='r'?'ثبت مطالبه':'ثبت بدهی';
- const op=L.filter(x=>!x.done),arch=L.filter(x=>x.done),tot=op.reduce((a,x)=>a+x.a,0),ac=dtab==='r'?'inc':'exp',noun=dtab==='r'?'مطالبه':'بدهی',plural=dtab==='r'?'مطالبات':'دیون';
- $('dsm').innerHTML=`<div><small>جمع ${dtab==='r'?'مطالبات فعال':'بدهی‌های فعال'}</small><b class="${ac}">${fa(tot)}</b></div><button class="dcount-card" data-dlist="open" aria-label="نمایش ${plural} باز"><small>تعداد ${dtab==='r'?'مطالبات فعال':'بدهی‌های فعال'}</small><b>${fa(op.length)}</b></button>`;
+ const op=L.filter(x=>!x.done),arch=L.filter(x=>x.done),tot=op.reduce((a,x)=>a+x.a,0),ac=dtab==='r'?'inc':'exp',noun=dtab==='r'?'مطالبه':'بدهی',plural=dtab==='r'?'مطالبات':'دیون',activeLabel=dtab==='r'?'مطالبات فعال':'بدهی‌های فعال';
+ $('dsm').innerHTML=`<div><small>جمع ${activeLabel}</small><b class="${ac}">${fa(tot)}</b></div>`;
+ $('activeDueTitle').textContent='تعداد '+activeLabel;$('activeDueCount').textContent=fa(op.length);
+ $('archiveDueTitle').textContent=dtab==='r'?'مطالبات تسویه‌شده':'دیون تسویه‌شده';$('archiveDueCount').textContent=fa(arch.length);
  $('dformTitle').textContent=editDueId?'ویرایش مورد':dtab==='r'?'＋ ثبت مطالبه جدید':'＋ ثبت بدهی جدید';
- $('duesArchiveLink').innerHTML=`<button class="archive-link" data-dlist="archive">${plural} تسویه‌شده (${fa(arch.length)})</button>`;
  const dueCard=x=>{const n=daysTo(x.y,x.m,x.d),cl=(x.done||x.rem<0)?'':n<0?'od':n<=x.rem?'sn':'',fc=x.id===focusId;return `<div class="dli${x.done?' done':''}${fc?' fcs '+x.k:''}" data-did="${x.id}"><div class="dtop">${fc?`<span class="bstar ${x.k}">★</span>`:''}<span class="gi" style="background:var(--chip)">${svg(x.k==='r'?'down':'up')}</span><div class="m"><b>${esc(x.who)}</b><span>${esc(x.subj||'بدون موضوع')}${x.ph?' · '+esc(x.ph):''}</span></div><div class="dam2 ${ac}">${fa(x.a)}</div></div>
 <div class="dtop"><span class="bdg ${cl}">${x.done?'تسویه شد':dText(n)}</span><span class="hint" style="margin:0">سررسید ${fa(x.d)} ${MN[x.m-1]} ${pd(x.y)} · ${x.rem<0?'بدون یادآوری':'یادآوری: '+(x.rc?fa(x.rc.d)+' '+MN[x.rc.m-1]+' '+pd(x.rc.y):rmTxt(x.rem))}</span></div>
 <div class="dact"><button data-dcal="${x.id}">${ic('bell')}افزودن به تقویم</button><button data-dok="${x.id}">${x.done?'↩ بازگشت':'✓ تسویه شد'}</button><button data-dedit="${x.id}">ویرایش</button><button data-ddel="${x.id}">حذف</button></div></div>`};
-
- const shown=duesListMode==='archive'?arch:duesListMode==='open'?op:[];
- $('dl').hidden=!duesListMode;
- if(!duesListMode){$('dl').innerHTML='';}
- else{
-  const heading=duesListMode==='archive'?`بایگانی ${plural} تسویه‌شده`:`${dtab==='r'?'مطالبات فعال':'بدهی‌های فعال'}`;
-  if(!shown.length)$('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close" aria-label="بستن فهرست"><span class="chev" style="display:inline-block;transform:rotate(180deg)"></span></button></div><div class="empty">${duesListMode==='archive'?'مورد تسویه‌شده‌ای در بایگانی نیست.':'مورد بازی برای نمایش نیست.'}</div>`;
-  else if(dtab!=='p')$('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close" aria-label="بستن فهرست"><span class="chev" style="display:inline-block;transform:rotate(180deg)"></span></button></div>`+shown.map(dueCard).join('');
-  else{
-   const groups=new Map(),standalone=[];
-   shown.forEach(x=>{if(x.installmentGroup){const k=String(x.installmentGroup);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(x)}else standalone.push(x)});
-   const cards=standalone.map(dueCard);
-   for(const items of groups.values()){
-    const first=items[0],openItems=items.filter(x=>!x.done),sum=openItems.reduce((a,x)=>a+x.a,0);
-    const subject=(first.subj||'اقساط').replace(/\s*[—-] قسط \d+ از \d+$/,'');
-    cards.push(`<details class="inst-group"><summary><span class="ig-name">${esc(first.who)}${subject?' · '+esc(subject):''}</span><span class="ig-meta">${fa(items.length)} قسط</span><span class="ig-meta">${duesListMode==='archive'?'تسویه‌شده':fa(openItems.length)+' باز · '+fa(sum)+' تومان'}</span></summary><div class="ig-items">${items.map(dueCard).join('')}</div></details>`);
-   }
-   $('dl').innerHTML=`<div class="dlist-head"><b>${heading}</b><button data-dlist="close" aria-label="بستن فهرست"><span class="chev" style="display:inline-block;transform:rotate(180deg)"></span></button></div>`+(cards.join('')||'<div class="empty">موردی برای نمایش نیست.</div>');
+ const buildList=(items,archive,target)=>{
+  if(!items.length){target.innerHTML=`<div class="empty">${archive?'مورد تسویه‌شده‌ای در بایگانی نیست.':'مورد فعالی برای نمایش نیست.'}</div>`;return}
+  if(dtab!=='p'){target.innerHTML=items.map(dueCard).join('');return}
+  const groups=new Map(),standalone=[];
+  items.forEach(x=>{if(x.installmentGroup){const k=String(x.installmentGroup);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(x)}else standalone.push(x)});
+  const cards=standalone.map(dueCard);
+  for(const groupItems of groups.values()){
+   const first=groupItems[0],openItems=groupItems.filter(x=>!x.done),sum=openItems.reduce((a,x)=>a+x.a,0);
+   const subject=(first.subj||'اقساط').replace(/\s*[—-] قسط \d+ از \d+$/,'');
+   cards.push(`<details class="inst-group"><summary><span class="ig-name">${esc(first.who)}${subject?' · '+esc(subject):''}</span><span class="ig-meta">${fa(groupItems.length)} قسط</span><span class="ig-meta">${archive?'تسویه‌شده':fa(openItems.length)+' باز · '+fa(sum)+' تومان'}</span></summary><div class="ig-items">${groupItems.map(dueCard).join('')}</div></details>`);
   }
- }
- renderAlert()}
+  target.innerHTML=cards.join('')||'<div class="empty">موردی برای نمایش نیست.</div>';
+ };
+ buildList(op,false,$('dlOpen'));buildList(arch,true,$('dlArchive'));renderAlert()}
 async function icsFor(x){const g=toG(x.y,x.m,x.d),p=n=>String(n).padStart(2,'0'),ds=g[0]+p(g[1])+p(g[2]);
  const now=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''),e2=s=>String(s).replace(/[\\;,]/g,'\\$&').replace(/\n/g,' ');
  const r=x.rem<0?0:x.rem,title=(x.k==='r'?(LANG==='en'?'Receivable from ':LANG==='ar'?'مستحق من ':'مطالبه از '):(LANG==='en'?'Debt payment to ':LANG==='ar'?'سداد دين إلى ':'پرداخت بدهی به '))+x.who+(x.subj?' — '+x.subj:'');
@@ -895,19 +907,21 @@ async function icsFor(x){const g=toG(x.y,x.m,x.d),p=n=>String(n).padStart(2,'0')
 $('dam').addEventListener('input',e=>{const n=num(e.target.value);e.target.value=n?fa(n):''});
 $('dmm').onchange=()=>dDays();$('dyy').onchange=()=>dDays();
 $('insadd').onclick=async()=>{
- const who=$('inswho').value.trim(),amount=num($('insamt').value),count=Math.floor(num($('inscount').value)),day=+$('insday').value,month=+$('insmonth').value,year=num($('insyear').value)||T[0],rem=+$('insrem').value,base=$('inssubj').value.trim(),ph=$('insph').value.trim();
+ const who=$('inswho').value.trim(),amount=num($('insamt').value),count=Math.floor(num($('inscount').value)),day=+$('insday').value,month=+$('insmonth').value,year=num($('insyear').value)||T[0],choice=$('insrem').value,baseRem=choice==='c'?0:+choice,base=$('inssubj').value.trim(),ph=$('insph').value.trim();
  if(!who){$('inswho').focus();notify('نام بستانکار را وارد کنید.',true);return}
  if(!amount){$('insamt').focus();notify('مبلغ هر قسط را به‌درستی وارد کنید.',true);return}
  if(!Number.isInteger(count)||count<1||count>600){$('inscount').focus();notify('تعداد اقساط باید بین ۱ تا ۶۰۰ باشد.',true);return}
+ const custom=choice==='c'?{y:num($('insrcy').value)||year,m:+$('insrcm').value,d:+$('insrcd').value}:null;
  const stamp=Date.now(),made=[];let seq=stamp;const ids=new Set(S.dues.map(x=>x.id));
  for(let i=0;i<count;i++){
-  let y=year+Math.floor((month-1+i)/12),m=(month-1+i)%12+1,d=Math.min(day,dim(y,m));
+  let y=year+Math.floor((month-1+i)/12),m=(month-1+i)%12+1,d=Math.min(day,dim(y,m)),rem=baseRem,rc=null;
+  if(custom){const rmth=monthStep(custom.y,custom.m,i);rc={y:rmth.y,m:rmth.m,d:Math.min(custom.d,dim(rmth.y,rmth.m))};const gd=toG(y,m,d),gr=toG(rc.y,rc.m,rc.d);rem=Math.round((Date.UTC(gd[0],gd[1]-1,gd[2])-Date.UTC(gr[0],gr[1]-1,gr[2]))/DAY);if(rem<0){notify('تاریخ یادآوری نمی‌تواند بعد از سررسید قسط باشد.',true);return}}
   while(ids.has(seq))seq++;const id=seq++;ids.add(id);
-  made.push({id,k:'p',who,ph,a:amount,subj:(base?base+' — ':'')+'قسط '+(i+1)+' از '+count,y,m,d,rem,rc:null,done:false,installmentGroup:stamp,installmentNo:i+1,installmentTotal:count});
+  made.push({id,k:'p',who,ph,a:amount,subj:(base?base+' — ':'')+'قسط '+(i+1)+' از '+count,y,m,d,rem,rc,done:false,installmentGroup:stamp,installmentNo:i+1,installmentTotal:count});
  }
  S.dues.push(...made);save();const ok=await verifyPersist();
  if(!ok){S.dues=S.dues.filter(x=>x.installmentGroup!==stamp);notify('ذخیره اقساط انجام نشد؛ فضای ذخیره‌سازی را بررسی کنید.',true);return}
- ['inswho','insph','insamt','inscount','inssubj'].forEach(id=>$(id).value='');$('insmsg').textContent=fa(count)+' قسط ماهانه ثبت شد؛ برای هر قسط یادآوری جداگانه تنظیم شده است.';render();
+ ['inswho','insph','insamt','inscount','inssubj'].forEach(id=>$(id).value='');$('insrem').value='7';$('insrcrow').hidden=true;delete $('insrcrow').dataset.i;$('insmsg').textContent=fa(count)+' قسط ماهانه ثبت شد؛ برای هر قسط یادآوری جداگانه تنظیم شده است.';render();
 };
 $('dadd').onclick=async()=>{const who=$('dnm').value.trim(),a=num($('dam').value);if(!who){$('dnm').focus();notify('نام شخص را وارد کنید.',true);return}if(!a){$('dam').focus();notify('مبلغ را به‌درستی وارد کنید.',true);return}
  const wasEditD=!!editDueId,dv={k:dtab,who,ph:$('dph').value.trim(),a,subj:$('dsb').value.trim(),y:num($('dyy').value)||T[0],m:+$('dmm').value,d:+$('ddd').value,rem:+$('drm').value};if($('drm').value==='c'){const ry=num($('rcy').value)||T[0],rmn=+$('rcm').value,rdd=+$('rcd').value,gd=toG(dv.y,dv.m,dv.d),gr=toG(ry,rmn,rdd),rr=Math.round((Date.UTC(gd[0],gd[1]-1,gd[2])-Date.UTC(gr[0],gr[1]-1,gr[2]))/864e5);if(rr<0){notify('تاریخ یادآوری نمی‌تواند بعد از تاریخ سررسید باشد.',true);return}dv.rem=rr;dv.rc={y:ry,m:rmn,d:rdd}}else dv.rc=null;
@@ -1001,7 +1015,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.21';$('appv').textContent=APP_VER;
+const APP_VER='1.3.23';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
