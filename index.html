@@ -500,7 +500,7 @@ body.c3 #frm .seg button{padding:4px}
 <button class="add" id="dadd">ثبت مطالبه</button><button class="cnl" id="dcan" hidden>انصراف از ویرایش</button>
 <p class="hint" style="margin-top:10px">برای اینکه حتی وقتی برنامه بسته است زنگ بزند، روی هر مورد «افزودن به تقویم» را بزنید تا یادآور در تقویم گوشی ثبت شود. سررسیدهای نزدیک و گذشته هم هنگام باز کردن برنامه بالای صفحه نمایش داده می‌شود.</p>
 </details></details></div>
-<div class="card" data-tab="reports"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">گزارشات</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div><p class="hint">برای دریافت فایل اکسل از همه اطلاعات برنامه استفاده کنید.</p><div class="bk" style="margin:0 0 10px"><button id="xla">خروجی اکسل (همه اطلاعات)</button></div></details></div>
+<div class="card" data-tab="reports"><details open><summary class="st"><span><i class="ii" data-ic="file"></i><span class="tl">گزارشات</span></span><span class="chev"></span></summary><div style="margin-top:12px"></div><div class="seg3" id="rrsc"><button data-rs2="y" class="on">سالانه</button><button data-rs2="m">ماهانه</button><button data-rs2="a">همه</button></div><select id="rrmn" hidden aria-label="ماه" style="margin-bottom:10px"></select><div class="ynav" id="ryn"><button id="ryp" aria-label="سال قبل"><span class="chev" style="transform:rotate(-90deg)"></span></button><b id="ryt"></b><button id="rynxt" aria-label="سال بعد"><span class="chev" style="transform:rotate(90deg)"></span></button></div><div id="ryr"></div><div class="bk" style="margin:10px 0"><button id="xla">خروجی اکسل (همه اطلاعات)</button></div></details></div>
 
 <div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><div class="settings-group"><button class="st gbtn" data-guide="1">راهنمای کار با برنامه <span class="chev"></span></button></div><details class="settings-group" hidden><summary class="st">اشتراک <span class="chev"></span></summary><p class="hint" id="lst"></p><div id="lbuy" hidden><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p><p class="hint">برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید: <b dir="ltr">09361239027</b></p></div>
 </details><details class="settings-group"><summary class="st">سرفصل‌های هزینه <span class="chev"></span></summary>
@@ -737,7 +737,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(b.dataset.rc){const[k,i]=b.dataset.rc.split(':');S.cats[k].splice(+i,1);editing=null;save();fillCats();render()}});
 [['e','ne'],['i','ni']].forEach(([k,id])=>$('a'+k).onclick=()=>{const v=$(id).value.trim();
  if(v&&!S.cats[k].includes(v)){S.cats[k].push(v);save();$(id).value='';if(type===k)fillCats();render()}});
-$('yp').onclick=()=>{ry--;renderYear()};$('yn').onclick=()=>{ry++;renderYear()};
+['yp','ryp'].forEach(id=>$(id).onclick=()=>{ry--;renderYear()});['yn','rynxt'].forEach(id=>$(id).onclick=()=>{ry++;renderYear()});
 const LK='dk_logo',LI=document.querySelector('.logo img'),DL=LI.src;
 try{const l=localStorage.getItem(LK);if(l)LI.src=l}catch(e){}
 $('lg').onclick=()=>$('lf').click();
@@ -914,17 +914,17 @@ function bars(g){const n=g.length,mx=Math.max(1,...g.map(x=>Math.max(x.i,x.e))),
  return `<svg viewBox="0 0 360 112" class="bch">${bs}</svg><div class="bl2" style="grid-template-columns:repeat(${n},1fr)">${g.map(x=>`<span>${x.l}</span>`).join('')}</div>`}
 function renderYear(){
  const inS=t=>rscope==='a'||(t.y===ry&&(rscope==='y'||t.m===rm)),sm=a=>a.reduce((s,t)=>s+t.a,0);
- $('yt').textContent=rscope==='a'?'همه سال\u200cها':pd(ry);$('ynav').hidden=rscope==='a';$('rmn').hidden=rscope!=='m';$('rmn').value=rm;
+ ['yt','ryt'].forEach(id=>$(id).textContent=rscope==='a'?'همه سال\u200cها':pd(ry));['ynav','ryn'].forEach(id=>$(id).hidden=rscope==='a');['rmn','rrmn'].forEach(id=>{ $(id).hidden=rscope!=='m';$(id).value=rm });
  document.querySelectorAll('[data-rs2]').forEach(b=>b.classList.toggle('on',b.dataset.rs2===rscope));
  const tx=S.tx.filter(inS),I=sm(tx.filter(t=>t.t==='i')),E=sm(tx.filter(t=>t.t==='e'));
  let h=`<div class="ys"><div><small>درآمد</small><b class="inc">${fa(I)}</b></div><div><small>هزینه</small><b class="exp">${fa(E)}</b></div><div><small>مانده</small><b>${fa(I-E)}</b></div></div>`;
- if(!tx.length){$('yr').innerHTML=h+'<div class="empty">برای این بازه چیزی ثبت نشده.</div>';return}
+ if(!tx.length){['yr','ryr'].forEach(id=>$(id).innerHTML=h+'<div class="empty">برای این بازه چیزی ثبت نشده.</div>');return}
  const cat=k=>{const by={};tx.filter(t=>t.t===k).forEach(t=>{const n=t.c||'بدون سرفصل';by[n]=(by[n]||0)+t.a});return Object.entries(by).sort((a,b)=>b[1]-a[1])};
  const exCats=cat('e'),inCats=cat('i');
  h+=`<div class="ch">${donut(exCats,E,'هزینه\u200cها','exp')}${donut(inCats,I,'درآمدها','inc')}</div>`;
  const catBars=(items,title,kind)=>{if(!items.length)return '';const max=items[0][1]||1;return `<section class="catbars ${kind}"><h3>${title}</h3>${items.map(([name,val],i)=>`<div class="catbar-row"><div class="catbar-track"><div class="catbar-fill" style="--bar-h:${(i*47+12)%360};width:${Math.max(1,val/max*100)}%"></div><span class="catbar-label">${esc(name)}</span></div><span class="catbar-value">${fa(val)}</span></div>`).join('')}</section>`};
  h+=catBars(exCats,'هزینه‌ها','expense')+catBars(inCats,'درآمدها','income');
- $('yr').innerHTML=h}
+ ['yr','ryr'].forEach(id=>$(id).innerHTML=h)}
 function fitSum(){
  const fit=(el,box)=>{el.style.fontSize='';let sz=parseFloat(getComputedStyle(el).fontSize)||16,n=0;
   while(n++<40&&sz>7&&(box.scrollWidth>box.clientWidth+1||el.scrollWidth>el.clientWidth+1)){sz-=.5;el.style.fontSize=sz+'px'}};
@@ -1378,7 +1378,7 @@ $('bi').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileRead
  r.readAsText(f);e.target.value=''};
 document.querySelectorAll('[data-ic]').forEach(e=>{e.innerHTML=svg(e.dataset.ic)});
 document.querySelectorAll('[data-tab]>details').forEach(d=>d.addEventListener('toggle',()=>{if(!d.open)d.open=true}));
-$('rmn').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('rmn').onchange=()=>{rm=+$('rmn').value;renderYear()};
+['rmn','rrmn'].forEach(id=>{ $(id).innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$(id).onchange=()=>{rm=+$(id).value;renderYear()} });
 document.documentElement.lang=LANG;document.documentElement.dir=LANG==='en'?'ltr':'rtl';$('lang').value=LANG;$('lang').onchange=()=>setLang($('lang').value);
 try{if(!localStorage.getItem('dk_gh'))$('ghb').hidden=false}catch(e){}
 
