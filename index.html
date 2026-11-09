@@ -512,6 +512,11 @@ body.c3 #frm .seg button{padding:4px}
 #dues .inst-group>summary .ig-meta{display:block!important;width:100%;margin-top:5px;box-sizing:border-box}
 #dues .inst-group>summary .due-details-btn{position:absolute!important;right:10px!important;left:auto!important;bottom:8px!important;top:auto!important;transform:none!important;display:block!important;min-width:110px!important;height:36px!important;box-sizing:border-box!important;text-align:center!important;margin:0!important}
 #dues .inst-group>summary:after{position:absolute!important;left:13px!important;right:auto!important;bottom:21px!important;top:auto!important;margin:0!important;grid-column:auto!important;grid-row:auto!important}
+[data-theme="dark"] #dues .inst-group.due-claim-card{background:var(--fi-bg)!important;border-color:var(--fi-bd)!important}
+[data-theme="dark"] #dues .inst-group.due-debt-card{background:var(--fe-bg)!important;border-color:var(--fe-bd)!important}
+[data-theme="dark"] #dues .inst-group.due-claim-card>summary .due-details-btn{background:var(--fi-bg)!important;border-color:var(--fi-bd)!important;color:var(--inc)!important}
+[data-theme="dark"] #dues .inst-group.due-debt-card>summary .due-details-btn{background:var(--fe-bg)!important;border-color:var(--fe-bd)!important;color:var(--exp)!important}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) #dues .inst-group.due-claim-card{background:var(--fi-bg)!important;border-color:var(--fi-bd)!important}:root:not([data-theme="light"]) #dues .inst-group.due-debt-card{background:var(--fe-bg)!important;border-color:var(--fe-bd)!important}:root:not([data-theme="light"]) #dues .inst-group.due-claim-card>summary .due-details-btn{background:var(--fi-bg)!important;border-color:var(--fi-bd)!important;color:var(--inc)!important}:root:not([data-theme="light"]) #dues .inst-group.due-debt-card>summary .due-details-btn{background:var(--fe-bg)!important;border-color:var(--fe-bd)!important;color:var(--exp)!important}}
 </style>
 </head>
 <body data-active-tab="home">
@@ -915,14 +920,14 @@ function renderDues(){
 <div class="dact"><button data-dcal="${x.id}">${ic('bell')}افزودن به تقویم</button><button data-dok="${x.id}">${x.done?'↩ بازگشت':'✓ تسویه شد'}</button><button data-dedit="${x.id}">ویرایش</button><button data-ddel="${x.id}">حذف</button></div></div>`};
  const buildList=(items,archive,target)=>{
   if(!items.length){target.innerHTML=`<div class="empty">${archive?'مورد تسویه‌شده‌ای در بایگانی نیست.':'مورد فعالی برای نمایش نیست.'}</div>`;return}
-  if(dtab==='r'){target.innerHTML=items.map(x=>`<details class="inst-group other-debt"><summary><span class="ig-name">${esc(x.who)}${x.subj?' · '+esc(x.subj):''}</span><span class="ig-meta">${fa(x.a)} تومان · ${x.done?'وصول‌شده':`سررسید ${fa(x.d)} ${MN[x.m-1]} ${pd(x.y)}`}</span><button class="due-details-btn" type="button" data-show-due>مشاهده جزئیات</button></summary><div class="ig-items">${dueCard(x)}</div></details>`).join('');wireDueDetails(target);return}
+  if(dtab==='r'){target.innerHTML=items.map(x=>`<details class="inst-group other-debt due-claim-card"><summary><span class="ig-name">${esc(x.who)}${x.subj?' · '+esc(x.subj):''}</span><span class="ig-meta">${fa(x.a)} تومان · ${x.done?'وصول‌شده':`سررسید ${fa(x.d)} ${MN[x.m-1]} ${pd(x.y)}`}</span><button class="due-details-btn" type="button" data-show-due>مشاهده جزئیات</button></summary><div class="ig-items">${dueCard(x)}</div></details>`).join('');wireDueDetails(target);return}
   const groups=new Map(),standalone=[];
   items.forEach(x=>{if(x.installmentGroup){const k=String(x.installmentGroup);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(x)}else standalone.push(x)});
-  const cards=standalone.map(x=>`<details class="inst-group other-debt"><summary><span class="ig-name">${esc(x.who)}${x.subj?' · '+esc(x.subj):''}</span><span class="ig-meta">${fa(x.a)} تومان · ${x.done?'تسویه‌شده':`سررسید ${fa(x.d)} ${MN[x.m-1]} ${pd(x.y)}`}</span><button class="due-details-btn" type="button" data-show-due>مشاهده جزئیات</button></summary><div class="ig-items">${dueCard(x)}</div></details>`);
+  const cards=standalone.map(x=>`<details class="inst-group other-debt due-debt-card"><summary><span class="ig-name">${esc(x.who)}${x.subj?' · '+esc(x.subj):''}</span><span class="ig-meta">${fa(x.a)} تومان · ${x.done?'تسویه‌شده':`سررسید ${fa(x.d)} ${MN[x.m-1]} ${pd(x.y)}`}</span><button class="due-details-btn" type="button" data-show-due>مشاهده جزئیات</button></summary><div class="ig-items">${dueCard(x)}</div></details>`);
   for(const groupItems of groups.values()){
    const first=groupItems[0],openItems=groupItems.filter(x=>!x.done),sum=openItems.reduce((a,x)=>a+x.a,0);
    const subject=(first.subj||'اقساط').replace(/\s*[—-] قسط \d+ از \d+$/,'');
-   cards.push(`<details class="inst-group installment-group"><summary><span class="ig-name">${esc(first.who)}${subject?' · '+esc(subject):''}</span><span class="ig-meta installment-remaining">${archive?`تعداد اقساط تسویه‌شده: ${fa(groupItems.filter(x=>x.done).length)}`:`تعداد اقساط باقی‌مانده: ${fa(openItems.length)}`}</span><button class="due-details-btn" type="button" data-show-due>مشاهده جزئیات</button></summary><div class="ig-items">${groupItems.map(dueCard).join('')}</div></details>`);
+   cards.push(`<details class="inst-group installment-group due-debt-card"><summary><span class="ig-name">${esc(first.who)}${subject?' · '+esc(subject):''}</span><span class="ig-meta installment-remaining">${archive?`تعداد اقساط تسویه‌شده: ${fa(groupItems.filter(x=>x.done).length)}`:`تعداد اقساط باقی‌مانده: ${fa(openItems.length)}`}</span><button class="due-details-btn" type="button" data-show-due>مشاهده جزئیات</button></summary><div class="ig-items">${groupItems.map(dueCard).join('')}</div></details>`);
   }
   target.innerHTML=cards.join('')||'<div class="empty">موردی برای نمایش نیست.</div>';wireDueDetails(target);
  };
@@ -1044,7 +1049,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.31';$('appv').textContent=APP_VER;
+const APP_VER='1.3.33';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
