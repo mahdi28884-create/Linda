@@ -301,6 +301,13 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 .settings-group .st{font-size:15px}
 .settings-group select{width:100%;min-height:48px;padding:10px 12px;border:1px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font:inherit;box-shadow:none}
 .settings-group select:focus{outline:2px solid var(--aca);outline-offset:1px}
+:root[data-theme="dark"] .settings-group select{background:var(--fe-bg)!important;border-color:var(--fe-bd)!important;color:var(--tx)!important}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .settings-group select{background:var(--fe-bg)!important;border-color:var(--fe-bd)!important;color:var(--tx)!important}}
+:root[data-theme="dark"] .settings-group>summary .chev{background:#dcebe0!important}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .settings-group>summary .chev{background:#dcebe0!important}}
+.settings-group>summary .chev{width:48px;height:48px;flex:0 0 48px;border-radius:50%;background:#dcebe0;display:grid;place-items:center;margin-inline-start:auto;position:relative;transform:none!important}
+.settings-group>summary .chev:after{content:"";width:9px;height:9px;border-right:3px solid #176b56;border-bottom:3px solid #176b56;transform:rotate(45deg);transition:transform .18s,top .18s;position:absolute;left:18px;top:16px}
+.settings-group[open]>summary .chev:after{transform:rotate(225deg);top:20px}
 :root[data-theme="light"] .settings-group{background:#fff!important}
 @media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .settings-group{background:#fff!important}}
 :root[data-theme="dark"] .settings-group{background:var(--card)!important}
@@ -1533,9 +1540,9 @@ $('xno').onclick=()=>{$('xo').hidden=true;armBackGuard();showTab(exitReturnTab)}
 $('xbk').onclick=()=>{$('xo').hidden=true;armBackGuard();showTab(exitReturnTab)};
 $('xok').onclick=()=>{
  try{if(PIN){localStorage.setItem('dk_pin_hidden_at',String(Date.now()));sessionStorage.removeItem('dk_pin_open')}}catch(e){}
- // Try to close the standalone/browser window. If the host refuses, leave the exit screen visible.
+ // A standalone/PWA window may refuse window.close(); navigating to a blank page is the reliable fallback.
  try{window.close()}catch(e){}
- setTimeout(()=>{if(!document.hidden){xoShow(1)}},180);
+ setTimeout(()=>{try{location.replace('about:blank')}catch(e){location.href='about:blank'}},120);
 };
 /* ---- v28: چیدمان پویا؛ دکمه ثبت همیشه دیده می‌شود ---- */
 function syncBnh(){try{const n=document.querySelector('.bn'),p=$('pbx');if(!n||!p)return;const pr=p.getBoundingClientRect().height,nr=n.getBoundingClientRect().height;if(pr>0&&nr>0)document.documentElement.style.setProperty('--bnh',(100*nr/pr).toFixed(1)+'px')}catch(e){}}
