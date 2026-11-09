@@ -1561,9 +1561,17 @@ try{if(!localStorage.getItem('dk_gh'))$('ghb').hidden=false}catch(e){}
 function closeDForm(){try{if(editDueId)$('dcan').onclick();else $('dform').open=false}catch(e){}}
 function xoShow(s){$('xs0').hidden=!!s;$('xs1').hidden=!s;$('xop').hidden=!PIN;$('xo').hidden=false}
 $('xit').onclick=()=>xoShow(0);
-$('xno').onclick=()=>{$('xo').hidden=true};
-$('xbk').onclick=()=>{$('xo').hidden=true};
-$('xok').onclick=()=>{try{if(PIN)pinLock(true)}catch(e){}try{window.close()}catch(e){}setTimeout(()=>xoShow(1),250)};
+// Android hardware/browser Back: keep the app page alive and ask before leaving.
+function armBackGuard(){try{history.pushState({hesabBackGuard:true},'',location.href)}catch(e){}}
+armBackGuard();
+window.addEventListener('popstate',()=>{armBackGuard();if(!$('pl').hidden)return;if($('xo').hidden)xoShow(0)});
+$('xno').onclick=()=>{$('xo').hidden=true;armBackGuard()};
+$('xbk').onclick=()=>{$('xo').hidden=true;armBackGuard();if(PIN)pinLock(true)};
+$('xok').onclick=()=>{
+ try{if(PIN)localStorage.setItem('dk_pin_hidden_at',String(Date.now()))}catch(e){}
+ // A web app cannot force Android to close its own window; show the exit instructions.
+ xoShow(1);
+};
 /* ---- v28: چیدمان پویا؛ دکمه ثبت همیشه دیده می‌شود ---- */
 function syncBnh(){try{const n=document.querySelector('.bn'),p=$('pbx');if(!n||!p)return;const pr=p.getBoundingClientRect().height,nr=n.getBoundingClientRect().height;if(pr>0&&nr>0)document.documentElement.style.setProperty('--bnh',(100*nr/pr).toFixed(1)+'px')}catch(e){}}
 function fitHome(){try{syncBnh();const b=document.body;b.classList.remove('c1','c2');if(tab!=='home')return;
