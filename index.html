@@ -299,6 +299,8 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 .settings-group>summary::-webkit-details-marker{display:none}
 .settings-group[open]>.st{margin-bottom:10px}
 .settings-group .st{font-size:15px}
+.settings-group select{width:100%;min-height:48px;padding:10px 12px;border:1px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font:inherit;box-shadow:none}
+.settings-group select:focus{outline:2px solid var(--aca);outline-offset:1px}
 .nav,.sum .bal,.sum .bal-main,.sum .bal .stat{
   border:2px solid var(--sum-outline)!important;
   box-shadow:0 0 0 1px var(--sum-outline-glow)!important
@@ -1532,14 +1534,16 @@ function xoShow(s){$('xs0').hidden=!!s;$('xs1').hidden=!s;$('xop').hidden=!PIN;$
 $('xit').onclick=()=>xoShow(0);
 // Android hardware/browser Back: keep the app page alive and ask before leaving.
 function armBackGuard(){try{history.pushState({hesabBackGuard:true},'',location.href)}catch(e){}}
+let exitReturnTab='home';
 armBackGuard();
-window.addEventListener('popstate',()=>{armBackGuard();if(!$('pl').hidden)return;if($('xo').hidden)xoShow(0)});
-$('xno').onclick=()=>{$('xo').hidden=true;armBackGuard()};
-$('xbk').onclick=()=>{$('xo').hidden=true;armBackGuard()};
+window.addEventListener('popstate',()=>{if(!$('pl').hidden)return;armBackGuard();if($('xo').hidden){exitReturnTab=tab;xoShow(0)}});
+$('xno').onclick=()=>{$('xo').hidden=true;armBackGuard();showTab(exitReturnTab)};
+$('xbk').onclick=()=>{$('xo').hidden=true;armBackGuard();showTab(exitReturnTab)};
 $('xok').onclick=()=>{
  try{if(PIN){localStorage.setItem('dk_pin_hidden_at',String(Date.now()));sessionStorage.removeItem('dk_pin_open')}}catch(e){}
- // Browsers do not let a web app force-close its Android window. Lock it and show the home-button instruction.
- xoShow(1);
+ // Try to close the standalone/browser window. If the host refuses, leave the exit screen visible.
+ try{window.close()}catch(e){}
+ setTimeout(()=>{if(!document.hidden){xoShow(1)}},180);
 };
 /* ---- v28: چیدمان پویا؛ دکمه ثبت همیشه دیده می‌شود ---- */
 function syncBnh(){try{const n=document.querySelector('.bn'),p=$('pbx');if(!n||!p)return;const pr=p.getBoundingClientRect().height,nr=n.getBoundingClientRect().height;if(pr>0&&nr>0)document.documentElement.style.setProperty('--bnh',(100*nr/pr).toFixed(1)+'px')}catch(e){}}
