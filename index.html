@@ -1076,7 +1076,20 @@ function renderAB(){const n=$('abn');n.hidden=!(AB.f!=='off'&&AB.pend);if(!n.hid
  $('abf').value=AB.f;}
 function checkAB(){if(AB.f!=='off'){const iv={d:864e5,w:6048e5,m:2592e6}[AB.f];if(Date.now()-AB.last>=iv){const a=snaps();a.unshift({t:Date.now(),d:JSON.stringify(S)});try{localStorage.setItem('dk_snaps',JSON.stringify(a.slice(0,3)))}catch(e){}AB.last=Date.now();AB.pend=true;abSave()}}renderAB()}
 $('abf').onchange=()=>{AB.f=$('abf').value;AB.last=0;abSave();checkAB()};
-let hid=0;function markPinBackground(){if(PIN){try{localStorage.setItem('dk_pin_hidden_at',String(Date.now()))}catch(e){}}}window.addEventListener('pagehide',markPinBackground);document.addEventListener('visibilitychange',()=>{if(document.hidden){hid=Date.now();markPinBackground()}else{autoUpd();if(PIN&&hid&&Date.now()-hid>12e4){try{localStorage.removeItem('dk_pin_hidden_at')}catch(e){}pinLock(true)}else{try{localStorage.removeItem('dk_pin_hidden_at');if(PIN)sessionStorage.setItem('dk_pin_open','1')}catch(e){}}checkAB();hid=0}});
+let hid=0;let backFromBackground=false;
+function markPinBackground(){if(PIN){try{localStorage.setItem('dk_pin_hidden_at',String(Date.now()));sessionStorage.removeItem('dk_pin_open');sessionStorage.setItem('dk_back_pending','1')}catch(e){}}}
+window.addEventListener('pagehide',markPinBackground);
+document.addEventListener('visibilitychange',()=>{
+ if(document.hidden){hid=Date.now();markPinBackground();return}
+ autoUpd();
+ try{backFromBackground=sessionStorage.getItem('dk_back_pending')==='1';sessionStorage.removeItem('dk_back_pending');localStorage.removeItem('dk_pin_hidden_at')}catch(e){backFromBackground=false}
+ if(PIN&&backFromBackground){
+   // In Android standalone/PWA, hardware Back often backgrounds the app instead of firing popstate.
+   // Ask for confirmation as soon as the user returns; either choice keeps the PIN lock enforced.
+   xoShow(0);
+ }else if(PIN&&hid){pinLock(true)}
+ checkAB();hid=0;
+});
 const EM='🏠 🏡 🏢 💡 🔥 💧 🚿 📞 📱 🌐 📺 🎓 📚 ✏️ 🏫 🔧 🛠️ 🧰 🚗 ⛽ 🚌 🚕 ✈️ 🧳 🏖️ 🍽️ 🍕 🍔 🥗 🍎 🥛 🍞 🛒 🛍️ 👕 👗 👟 💄 💈 🧴 🧼 💊 🩺 🏥 🦷 💰 💵 💳 🏦 🧾 📈 📉 🎁 🎉 🎂 🎬 🎮 🎵 🏋️ ⚽ 🐶 🐱 🌳 🌸 ☕ 🍵 👶 🧸 🍼 👩 👨 👵 👴 👧 👦 🕌 🙏 ❤️ ⭐ 🔔 📅 🛡️ 🔑 🪑 🛏️ 🧹 🧺 📦 💻 🖥️ 🎧 📷 🕯️ 🪙 🏷️'.split(' ');const epk=()=>'<div class="ipk em">'+EM.map(e=>`<button type="button" data-pk2="${e}">${e}</button>`).join('')+'</div>';
 const PAL=['#2E9E8F','#E0443E','#F2A33A','#5B8DEF','#9B6BD6','#3DBE7A','#E57AA7'],SM=['فرو','ارد','خرد','تیر','مرد','شهر','مهر','آبا','آذر','دی','بهم','اسف'];
 let rscope='y',rm=T[1];
@@ -1565,11 +1578,11 @@ $('xit').onclick=()=>xoShow(0);
 function armBackGuard(){try{history.pushState({hesabBackGuard:true},'',location.href)}catch(e){}}
 armBackGuard();
 window.addEventListener('popstate',()=>{armBackGuard();if(!$('pl').hidden)return;if($('xo').hidden)xoShow(0)});
-$('xno').onclick=()=>{$('xo').hidden=true;armBackGuard()};
+$('xno').onclick=()=>{$('xo').hidden=true;armBackGuard();if(PIN)pinLock(true)};
 $('xbk').onclick=()=>{$('xo').hidden=true;armBackGuard();if(PIN)pinLock(true)};
 $('xok').onclick=()=>{
- try{if(PIN)localStorage.setItem('dk_pin_hidden_at',String(Date.now()))}catch(e){}
- // A web app cannot force Android to close its own window; show the exit instructions.
+ try{if(PIN){localStorage.setItem('dk_pin_hidden_at',String(Date.now()));sessionStorage.removeItem('dk_pin_open')}}catch(e){}
+ // Browsers do not let a web app force-close its Android window. Lock it and show the home-button instruction.
  xoShow(1);
 };
 /* ---- v28: چیدمان پویا؛ دکمه ثبت همیشه دیده می‌شود ---- */
