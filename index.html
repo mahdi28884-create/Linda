@@ -531,6 +531,20 @@ body.c3 #frm .seg button{padding:4px}
 :root[data-theme="dark"] #dues #dtp.on{background:rgba(217,58,53,.24)!important;box-shadow:inset 0 0 0 2px #F0615C!important}
 :root[data-theme="dark"] #dues.t-e #dadd,:root[data-theme="dark"] #dues #insadd{background:#D93A35!important;color:#fff!important}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #dues.t-i,:root:not([data-theme="light"]) #dues.t-e{background-image:none!important}:root:not([data-theme="light"]) #dues #activeDuePanel,:root:not([data-theme="light"]) #dues #archiveDuePanel,:root:not([data-theme="light"]) #dues #dform,:root:not([data-theme="light"]) #dues #instform{background:var(--card)!important;border:2px solid var(--bd)!important}:root:not([data-theme="light"]) #dues #dform>summary.st,:root:not([data-theme="light"]) #dues #instform>summary.st{background:transparent!important}:root:not([data-theme="light"]) #dues #dform input,:root:not([data-theme="light"]) #dues #dform select,:root:not([data-theme="light"]) #dues #instform input,:root:not([data-theme="light"]) #dues #instform select{background:var(--fi-bg)!important;border:1px solid var(--fi-bd)!important;color:var(--tx)!important}:root:not([data-theme="light"]) #dues #dform input::placeholder,:root:not([data-theme="light"]) #dues #instform input::placeholder{color:var(--mut)!important;opacity:1}:root:not([data-theme="light"]) #dues .dues-chevron{background:var(--chip)}:root:not([data-theme="light"]) #dues .dues-chevron i{background:var(--card)}:root:not([data-theme="light"]) #dues .dues-chevron i:after{border-right-color:var(--ac);border-bottom-color:var(--ac)}:root:not([data-theme="light"]) #dues #dtp{color:#F0615C!important}:root:not([data-theme="light"]) #dues #dtp.on{background:rgba(217,58,53,.24)!important;box-shadow:inset 0 0 0 2px #F0615C!important}:root:not([data-theme="light"]) #dues.t-e #dadd,:root:not([data-theme="light"]) #dues #insadd{background:#D93A35!important;color:#fff!important}}
+
+
+/* ===== v30: نوار پایین با فرورفتگی منحنی دور دکمه وسط (شبیه نمونه) ===== */
+nav.bn{--barbg:var(--card);--barsh:rgba(20,35,43,.14);
+ background:radial-gradient(circle 40px at 50% -2px,transparent 39px,var(--barbg) 40px)!important;
+ border-top:0!important;box-shadow:none!important;
+ filter:drop-shadow(0 -3px 6px var(--barsh))}
+:root[data-theme="light"] nav.bn{--barbg:var(--card2)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) nav.bn{--barbg:var(--card2)}}
+:root[data-theme="dark"] nav.bn{--barsh:rgba(0,0,0,.5)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav.bn{--barsh:rgba(0,0,0,.5)}}
+nav.bn button.on{background:transparent}
+nav.bn .ctr{justify-content:flex-end}
+nav.bn .ctr .ic{width:58px;height:58px;padding:15px;margin-top:-46px;box-shadow:0 4px 12px rgba(16,128,111,.35)}
 </style>
 </head>
 <body data-active-tab="home">
