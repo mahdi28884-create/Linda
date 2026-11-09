@@ -301,6 +301,10 @@ details summary{cursor:pointer;font-weight:600;list-style:none}
 .settings-group .st{font-size:15px}
 .settings-group select{width:100%;min-height:48px;padding:10px 12px;border:1px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font:inherit;box-shadow:none}
 .settings-group select:focus{outline:2px solid var(--aca);outline-offset:1px}
+:root[data-theme="light"] .settings-group{background:#fff!important}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .settings-group{background:#fff!important}}
+:root[data-theme="dark"] .settings-group{background:var(--card)!important}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .settings-group{background:var(--card)!important}}
 .nav,.sum .bal,.sum .bal-main,.sum .bal .stat{
   border:2px solid var(--sum-outline)!important;
   box-shadow:0 0 0 1px var(--sum-outline-glow)!important
@@ -1034,20 +1038,8 @@ function renderAB(){const n=$('abn');n.hidden=!(AB.f!=='off'&&AB.pend);if(!n.hid
  $('abf').value=AB.f;}
 function checkAB(){if(AB.f!=='off'){const iv={d:864e5,w:6048e5,m:2592e6}[AB.f];if(Date.now()-AB.last>=iv){const a=snaps();a.unshift({t:Date.now(),d:JSON.stringify(S)});try{localStorage.setItem('dk_snaps',JSON.stringify(a.slice(0,3)))}catch(e){}AB.last=Date.now();AB.pend=true;abSave()}}renderAB()}
 $('abf').onchange=()=>{AB.f=$('abf').value;AB.last=0;abSave();checkAB()};
-let hid=0;let backFromBackground=false;
-function markPinBackground(){if(PIN){try{localStorage.setItem('dk_pin_hidden_at',String(Date.now()));sessionStorage.removeItem('dk_pin_open');sessionStorage.setItem('dk_back_pending','1')}catch(e){}}}
-window.addEventListener('pagehide',markPinBackground);
-document.addEventListener('visibilitychange',()=>{
- if(document.hidden){hid=Date.now();markPinBackground();return}
- autoUpd();
- try{backFromBackground=sessionStorage.getItem('dk_back_pending')==='1';sessionStorage.removeItem('dk_back_pending');localStorage.removeItem('dk_pin_hidden_at')}catch(e){backFromBackground=false}
- if(PIN&&backFromBackground){
-   // In Android standalone/PWA, hardware Back often backgrounds the app instead of firing popstate.
-   // Ask for confirmation as soon as the user returns; either choice keeps the PIN lock enforced.
-   xoShow(0);
- }else if(PIN&&hid){pinLock(true)}
- checkAB();hid=0;
-});
+// Home and Recent Apps only hide/background the app; they must not ask for exit or lock PIN.
+// The exit dialog is opened only by the real Back navigation event below.
 const EM='🏠 🏡 🏢 💡 🔥 💧 🚿 📞 📱 🌐 📺 🎓 📚 ✏️ 🏫 🔧 🛠️ 🧰 🚗 ⛽ 🚌 🚕 ✈️ 🧳 🏖️ 🍽️ 🍕 🍔 🥗 🍎 🥛 🍞 🛒 🛍️ 👕 👗 👟 💄 💈 🧴 🧼 💊 🩺 🏥 🦷 💰 💵 💳 🏦 🧾 📈 📉 🎁 🎉 🎂 🎬 🎮 🎵 🏋️ ⚽ 🐶 🐱 🌳 🌸 ☕ 🍵 👶 🧸 🍼 👩 👨 👵 👴 👧 👦 🕌 🙏 ❤️ ⭐ 🔔 📅 🛡️ 🔑 🪑 🛏️ 🧹 🧺 📦 💻 🖥️ 🎧 📷 🕯️ 🪙 🏷️'.split(' ');const epk=()=>'<div class="ipk em">'+EM.map(e=>`<button type="button" data-pk2="${e}">${e}</button>`).join('')+'</div>';
 const PAL=['#2E9E8F','#E0443E','#F2A33A','#5B8DEF','#9B6BD6','#3DBE7A','#E57AA7'],SM=['فرو','ارد','خرد','تیر','مرد','شهر','مهر','آبا','آذر','دی','بهم','اسف'];
 let rscope='y',rm=T[1];
@@ -1561,7 +1553,9 @@ showTab=(function(r){return function(){closeDForm();const v=r.apply(this,argumen
 applyUI=(function(r){return function(){const v=r.apply(this,arguments);schedFit();return v}})(applyUI);
 window.addEventListener('resize',schedFit);window.addEventListener('orientationchange',schedFit);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(schedFit);
-renderGuide();pinUI();checkAB();pinLock();autoUpd();
+renderGuide();pinUI();checkAB();
+try{if(PIN&&sessionStorage.getItem('dk_pin_open')!=='1')pinLock()}catch(e){if(PIN)pinLock()}
+autoUpd();
 lFill();dInit();renderSw();applyUI();showTab('home');['dy','dyy'].forEach(i=>$(i).addEventListener('input',e=>{e.target.value=pd(toLat(e.target.value))}));
 fillDate();setType('e');render();setTimeout(i18n,60);schedFit();
 licApply();
