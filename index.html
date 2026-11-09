@@ -1059,7 +1059,7 @@ $('pgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
  if(c==='d'){setPi(v.slice(0,-1));$('pm').textContent='';return}
  if(v.length>=4)return;$('pm').textContent='';setPi(v+c);if(v.length+1===4)pinTry()});
 document.addEventListener('keydown',e=>{if($('pl').hidden)return;if(/^[0-9]$/.test(e.key)){const v=$('pi').value;if(v.length<4){setPi(v+e.key);if(v.length+1===4)pinTry()}}else if(e.key==='Backspace')setPi($('pi').value.slice(0,-1))});
-function pinLock(force=false){if(!PIN)return;if(!force){try{if(sessionStorage.getItem('dk_pin_open')==='1')return;const hiddenAt=Number(localStorage.getItem('dk_pin_hidden_at')||0);if(hiddenAt&&Date.now()-hiddenAt<12e4){sessionStorage.setItem('dk_pin_open','1');localStorage.removeItem('dk_pin_hidden_at');return}localStorage.removeItem('dk_pin_hidden_at')}catch(e){}}buildPad();$('pl').hidden=false;setPi('');$('pm').textContent='';}
+function pinLock(force=false){if(!PIN)return;try{sessionStorage.removeItem('dk_pin_open');localStorage.removeItem('dk_pin_hidden_at')}catch(e){}buildPad();$('pl').hidden=false;setPi('');$('pm').textContent='';}
 async function pinTry(){const v=$('pi').value;if(v.length<4)return;const f=pinFail();
  if(f.until>Date.now()){$('pm').textContent='لطفاً '+fa(Math.ceil((f.until-Date.now())/1000))+' ثانیه صبر کنید.';setPi('');return}
  if(await hashPin(v,PIN.s)===PIN.h){$('pl').hidden=true;setPi('');try{localStorage.removeItem('dk_pf');sessionStorage.setItem('dk_pin_open','1')}catch(e){}}
