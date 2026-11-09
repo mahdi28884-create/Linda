@@ -533,6 +533,11 @@ body.c3 #frm .seg button{padding:4px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #dues.t-i,:root:not([data-theme="light"]) #dues.t-e{background-image:none!important}:root:not([data-theme="light"]) #dues #activeDuePanel,:root:not([data-theme="light"]) #dues #archiveDuePanel,:root:not([data-theme="light"]) #dues #dform,:root:not([data-theme="light"]) #dues #instform{background:var(--card)!important;border:2px solid var(--bd)!important}:root:not([data-theme="light"]) #dues #dform>summary.st,:root:not([data-theme="light"]) #dues #instform>summary.st{background:transparent!important}:root:not([data-theme="light"]) #dues #dform input,:root:not([data-theme="light"]) #dues #dform select,:root:not([data-theme="light"]) #dues #instform input,:root:not([data-theme="light"]) #dues #instform select{background:var(--fi-bg)!important;border:1px solid var(--fi-bd)!important;color:var(--tx)!important}:root:not([data-theme="light"]) #dues #dform input::placeholder,:root:not([data-theme="light"]) #dues #instform input::placeholder{color:var(--mut)!important;opacity:1}:root:not([data-theme="light"]) #dues .dues-chevron{background:var(--chip)}:root:not([data-theme="light"]) #dues .dues-chevron i{background:var(--card)}:root:not([data-theme="light"]) #dues .dues-chevron i:after{border-right-color:var(--ac);border-bottom-color:var(--ac)}:root:not([data-theme="light"]) #dues #dtp{color:#F0615C!important}:root:not([data-theme="light"]) #dues #dtp.on{background:rgba(217,58,53,.24)!important;box-shadow:inset 0 0 0 2px #F0615C!important}:root:not([data-theme="light"]) #dues.t-e #dadd,:root:not([data-theme="light"]) #dues #insadd{background:#D93A35!important;color:#fff!important}}
 
 
+
+/* ===== v31: ثبت سریع از پیامک ===== */
+#smstx{font:inherit;width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid var(--bd);border-radius:13px;background:var(--bg);color:var(--tx);resize:none;min-height:92px}
+#frm #smstx{background:var(--fi-bg)!important;border:1px solid var(--fi-bd)!important;color:var(--tx)!important}
+#frm #smstx::placeholder{color:var(--mut)!important;opacity:1}
 </style>
 </head>
 <body data-active-tab="home">
@@ -545,6 +550,8 @@ body.c3 #frm .seg button{padding:4px}
 
 <div class="card t-e" id="frm" data-tab="home">
 <div class="seg"><button id="te" class="on">هزینه</button><button id="ti">درآمد</button></div>
+<div class="row"><button type="button" class="cnl" id="smsbtn" style="width:100%">ثبت سریع از پیامک بانک</button></div>
+<div id="smsbox" hidden><div class="row"><textarea id="smstx" rows="4" placeholder="متن پیامک واریز یا برداشت بانک را اینجا بچسبانید"></textarea></div><div class="row"><button type="button" class="add" id="smsgo">تشخیص و پر کردن فرم</button></div></div>
 <div class="row"><input id="amt" inputmode="numeric" placeholder="مبلغ (تومان)" autocomplete="off"></div>
 <div class="row"><select id="cat" aria-label="سرفصل"></select></div>
 <div class="row r3"><select id="dd" aria-label="روز"></select><select id="dm" aria-label="ماه"></select><select id="dy" aria-label="سال"></select></div>
@@ -789,6 +796,42 @@ $('add').onclick=async()=>{const a=num($('amt').value);if(!a){$('amt').focus();n
  const wasEdit=!!editTxId;if(wasEdit){const t0=S.tx.find(z=>z.id==editTxId);if(t0)Object.assign(t0,{t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});else S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()})}else S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});editTxId=null;$('ecan').hidden=true;$('add').textContent=type==='e'?'ثبت هزینه':'ثبت درآمد';
  save();const ok=await verifyPersist();vy=y;vm=+$('dm').value;tvy=y;tvm=+$('dm').value;$('amt').value='';$('note').value='';render();notify(ok?(wasEdit?'تغییرات تراکنش ذخیره شد.':'تراکنش با موفقیت ثبت شد.'):'خطا در ذخیره تراکنش؛ فضای ذخیره‌سازی را بررسی کنید.',!ok)};
 $('dm').onchange=()=>fillDays();$('dy').onchange=()=>fillDays();
+function parseSms(raw){
+ const t=toLat(String(raw||'')).replace(/[٬،]/g,',');
+ const body=t.replace(/(?:مانده|موجودی)[^\n]*/g,' ');
+ let dt=null,m=body.match(/(?:^|\D)(1[34]\d{2})[\/\-.](\d{1,2})[\/\-.](\d{1,2})(?!\d)/);
+ if(m)dt=[+m[1],+m[2],+m[3]];
+ else{m=body.match(/(?:^|\D)(\d{2})[\/\-.](\d{1,2})[\/\-.](\d{1,2})(?!\d)/);if(m&&+m[2]>=1&&+m[2]<=12&&+m[3]>=1&&+m[3]<=31)dt=[1400+(+m[1]),+m[2],+m[3]]}
+ if(dt&&(dt[1]<1||dt[1]>12||dt[2]<1||dt[2]>31))dt=null;
+ const clean=body.replace(/\d{1,4}[\/\-.]\d{1,2}[\/\-.]\d{1,4}/g,' ').replace(/\d{1,2}:\d{2}(?::\d{2})?/g,' ').replace(/[\d*xX#]{2,}(?:[\s\-]+[\d*xX#]{2,}){2,}/g,' ').replace(/\d*\*+\d*/g,' ').replace(/(?<![\d,])\d{10,}(?![\d,])/g,' ');
+ const KW=/(مبلغ|برداشت|واریز|خرید|پرداخت|انتقال|دریافت|سپرده|کارمزد)/;
+ let best=null,re=/([+\-])?\s*(\d{1,3}(?:,\d{3})+|\d{4,9})\s*([+\-])?/g,x;
+ while((x=re.exec(clean))){
+  const v=parseInt(x[2].replace(/,/g,''),10);if(!v)continue;
+  const sign=x[3]||x[1]||'',pre=clean.slice(Math.max(0,x.index-22),x.index);
+  const score=(sign?3:0)+(KW.test(pre)?4:0)+(x[2].indexOf(',')>=0?1:0);
+  if(!best||score>best.score)best={v,sign,score,idx:x.index}}
+ if(!best)return null;
+ let type=null;
+ if(best.sign==='+')type='i';else if(best.sign==='-')type='e';
+ else{const ii=clean.search(/واریز|دریافت|سپرده|افزایش|بستانکار/),ei=clean.search(/برداشت|خرید|پرداخت|کسر|انتقال|کاهش|بدهکار|قبض|پایا|ساتنا|کارمزد/);
+  if(ii>=0&&(ei<0||ii<ei))type='i';else if(ei>=0)type='e'}
+ const toman=/تومان/.test(clean)&&!/ریال/.test(clean);
+ const a=toman?best.v:Math.round(best.v/10);
+ let note='',n1=body.match(/بابت\s+([^\n\d]{2,30})/),n2=body.match(/بانک\s+[\u0600-\u06FF]+/);
+ if(n1)note=n1[1].trim();else if(n2)note=n2[0].trim();
+ return{a,type,dt,note,conv:!toman}}
+$('smsbtn').onclick=()=>{const b=$('smsbox');b.hidden=!b.hidden;if(!b.hidden)setTimeout(()=>$('smstx').focus(),50)};
+$('smsgo').onclick=()=>{const r=parseSms($('smstx').value);
+ if(!r||!r.a){notify('مبلغی در متن پیامک پیدا نشد؛ مبلغ را دستی وارد کنید.',true);return}
+ if(r.type)setType(r.type);
+ $('amt').value=fa(r.a);
+ if(r.dt){const y=r.dt[0];fillYearSelect($('dy'),y);if([...$('dy').options].some(o=>o.value===String(y))){$('dy').value=String(y);$('dm').value=String(r.dt[1]);fillDays(r.dt[2]);$('dd').value=String(Math.min(r.dt[2],$('dd').options.length))}}
+ if(r.note)$('note').value=r.note;
+ $('smstx').value='';$('smsbox').hidden=true;
+ notify('مبلغ '+fa(r.a)+' تومان'+(r.conv?' (تبدیل از ریال)':'')+' پر شد. سرفصل را انتخاب و ثبت کنید.');
+ $('cat').focus()};
+
 $('te').onclick=()=>setType('e');$('ti').onclick=()=>setType('i');
 $('nx').onclick=()=>{vm--;if(vm<1){vm=12;vy--}fillDate();render()};
 $('pv').onclick=()=>{vm++;if(vm>12){vm=1;vy++}fillDate();render()};
@@ -1016,7 +1059,7 @@ $('pgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
  if(c==='d'){setPi(v.slice(0,-1));$('pm').textContent='';return}
  if(v.length>=4)return;$('pm').textContent='';setPi(v+c);if(v.length+1===4)pinTry()});
 document.addEventListener('keydown',e=>{if($('pl').hidden)return;if(/^[0-9]$/.test(e.key)){const v=$('pi').value;if(v.length<4){setPi(v+e.key);if(v.length+1===4)pinTry()}}else if(e.key==='Backspace')setPi($('pi').value.slice(0,-1))});
-function pinLock(force=false){if(!PIN)return;if(!force){try{if(sessionStorage.getItem('dk_pin_open')==='1')return}catch(e){}}buildPad();$('pl').hidden=false;setPi('');$('pm').textContent='';}
+function pinLock(force=false){if(!PIN)return;if(!force){try{if(sessionStorage.getItem('dk_pin_open')==='1')return;const hiddenAt=Number(localStorage.getItem('dk_pin_hidden_at')||0);if(hiddenAt&&Date.now()-hiddenAt<12e4){sessionStorage.setItem('dk_pin_open','1');localStorage.removeItem('dk_pin_hidden_at');return}localStorage.removeItem('dk_pin_hidden_at')}catch(e){}}buildPad();$('pl').hidden=false;setPi('');$('pm').textContent='';}
 async function pinTry(){const v=$('pi').value;if(v.length<4)return;const f=pinFail();
  if(f.until>Date.now()){$('pm').textContent='لطفاً '+fa(Math.ceil((f.until-Date.now())/1000))+' ثانیه صبر کنید.';setPi('');return}
  if(await hashPin(v,PIN.s)===PIN.h){$('pl').hidden=true;setPi('');try{localStorage.removeItem('dk_pf');sessionStorage.setItem('dk_pin_open','1')}catch(e){}}
@@ -1033,7 +1076,7 @@ function renderAB(){const n=$('abn');n.hidden=!(AB.f!=='off'&&AB.pend);if(!n.hid
  $('abf').value=AB.f;}
 function checkAB(){if(AB.f!=='off'){const iv={d:864e5,w:6048e5,m:2592e6}[AB.f];if(Date.now()-AB.last>=iv){const a=snaps();a.unshift({t:Date.now(),d:JSON.stringify(S)});try{localStorage.setItem('dk_snaps',JSON.stringify(a.slice(0,3)))}catch(e){}AB.last=Date.now();AB.pend=true;abSave()}}renderAB()}
 $('abf').onchange=()=>{AB.f=$('abf').value;AB.last=0;abSave();checkAB()};
-let hid=0;document.addEventListener('visibilitychange',()=>{if(document.hidden)hid=Date.now();else{autoUpd();if(PIN&&hid&&Date.now()-hid>12e4)pinLock();checkAB();hid=0}});
+let hid=0;function markPinBackground(){if(PIN){try{localStorage.setItem('dk_pin_hidden_at',String(Date.now()))}catch(e){}}}window.addEventListener('pagehide',markPinBackground);document.addEventListener('visibilitychange',()=>{if(document.hidden){hid=Date.now();markPinBackground()}else{autoUpd();if(PIN&&hid&&Date.now()-hid>12e4){try{localStorage.removeItem('dk_pin_hidden_at')}catch(e){}pinLock(true)}else{try{localStorage.removeItem('dk_pin_hidden_at');if(PIN)sessionStorage.setItem('dk_pin_open','1')}catch(e){}}checkAB();hid=0}});
 const EM='🏠 🏡 🏢 💡 🔥 💧 🚿 📞 📱 🌐 📺 🎓 📚 ✏️ 🏫 🔧 🛠️ 🧰 🚗 ⛽ 🚌 🚕 ✈️ 🧳 🏖️ 🍽️ 🍕 🍔 🥗 🍎 🥛 🍞 🛒 🛍️ 👕 👗 👟 💄 💈 🧴 🧼 💊 🩺 🏥 🦷 💰 💵 💳 🏦 🧾 📈 📉 🎁 🎉 🎂 🎬 🎮 🎵 🏋️ ⚽ 🐶 🐱 🌳 🌸 ☕ 🍵 👶 🧸 🍼 👩 👨 👵 👴 👧 👦 🕌 🙏 ❤️ ⭐ 🔔 📅 🛡️ 🔑 🪑 🛏️ 🧹 🧺 📦 💻 🖥️ 🎧 📷 🕯️ 🪙 🏷️'.split(' ');const epk=()=>'<div class="ipk em">'+EM.map(e=>`<button type="button" data-pk2="${e}">${e}</button>`).join('')+'</div>';
 const PAL=['#2E9E8F','#E0443E','#F2A33A','#5B8DEF','#9B6BD6','#3DBE7A','#E57AA7'],SM=['فرو','ارد','خرد','تیر','مرد','شهر','مهر','آبا','آذر','دی','بهم','اسف'];
 let rscope='y',rm=T[1];
@@ -1065,7 +1108,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.3.35';$('appv').textContent=APP_VER;
+const APP_VER='1.3.36';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
