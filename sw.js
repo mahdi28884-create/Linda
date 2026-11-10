@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hesab-shell-v12';
+const CACHE_NAME = 'hesab-shell-v13';
 const APP_FILES = [
   './',
   './index.html',
@@ -129,7 +129,7 @@ async function hesabCheckDue() {
   for (const x of list) {
     const left = Math.round((x.g - today) / 864e5);
     if (left <= 0 || left <= x.rem) {
-      const title = (x.k === 'r' ? 'سررسید طلب از ' : 'سررسید بدهی به ') + x.who;
+      const title = x.who ? (x.k === 'r' ? 'سررسید طلب از ' : 'سررسید بدهی به ') + x.who : (x.k === 'r' ? 'سررسید طلب دارید' : 'سررسید بدهی دارید');
       const existing = await self.registration.getNotifications({ tag: 'hesab-' + x.id });
       if (existing.length) continue;
 
@@ -138,7 +138,7 @@ async function hesabCheckDue() {
                  : left + ' روز مانده';
 
       await self.registration.showNotification(title, {
-        body: x.a.toLocaleString('fa-IR') + ' تومان · ' + when,
+        body: (x.a ? x.a.toLocaleString('fa-IR') + ' تومان · ' : '') + when,
         tag: 'hesab-' + x.id,
         requireInteraction: true,
         vibrate: [300, 150, 300, 150, 300]
