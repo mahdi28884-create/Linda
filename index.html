@@ -547,7 +547,6 @@ body.c3 #frm .seg button{padding:4px}
 :root:not([data-theme="light"]) [data-tab="settings"] .dues-chevron{background:var(--chip)}
 :root:not([data-theme="light"]) [data-tab="settings"] .dues-chevron i{background:var(--card)}
 :root:not([data-theme="light"]) [data-tab="settings"] .dues-chevron i:after{border-right-color:var(--ac);border-bottom-color:var(--ac)}
-main{padding-bottom:calc(var(--bnh,64px) + 66px)!important}
 </style>
 </head>
 <body data-active-tab="home">
@@ -580,10 +579,10 @@ main{padding-bottom:calc(var(--bnh,64px) + 66px)!important}
 <details id="activeDuePanel" class="settings-group dues-accordion"><summary class="st"><span id="activeDueTitle">تعداد مطالبات فعال</span><b id="activeDueCount" class="dues-accordion-count">۰</b><span class="dues-chevron" aria-hidden="true"><i></i></span></summary><div id="dlOpen" class="dues-list-body"></div></details>
 <details id="archiveDuePanel" class="settings-group dues-accordion"><summary class="st"><span id="archiveDueTitle">مطالبات تسویه‌شده</span><b id="archiveDueCount" class="dues-accordion-count">۰</b><span class="dues-chevron" aria-hidden="true"><i></i></span></summary><div id="dlArchive" class="dues-list-body"></div></details>
 <details id="dform" style="margin-top:12px"><summary class="st"><span id="dformTitle">＋ ثبت مورد جدید</span><span id="dformChevron" class="chev tiny" style="display:none"></span></summary>
-<div class="row" style="margin-top:12px"><input id="dnm" placeholder="نام بدهکار"></div>
-<div class="row"><input id="dph" inputmode="tel" placeholder="شماره تماس (اختیاری)"></div>
+<div class="row" style="margin-top:12px"><input id="dnm" placeholder="نام بدهکار" autocomplete="off"></div>
+<div class="row"><input id="dph" inputmode="tel" placeholder="شماره تماس (اختیاری)" autocomplete="off"></div>
 <div class="row"><input id="dam" inputmode="numeric" placeholder="مبلغ بدهی (تومان)" autocomplete="off"></div>
-<div class="row"><input id="dsb" placeholder="موضوع بدهی"></div>
+<div class="row"><input id="dsb" placeholder="موضوع بدهی" autocomplete="off"></div>
 <p class="hint" style="margin:4px 2px 6px">تاریخ سررسید</p>
 <div class="row r3"><select id="ddd" aria-label="روز"></select><select id="dmm" aria-label="ماه"></select><select id="dyy" aria-label="سال"></select></div>
 <p class="hint" style="margin:4px 2px 6px">یادآوری</p>
@@ -594,11 +593,11 @@ main{padding-bottom:calc(var(--bnh,64px) + 66px)!important}
 </details>
 <details id="instform" style="margin-top:12px" hidden><summary class="st">＋ ثبت اقساط<span class="chev tiny"></span></summary>
 <p class="hint" style="margin:6px 2px 8px">مشخصات را یک‌بار وارد کنید تا قسط‌ها به‌صورت بدهی‌های جداگانه و ماهانه ثبت شوند.</p>
-<div class="row"><input id="inswho" placeholder="نام بستانکار، مؤسسه، بانک، مدرسه یا مورد دیگر" aria-label="نام بستانکار، مؤسسه، بانک، مدرسه یا مورد دیگر"></div>
-<div class="row"><input id="insph" inputmode="tel" placeholder="شماره تماس (اختیاری)"></div>
+<div class="row"><input id="inswho" placeholder="نام بستانکار، مؤسسه، بانک، مدرسه یا مورد دیگر" aria-label="نام بستانکار، مؤسسه، بانک، مدرسه یا مورد دیگر" autocomplete="off"></div>
+<div class="row"><input id="insph" inputmode="tel" placeholder="شماره تماس (اختیاری)" autocomplete="off"></div>
 <div class="row"><input id="insamt" inputmode="numeric" placeholder="مبلغ هر قسط (تومان)" autocomplete="off"></div>
-<div class="row"><input id="inscount" type="number" inputmode="numeric" min="1" max="600" placeholder="تعداد اقساط"></div>
-<div class="row"><input id="inssubj" placeholder="موضوع؛ مثلاً وام یا شهریه مدرسه"></div>
+<div class="row"><input id="inscount" type="number" inputmode="numeric" min="1" max="600" placeholder="تعداد اقساط" autocomplete="off"></div>
+<div class="row"><input id="inssubj" placeholder="موضوع؛ مثلاً وام یا شهریه مدرسه" autocomplete="off"></div>
 <p class="hint" style="margin:4px 2px 6px">تاریخ اولین سررسید؛ قسط‌های بعدی هر ماه در همین روز هستند.</p>
 <div class="row r3"><select id="insday" aria-label="روز سررسید ماهانه"></select><select id="insmonth" aria-label="ماه اولین قسط"></select><select id="insyear" aria-label="سال اولین قسط"></select></div>
 <p class="hint" style="margin:4px 2px 6px">یادآوری برای هر قسط</p>
@@ -611,12 +610,12 @@ main{padding-bottom:calc(var(--bnh,64px) + 66px)!important}
 
 <div class="card" data-tab="settings"><details open><summary class="st"><span><i class="ii" data-ic="sliders"></i><span class="tl">تنظیمات</span></span><span class="chev"></span></summary><details class="settings-group" hidden><summary class="st">اشتراک <span class="dues-chevron" aria-hidden="true"><i></i></span></summary><p class="hint" id="lst"></p><div id="lbuy" hidden><p class="hint">شناسه دستگاه: <b class="dvid"></b></p><div class="addc"><input id="lcode2" placeholder="کد فعال‌سازی" autocomplete="off" style="direction:ltr"><button id="lact2">فعال‌سازی</button></div><p class="hint" id="lmsg2"></p><p class="hint">برای خرید یا تمدید اشتراک با پشتیبانی تماس بگیرید: <b dir="ltr">09361239027</b></p></div>
 </details><details class="settings-group"><summary class="st">سرفصل‌های هزینه <span class="dues-chevron" aria-hidden="true"><i></i></span></summary>
-<div class="addc"><input id="ne" placeholder="سرفصل جدید هزینه"><button id="ae">افزودن</button></div>
+<div class="addc"><input id="ne" placeholder="سرفصل جدید هزینه" autocomplete="off"><button id="ae">افزودن</button></div>
 <div class="chips" id="ce"></div><p class="hint">برای عوض کردن اسم یا آیکن یک سرفصل، روی علامت مداد کنار آن بزنید. در کادر کوچک، ایموجی را با کیبورد گوشی بزنید؛ خالی بگذارید تا خودکار انتخاب شود.</p>
 </details><details class="settings-group"><summary class="st">سرفصل‌های درآمد <span class="dues-chevron" aria-hidden="true"><i></i></span></summary>
-<div class="addc"><input id="ni" placeholder="سرفصل جدید درآمد"><button id="ai">افزودن</button></div>
+<div class="addc"><input id="ni" placeholder="سرفصل جدید درآمد" autocomplete="off"><button id="ai">افزودن</button></div>
 <div class="chips" id="ci"></div><p class="hint">برای عوض کردن اسم یا آیکن یک سرفصل، روی علامت مداد کنار آن بزنید. در کادر کوچک، ایموجی را با کیبورد گوشی بزنید؛ خالی بگذارید تا خودکار انتخاب شود.</p>
-</details><details class="settings-group"><summary class="st">حساب کاربری <span class="dues-chevron" aria-hidden="true"><i></i></span></summary><div id="hxacc"></div><div hidden><input id="pn1"><input id="pn2"><button id="psv"></button><button id="prm" hidden></button><p id="pmsg"></p><p id="pst"></p></div></details><details class="settings-group"><summary class="st">ارتباط با ما <span class="dues-chevron" aria-hidden="true"><i></i></span></summary><p class="hint">سازنده: <b dir="ltr">MORAD_DARVISHPOR</b><br>پشتیبانی: <a href="tel:09361239027" dir="ltr" style="color:var(--ac)"><b>09361239027</b></a><br>نسخه نرم‌افزار: <b dir="ltr" id="appv"></b></p><div class="bk"><button id="chkv">بررسی نسخه جدید</button></div><p class="hint" id="chkm"></p>
+</details><details class="settings-group"><summary class="st">حساب کاربری <span class="dues-chevron" aria-hidden="true"><i></i></span></summary><div id="hxacc"></div><div hidden><input id="pn1" autocomplete="off"><input id="pn2" autocomplete="off"><button id="psv"></button><button id="prm" hidden></button><p id="pmsg"></p><p id="pst"></p></div></details><details class="settings-group"><summary class="st">ارتباط با ما <span class="dues-chevron" aria-hidden="true"><i></i></span></summary><p class="hint">سازنده: <b dir="ltr">MORAD_DARVISHPOR</b><br>پشتیبانی: <a href="tel:09361239027" dir="ltr" style="color:var(--ac)"><b>09361239027</b></a><br>نسخه نرم‌افزار: <b dir="ltr" id="appv"></b></p><div class="bk"><button id="chkv">بررسی نسخه جدید</button></div><p class="hint" id="chkm"></p>
 </details><details class="settings-group"><summary class="st">خام نمودن اطلاعات برنامه <span class="dues-chevron" aria-hidden="true"><i></i></span></summary><p class="hint">«پاک کردن همه اطلاعات» همه تراکنش‌ها، مطالبات و دیون را پاک می‌کند و سرفصل‌ها را به حالت اولیه برمی‌گرداند. اشتراک شما پاک نمی‌شود. قبلش پشتیبان بگیرید.</p><div class="bk"><button data-rs="1">پاک کردن همه اطلاعات</button></div>
 </details><details class="settings-group"><summary class="st">پشتیبان‌گیری و بازیابی اطلاعات <span class="dues-chevron" aria-hidden="true"><i></i></span></summary><p class="hint abt">فعال‌سازی پشتیبان‌گیری خودکار</p><select id="abf"><option value="off">خاموش</option><option value="d">روزانه</option><option value="w">هفتگی</option><option value="m">ماهانه</option></select><p class="hint" style="margin-top:8px">مرورگر نمی‌تواند بی‌صدا فایل ذخیره کند. پس در بازه انتخابی، یک نسخه داخل خود برنامه نگه داشته می‌شود و پیامی برای ذخیره فایل می‌آید.</p><div class="backup-tools"><p class="hint">با زدن «پشتیبان‌گیری»، فایلی با اسم HESAB و تاریخ شمسی امروز (مثلاً HESAB14050809) در پوشه دانلودهای دستگاه ذخیره می‌شود. «بازیابی اطلاعات» اطلاعات فعلی را با اطلاعات فایل پشتیبان جایگزین می‌کند.</p><div class="bk"><button id="bd">پشتیبان‌گیری</button></div><div class="bk"><button id="bf">بازیابی اطلاعات</button></div><input type="file" id="bi" hidden><p class="hint" id="bm" style="margin-top:8px"></p></div></details><div class="settings-group"><button class="st gbtn" data-guide="1">راهنمای کار با برنامه <span class="dues-chevron" aria-hidden="true"><i></i></span></button></div></details></div>
 </main>
@@ -625,7 +624,7 @@ main{padding-bottom:calc(var(--bnh,64px) + 66px)!important}
 <div id="pbx" aria-hidden="true"></div>
 <div id="xo" hidden><div class="pbox"><i class="ii" data-ic="power"></i><div id="xs0"><div class="xt">خروج از برنامه</div><p class="hint">می‌خواهید از برنامه خارج شوید؟ اطلاعات شما ذخیره است.</p><p class="hint" id="xop" hidden>رمز ورود فعال است؛ دفعهٔ بعد رمز لازم است.</p><button class="pbtn xr" id="xok">خروج</button><button class="cnl" id="xno">ماندن در برنامه</button></div><div id="xs1" hidden><div class="xt">از برنامه خارج شدید</div><p class="hint">اگر برنامه بسته نشد، دکمهٔ خانهٔ گوشی را بزنید یا آن را از فهرست برنامه‌های اخیر ببندید.</p><button class="pbtn" id="xbk">بازگشت به برنامه</button></div></div></div>
 <div id="gd" hidden><div class="gdc"><div class="gdh"><h2>راهنمای HESAB</h2><button data-gc="1">بستن</button></div><div id="gdb"></div><button class="pbtn" data-gc="1" style="margin-top:8px">بستن راهنما</button></div></div>
-<div id="pl" hidden><div class="pc pk"><h2 class="pkt">رمز عبور را وارد نمایید:</h2><div class="pdots" id="pdots"><i></i><i></i><i></i><i></i></div><input id="pi" type="password" inputmode="none" readonly maxlength="4" autocomplete="off" aria-hidden="true" tabindex="-1"><p class="hint pkm" id="pm"></p><div class="pgrid" id="pgrid"></div><button class="pforgot" id="pf">رمز را فراموش کرده‌ام</button></div></div>
+<div id="pl" hidden><div class="pc pk"><h2 class="pkt">رمز عبور را وارد نمایید:</h2><div class="pdots" id="pdots"><i></i><i></i><i></i><i></i></div><input id="pi" type="text" inputmode="none" readonly maxlength="4" autocomplete="off" aria-hidden="true" tabindex="-1"><p class="hint pkm" id="pm"></p><div class="pgrid" id="pgrid"></div><button class="pforgot" id="pf">رمز را فراموش کرده‌ام</button></div></div>
 <div id="lk" hidden><div class="lkc"><div class="lkl"><i class="ii" data-ic="lock"></i></div><h2>دوره آزمایشی به پایان رسید</h2>
 <p>برای ادامه استفاده از HESAB اشتراک تهیه کنید. اطلاعات شما سر جایش هست و بعد از فعال‌سازی اشتراک دوباره در دسترس می‌شود.</p>
 <a id="pay" class="add pay" target="_blank" rel="noopener" hidden>خرید اشتراک</a>
@@ -638,6 +637,7 @@ main{padding-bottom:calc(var(--bnh,64px) + 66px)!important}
 /* HESAB account + encryption layer (AES-256-GCM, key from password via PBKDF2-SHA256) */
 (function(){
 'use strict';
+const PWA=(window.CSS&&CSS.supports&&CSS.supports('-webkit-text-security','disc'))?'type="text" class="hxpw" autocomplete="off"':'type="password" autocomplete="new-password"';
 const PEPPER='HESAB|backup|v1|a7c1e9d4',ITER=300000,S_=window.crypto&&crypto.subtle;
 const te=new TextEncoder(),td=new TextDecoder(),$=i=>document.getElementById(i);
 const b64=u=>{let s='';for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)};
@@ -660,7 +660,7 @@ H.exportTxt=async o=>{const salt=rnd(16);return 'HESABENC1.'+b64(salt)+'.'+ITER+
 H.importTxt=async t=>{t=String(t).trim();if(t.indexOf('HESABENC1.')!==0)return t;const a=t.split('.');const pw=await H.ask('رمز عبور زمان تهیه این پشتیبان را وارد کنید');if(pw==null)throw new Error('cancel');const it=Math.min(Math.max(+a[2]||ITER,1000),2000000);return decK(a[3]+'.'+a[4],await ekey(dig(pw),ub(a[1]),it))};
 const css=document.createElement('style');
 css.textContent='.hxo{position:fixed;inset:0;z-index:100000;background:var(--bg,#fff);color:var(--tx,#111);display:flex;justify-content:center;overflow:auto;padding:24px 16px;direction:rtl}.hxc{width:100%;max-width:380px;margin:auto}.hxc h2,.hxc h3{text-align:center;margin:0 0 12px}.hxc p.hxs{font-size:13px;text-align:center;opacity:.8;margin:0 0 14px;line-height:1.7}.hxc input{margin-bottom:10px}.hxb{width:100%;padding:13px;border:0;border-radius:13px;background:var(--ac,#397F68);color:#fff;font:inherit;font-weight:700;margin-top:4px}.hxb:disabled{opacity:.6}.hxg{width:100%;padding:11px;border:0;background:transparent;color:var(--ac,#397F68);font:inherit;margin-top:6px}.hxm{color:#D32F2F;min-height:20px;font-size:13px;text-align:center;margin:2px 0 6px}.hxph{width:96px;height:96px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;background:var(--chip,#e6efe9);overflow:hidden;cursor:pointer;border:2px dashed var(--ac,#397F68);font-size:12px;text-align:center;padding:0}.hxph img{width:100%;height:100%;object-fit:cover}.hxmd{z-index:100001;background:rgba(0,0,0,.55);align-items:center}.hxmd .hxc{background:var(--card,#fff);padding:18px;border-radius:18px}.hxpf{display:flex;align-items:center;gap:12px;margin-bottom:12px}.hxpf img{width:64px;height:64px;border-radius:50%;object-fit:cover;background:var(--chip,#e6efe9)}';
-css.textContent+='.hxlogo{display:block;width:84px;height:84px;border-radius:20px;margin:0 auto 6px;object-fit:cover}.hxlg{align-items:center}.hxlg .pk{margin:auto;max-width:340px;display:flex;flex-direction:column;align-items:center}.hxr{display:flex;align-items:center;gap:8px;margin-bottom:10px}.hxr input{flex:1;margin:0;min-width:0}.hxbs{display:flex;gap:6px;margin-inline-start:auto}.hxbt{padding:9px 12px;border-radius:12px;border:1px solid var(--ac,#397F68);background:transparent;color:var(--ac,#397F68);font:inherit;font-weight:600;white-space:nowrap}.hxbt.ok{background:var(--ac,#397F68);color:#fff}.hxbt.x{border-color:#D32F2F;color:#D32F2F}#hxad{position:fixed;left:0;right:0;bottom:var(--bnh,64px);z-index:49;height:40px;display:flex;align-items:center;justify-content:center;background:var(--chip,#e6efe9);color:var(--tx,#111);border-top:1px solid var(--bd,#ccc);font-size:12px;line-height:1.4;padding:2px 12px;overflow:hidden;direction:rtl;text-align:center}#hxad span{transition:opacity .3s;max-height:34px;overflow:hidden}#hxad a{color:inherit;font-weight:700}.hxc h2{justify-content:center}.hxc h2:before{display:none}';
+css.textContent+='.hxlogo{display:block;width:84px;height:84px;border-radius:20px;margin:0 auto 6px;object-fit:cover}.hxlg{align-items:center}.hxlg .pk{margin:auto;max-width:340px;display:flex;flex-direction:column;align-items:center}.hxr{display:flex;align-items:center;gap:8px;margin-bottom:10px}.hxr input{flex:1;margin:0;min-width:0}.hxbs{display:flex;gap:6px;margin-inline-start:auto}.hxbt{padding:9px 12px;border-radius:12px;border:1px solid var(--ac,#397F68);background:transparent;color:var(--ac,#397F68);font:inherit;font-weight:600;white-space:nowrap}.hxbt.ok{background:var(--ac,#397F68);color:#fff}.hxbt.x{border-color:#D32F2F;color:#D32F2F}.hxc h2{justify-content:center}.hxc h2:before{display:none}.hxpw{-webkit-text-security:disc}.hxreg{padding-bottom:72px}.hxtkw{position:fixed;left:0;right:0;bottom:0;z-index:2;height:46px;display:flex;flex-direction:row-reverse;direction:ltr;background:#0f3d33;color:#fff;box-shadow:0 -3px 12px rgba(0,0,0,.25)}.hxtkl{flex:none;background:#FDD835;color:#1b1b1b;font-weight:800;padding:0 14px;display:flex;align-items:center;font-size:15px;letter-spacing:1px}.hxtkv{flex:1;overflow:hidden;display:flex;align-items:center}.hxtkt{display:flex;white-space:nowrap;width:max-content;animation:hxtk 45s linear infinite}.hxtk1{display:flex;align-items:center;direction:rtl}.hxtk1 b{font-size:17px;font-weight:700;padding:0 18px}.hxtk1 i{font-style:normal;color:#FDD835;font-size:12px}@keyframes hxtk{from{transform:translateX(-50%)}to{transform:translateX(0)}}@media(prefers-reduced-motion:reduce){.hxtkt{animation-duration:120s}}';
 document.head.appendChild(css);
 function ov(html,modal){const o=document.createElement('div');o.className='hxo'+(modal?' hxmd':'');o.innerHTML=html;document.body.appendChild(o);return o}
 const val=(o,id)=>o.querySelector('#'+id).value;
@@ -672,17 +672,18 @@ function setImg(u){const i=document.querySelector('.logo img');if(i&&u)i.src=u}
 H.photo=()=>PROF&&PROF.photo||null;
 H.setPhoto=async u=>{if(!PROF)return;PROF.photo=u;await saveProf()};
 H.pick=f=>new Promise((res,rej)=>{if(!f||(f.type&&f.type.indexOf('image/')!==0))return rej(new Error('type'));const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=160;c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,160,160);res(c.toDataURL('image/jpeg',.85))};im.onerror=rej;im.src=r.result};r.onerror=rej;r.readAsDataURL(f)});
-H.ask=msg=>new Promise(res=>{const o=ov('<div class="hxc"><h3></h3><input id="hxq" type="password" inputmode="numeric" autocomplete="off" style="direction:ltr"><button class="hxb" id="hxqo">تأیید</button><button class="hxg" id="hxqc">انصراف</button></div>',true);o.querySelector('h3').textContent=msg;const i=o.querySelector('#hxq'),end=v=>{o.remove();res(v)};o.querySelector('#hxqo').onclick=()=>end(i.value);o.querySelector('#hxqc').onclick=()=>end(null);i.onkeydown=e=>{if(e.key==='Enter')end(i.value)};setTimeout(()=>i.focus(),50)});
+H.ask=msg=>new Promise(res=>{const o=ov('<div class="hxc"><h3></h3><input id="hxq" '+PWA+' inputmode="numeric" style="direction:ltr"><button class="hxb" id="hxqo">تأیید</button><button class="hxg" id="hxqc">انصراف</button></div>',true);o.querySelector('h3').textContent=msg;const i=o.querySelector('#hxq'),end=v=>{o.remove();res(v)};o.querySelector('#hxqo').onclick=()=>end(i.value);o.querySelector('#hxqc').onclick=()=>end(null);i.onkeydown=e=>{if(e.key==='Enter')end(i.value)};setTimeout(()=>i.focus(),50)});
 H.confirmPw=async msg=>{for(;;){const p=await H.ask(msg);if(p==null)return false;if(await check(dig(p)))return true;msg='رمز اشتباه است. دوباره وارد کنید'}};
 async function wipe(){['dk1','dk_snaps','dk_ab','dk_logo','dk_pin','dk_pf','hx_acc'].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});for(const n of['HESAB_DATABASE','hesab-alarm'])await new Promise(r=>{try{const q=indexedDB.deleteDatabase(n);q.onsuccess=q.onerror=q.onblocked=()=>r()}catch(e){r()}});location.reload()}
 function register(done){
-const o=ov('<div class="hxc"><img class="hxlogo" alt="HESAB"><h2>HESAB</h2><p class="hxs">HESAB (دخل و خرج)، برنامه‌ی مدیریت هوشمند مالی: ثبت هزینه و درآمد، مطالبات و دیون، گزارش ماهانه و سالانه، یادآور سررسید و پشتیبان‌گیری امن. اطلاعات مالی شما رمزنگاری می‌شود و فقط روی همین دستگاه می‌ماند.</p><h3>ایجاد حساب کاربری</h3><button type="button" class="hxph" id="hxph">افزودن عکس</button><input id="hxf" type="file" accept="image/*" hidden><input id="hxn" placeholder="نام و نام خانوادگی" autocomplete="off"><input id="hxm" inputmode="tel" placeholder="شماره همراه" autocomplete="off" style="direction:ltr;text-align:right"><input id="hxe" type="email" placeholder="ایمیل (اختیاری)" autocomplete="off" style="direction:ltr;text-align:right"><input id="hx1" type="password" inputmode="numeric" maxlength="6" placeholder="رمز عبور (۶ رقم)" autocomplete="new-password" style="direction:ltr"><input id="hx2" type="password" inputmode="numeric" maxlength="6" placeholder="تکرار رمز عبور" autocomplete="new-password" style="direction:ltr"><p class="hxm" id="hxmsg"></p><button class="hxb" id="hxgo">ثبت نام</button><p class="hxs" style="margin-top:12px">رمز عبور قابل بازیابی نیست. آن را جای امنی یادداشت کنید.</p></div>');
+const o=ov('<div class="hxc"><img class="hxlogo" alt="HESAB"><h2>HESAB</h2><p class="hxs">HESAB (دخل و خرج)، برنامه‌ی مدیریت هوشمند مالی: ثبت هزینه و درآمد، مطالبات و دیون، گزارش ماهانه و سالانه، یادآور سررسید و پشتیبان‌گیری امن. اطلاعات مالی شما رمزنگاری می‌شود و فقط روی همین دستگاه می‌ماند.</p><h3>ایجاد حساب کاربری</h3><button type="button" class="hxph" id="hxph">افزودن عکس</button><input id="hxf" type="file" accept="image/*" hidden><input id="hxn" placeholder="نام و نام خانوادگی" autocomplete="off"><input id="hxm" inputmode="tel" placeholder="شماره همراه" autocomplete="off" style="direction:ltr;text-align:right"><input id="hxe" type="email" placeholder="ایمیل (اختیاری)" autocomplete="off" style="direction:ltr;text-align:right"><input id="hx1" '+PWA+' inputmode="numeric" maxlength="6" placeholder="رمز عبور (۶ رقم)" style="direction:ltr"><input id="hx2" '+PWA+' inputmode="numeric" maxlength="6" placeholder="تکرار رمز عبور" style="direction:ltr"><p class="hxm" id="hxmsg"></p><button class="hxb" id="hxgo">ثبت نام</button><p class="hxs" style="margin-top:12px">رمز عبور قابل بازیابی نیست. آن را جای امنی یادداشت کنید.</p></div>');
 try{o.querySelector('.hxlogo').src=document.querySelector('.logo img').getAttribute('src')}catch(e){}
+o.classList.add('hxreg');o.appendChild(ticker());
 let photo=null;const msg=t=>o.querySelector('#hxmsg').textContent=t;
 o.querySelector('#hxph').onclick=()=>o.querySelector('#hxf').click();
 o.querySelector('#hxf').onchange=async e=>{try{photo=await H.pick(e.target.files[0]);const b=o.querySelector('#hxph');b.innerHTML='';const im=document.createElement('img');im.src=photo;b.appendChild(im)}catch(x){msg('فایل تصویر معتبر نیست.')}e.target.value=''};
 const go=async()=>{const n=val(o,'hxn'),m=val(o,'hxm'),e=val(o,'hxe'),p1=dig(val(o,'hx1')),p2=dig(val(o,'hx2'));let er=checkProfile(n,m,e);if(!er&&!/^\d{6}$/.test(p1))er='رمز عبور باید دقیقاً ۶ رقم (عدد) باشد.';if(!er&&p1!==p2)er='رمز عبور و تکرار آن یکسان نیست.';if(er)return msg(er);const b=o.querySelector('#hxgo');b.disabled=true;b.textContent='لطفاً صبر کنید…';try{const salt=rnd(16),r=await kdf(p1,salt,ITER);KEY=r.key;PW=p1;PROF={name:n.trim(),phone:dig(m).replace(/\D/g,''),email:e.trim(),photo,created:Date.now()};ACC={v:1,salt:b64(salt),it:ITER,ver:r.ver};await saveProf();o.remove();done()}catch(x){b.disabled=false;b.textContent='ثبت نام';msg('خطا در ساخت حساب؛ دوباره تلاش کنید.')}};
-o.querySelector('#hxgo').onclick=go;o.querySelectorAll('input[type=password]').forEach(i=>i.onkeydown=e=>{if(e.key==='Enter')go()})}
+o.querySelector('#hxgo').onclick=go;o.querySelectorAll('#hx1,#hx2').forEach(i=>i.onkeydown=e=>{if(e.key==='Enter')go()})}
 function login(done){
 if(document.querySelector('.hxo.hxlg'))return;
 const o=ov('<div class="pc pk"><h2 class="pkt">رمز عبور را وارد نمایید:</h2><div class="pdots" id="hxd"><i></i><i></i><i></i><i></i><i></i><i></i></div><p class="hint pkm" id="hxmsg"></p><div class="pgrid" id="hxpad"></div><button class="pforgot" id="hxfg">رمز را فراموش کرده‌ام</button></div>');o.classList.add('hxlg');
@@ -700,21 +701,23 @@ pad.onclick=e=>{const b=e.target.closest('button');if(b)push(b.dataset.k)};
 document.addEventListener('keydown',kd);
 o.querySelector('#hxfg').onclick=function(){if(!this.dataset.s){this.dataset.s=1;this.textContent='همه اطلاعات پاک می‌شود و حساب جدید می‌سازید. دوباره بزنید';clearTimeout(t);t=setTimeout(()=>{this.dataset.s='';this.textContent='رمز را فراموش کرده‌ام'},5000)}else wipe()}}
 let editing=new Set(),pPhoto=null;
-H.pending=()=>{if(editing.size||pPhoto)return true;const a=$('hxo1');return !!(a&&(a.value||$('hxn1').value||$('hxn2').value))};
+H.pending=()=>editing.size>0||!!pPhoto;
 H.discard=()=>{editing.clear();pPhoto=null;renderAcc()};
 H.askPending=cb=>{const o=ov('<div class="hxc"><h3>تغییرات قبلی شما هنوز تکمیل نشده است.</h3><button class="hxb" id="hxc1">ادامه تغییرات</button><button class="hxg" id="hxc2">انصراف</button></div>',true);o.querySelector('#hxc1').onclick=()=>o.remove();o.querySelector('#hxc2').onclick=()=>{o.remove();H.discard();cb()}};
 const FLD={n:['name','نام و نام خانوادگی',''],m:['phone','شماره همراه','direction:ltr;text-align:right'],e:['email','ایمیل (اختیاری)','direction:ltr;text-align:right']};
 function renderAcc(){const el=$('hxacc');if(!el||!PROF)return;editing=new Set();pPhoto=null;
 let h='<div class="hxpf"><img id="hxai" alt=""><span class="hxbs" id="hxpb"></span><input id="hxaf" type="file" accept="image/*" hidden></div>';
-for(const k in FLD)h+='<div class="hxr"><input id="hxa_'+k+'" readonly placeholder="'+FLD[k][1]+'" style="'+FLD[k][2]+'"><span class="hxbs" id="hxb_'+k+'"></span></div>';
-h+='<p class="hint" id="hxamsg"></p><p class="hint" style="margin-top:14px"><b>تغییر رمز عبور</b></p><div class="row"><input id="hxo1" type="password" inputmode="numeric" maxlength="6" placeholder="رمز عبور قبلی" autocomplete="current-password" style="direction:ltr"></div><div class="row"><input id="hxn1" type="password" inputmode="numeric" maxlength="6" placeholder="رمز عبور جدید (۶ رقم)" autocomplete="new-password" style="direction:ltr"></div><div class="row"><input id="hxn2" type="password" inputmode="numeric" maxlength="6" placeholder="تکرار رمز عبور جدید" autocomplete="new-password" style="direction:ltr"></div><button class="add" id="hxcp">تغییر رمز</button><p class="hint" id="hxpmsg"></p><p class="hint">رمز عبور قابل بازیابی نیست. اگر آن را فراموش کنید، اطلاعات و فایل‌های پشتیبان قابل خواندن نخواهند بود.</p>';
+for(const k in FLD)h+='<div class="hxr"><input id="hxa_'+k+'" autocomplete="off" readonly placeholder="'+FLD[k][1]+'" style="'+FLD[k][2]+'"><span class="hxbs" id="hxb_'+k+'"></span></div>';
+h+='<p class="hint" id="hxamsg"></p><p class="hint" style="margin-top:14px"><b>تغییر رمز عبور</b></p><div class="row"><input id="hxo1" '+PWA+' inputmode="numeric" maxlength="6" placeholder="رمز عبور قبلی" style="direction:ltr"></div><div class="row"><input id="hxn1" '+PWA+' inputmode="numeric" maxlength="6" placeholder="رمز عبور جدید (۶ رقم)" style="direction:ltr"></div><div class="row"><input id="hxn2" '+PWA+' inputmode="numeric" maxlength="6" placeholder="تکرار رمز عبور جدید" style="direction:ltr"></div><button class="add" id="hxcp">تغییر رمز</button><p class="hint" id="hxpmsg"></p><p class="hint">رمز عبور قابل بازیابی نیست. اگر آن را فراموش کنید، اطلاعات و فایل‌های پشتیبان قابل خواندن نخواهند بود.</p>';
 el.innerHTML=h;const g=$,msg=t=>g('hxamsg').textContent=t;
 const btn=(t,c,a,k)=>'<button type="button" class="hxbt '+c+'" data-a="'+a+'" data-k="'+k+'">'+t+'</button>';
 const paint=k=>{g('hxb_'+k).innerHTML=editing.has(k)?btn('تأیید','ok','ok',k)+btn('لغو','x','no',k):btn('ویرایش','','ed',k)};
 const paintP=()=>{g('hxpb').innerHTML=pPhoto?btn('تأیید','ok','ok','p')+btn('لغو','x','no','p'):btn('ویرایش','','ed','p');g('hxai').src=pPhoto||PROF.photo||document.querySelector('.logo img').src};
 for(const k in FLD){g('hxa_'+k).value=PROF[FLD[k][0]]||'';paint(k)}paintP();
 g('hxaf').onchange=async e=>{try{pPhoto=await H.pick(e.target.files[0]);paintP()}catch(x){msg('فایل تصویر معتبر نیست.')}e.target.value=''};
+const startEdit=k=>{if(k==='p'){g('hxaf').click();return}editing.add(k);const i=g('hxa_'+k);i.readOnly=false;i.focus();paint(k)};H._start=startEdit;
 el.onclick=async e=>{const b=e.target.closest('button.hxbt');if(!b)return;const k=b.dataset.k,a=b.dataset.a;msg('');
+if(a==='ed'){if(H.pending()){H.askPending(()=>{H.discard();H._start(k)})}else startEdit(k);return}
 if(k==='p'){if(a==='ed')g('hxaf').click();else if(a==='no'){pPhoto=null;paintP()}else{try{await H.setPhoto(pPhoto);setImg(pPhoto);pPhoto=null;paintP();msg('عکس تغییر کرد.')}catch(x){msg('خطا در ذخیره.')}}return}
 const inp=g('hxa_'+k),key=FLD[k][0];
 if(a==='ed'){editing.add(k);inp.readOnly=false;inp.focus();paint(k)}
@@ -731,7 +734,7 @@ if(H.bind)H.bind.save()}
 H.gate=()=>new Promise(resolve=>{
 try{ACC=JSON.parse(localStorage.getItem('hx_acc'))}catch(e){ACC=null}
 if(!S_){ov('<div class="hxc"><h3>خطا</h3><p class="hxs">این مرورگر از رمزنگاری پشتیبانی نمی‌کند. برنامه را از آدرس https یا مرورگر به‌روز باز کنید.</p></div>');return}
-const done=()=>{setImg(H.photo());renderAcc();H.ads();resolve()};
+const done=()=>{setImg(H.photo());renderAcc();resolve()};
 ACC&&ACC.salt?login(done):register(done)});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)hiddenAt=Date.now();else if(KEY&&hiddenAt&&Date.now()-hiddenAt>60000)login(()=>{})});
 // settings accordion: opening a menu closes the others; unfinished edits trigger a warning
@@ -740,8 +743,8 @@ e.preventDefault();
 const go=()=>{if(g.open)g.open=false;else{document.querySelectorAll('[data-tab="settings"] details.settings-group[open]').forEach(x=>{if(x!==g)x.open=false});g.open=true}};
 if(H.pending())H.askPending(go);else go()},true);
 // promotional strip above the bottom bar
-const ADS=['HESAB؛ مدیریت هوشمند دخل و خرج شما','ثبت هزینه و درآمد، مطالبات و دیون، گزارش ماهانه و سالانه','اطلاعات مالی شما رمزنگاری می‌شود و فقط روی دستگاه خودتان می‌ماند','سازنده و برنامه‌نویس: <b dir="ltr">MORAD_DARVISHPOR</b>','پشتیبانی و دریافت اشتراک دائمی: <a href="tel:09361239027" dir="ltr">09361239027</a>'];
-H.ads=()=>{if($('hxad'))return;const d=document.createElement('div');d.id='hxad';d.innerHTML='<span></span>';document.body.appendChild(d);const sp=d.firstChild;let i=0;const show=()=>{sp.style.opacity=0;setTimeout(()=>{sp.innerHTML=ADS[i++%ADS.length];sp.style.opacity=1},300)};sp.innerHTML=ADS[i++];setInterval(show,5000)};
+const ADS=['HESAB؛ مدیریت هوشمند دخل و خرج شما','ثبت هزینه و درآمد، مطالبات و دیون، گزارش ماهانه و سالانه','اطلاعات مالی شما رمزنگاری می‌شود و فقط روی دستگاه خودتان می‌ماند','سازنده و برنامه‌نویس: MORAD_DARVISHPOR','پشتیبانی و دریافت اشتراک دائمی: 09361239027'];
+function ticker(){const d=document.createElement('div');d.className='hxtkw';const one='<span class="hxtk1">'+ADS.map(t=>'<b>'+t+'</b>').join('<i>◆</i>')+'<i>◆</i></span>';d.innerHTML='<div class="hxtkl">HESAB</div><div class="hxtkv"><div class="hxtkt">'+one+one+'</div></div>';return d}
 
 })();
 </script>
@@ -1193,7 +1196,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.4.1';$('appv').textContent=APP_VER;
+const APP_VER='1.4.2';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
@@ -1663,7 +1666,7 @@ $('xok').onclick=()=>{
 function syncBnh(){try{const n=document.querySelector('.bn'),p=$('pbx');if(!n||!p)return;const pr=p.getBoundingClientRect().height,nr=n.getBoundingClientRect().height;if(pr>0&&nr>0)document.documentElement.style.setProperty('--bnh',(100*nr/pr).toFixed(1)+'px')}catch(e){}}
 function fitHome(){try{syncBnh();const b=document.body;b.classList.remove('c1','c2');if(tab!=='home')return;
  const ae=document.activeElement;if(ae&&/^(INPUT|SELECT|TEXTAREA)$/.test(ae.tagName))return;
- const f=$('frm'),n=$('hxad')||document.querySelector('.bn');if(!f||!n)return;
+ const f=$('frm'),n=document.querySelector('.bn');if(!f||!n)return;
  const sy=window.scrollY;if(sy)window.scrollTo(0,0);
  const over=()=>f.getBoundingClientRect().bottom>n.getBoundingClientRect().top-4;
  for(const c of ['c1','c2','c3']){if(!over())break;b.classList.remove('c1','c2','c3');b.classList.add(c)}
