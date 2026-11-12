@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hesab-shell-v15';
+const CACHE_NAME = 'hesab-shell-v18';
 const APP_FILES = [
   './',
   './index.html',
