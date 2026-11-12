@@ -719,9 +719,12 @@ box.innerHTML='<h2 class="pkt">رمز عبور را وارد نمایید:</h2><
 q('#hxpad').innerHTML=['1','2','3','4','5','6','7','8','9','x','0','d'].map(c=>c==='x'?'<button class="pt px" data-k="x">خروج</button>':c==='d'?'<button class="pt" data-k="d">حذف</button>':'<button data-k="'+c+'">'+'۰۱۲۳۴۵۶۷۸۹'[+c]+'</button>').join('');
 q('#hxpad').onclick=e=>{const b=e.target.closest('button');if(b)push(b.dataset.k)};q('#hxfg').onclick=showRec};
 function showRec(){v='';const has=ACC.rec&&ACC.rec.c;
-box.innerHTML='<h2 class="pkt">بازیابی رمز عبور</h2>'+(has?'<p class="hxs">شناسه دستگاه خود را برای پشتیبان برنامه ارسال کنید تا رمز جدید ساخته و برای شما ارسال شود.</p><p class="hxs" style="margin:0">شناسه دستگاه</p><div class="hxid" id="hxsh">······</div><button class="hxb" id="hxcp2">کپی شناسه</button><input id="hxcode" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="کد ۶ رقمی ارسال‌شده توسط پشتیبان" style="direction:ltr;text-align:center;margin-top:14px"><p class="hxm" id="hxrm"></p><button class="hxb" id="hxrgo">تأیید کد</button>':'<p class="hxs">برای این حساب امکان بازیابی ثبت نشده است. با پشتیبان تماس بگیرید.</p>')+'<button class="hxg" id="hxrback">بازگشت به ورود با رمز</button><button class="hxg" id="hxwipe">پاک کردن همه اطلاعات و شروع از نو</button>';
+box.innerHTML='<h2 class="pkt">بازیابی رمز عبور</h2>'+(has?'<p class="hxs">شناسه دستگاه خود را برای پشتیبان برنامه ارسال کنید تا رمز جدید ساخته و برای شما ارسال شود.</p><p class="hxs" style="margin:0">شناسه دستگاه</p><div class="hxid" id="hxsh">······</div><button class="hxb" id="hxbale" style="background:#2e7d32">ارسال شناسه به پشتیبان در بله</button><button class="hxg" id="hxcp2" style="margin-top:0">کپی شناسه</button><input id="hxcode" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="کد ۶ رقمی ارسال‌شده توسط پشتیبان" style="direction:ltr;text-align:center;margin-top:14px"><p class="hxm" id="hxrm"></p><button class="hxb" id="hxrgo">تأیید کد</button>':'<p class="hxs">برای این حساب امکان بازیابی ثبت نشده است. با پشتیبان تماس بگیرید.</p>')+'<button class="hxg" id="hxrback">بازگشت به ورود با رمز</button><button class="hxg" id="hxwipe">پاک کردن همه اطلاعات و شروع از نو</button>';
 const rm=x=>{const m=q('#hxrm');if(m)m.textContent=x};
 if(has){let sid='';idFor(ACC.rec.d,ACC.rec.k).then(x=>{sid=x;const e=q('#hxsh');if(e)e.textContent=x.slice(0,3)+' '+x.slice(3)});
+q('#hxbale').onclick=()=>{const txt='شناسه دستگاه HESAB: '+sid;try{navigator.clipboard.writeText(txt).catch(()=>{})}catch(e){}
+if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){window.open('https://ble.ir/mahdi28884','_blank');rm('شناسه کپی شد. گفتگوی بله باز می‌شود؛ شناسه را بچسبانید و ارسال کنید.')}
+else rm('شناسه کپی شد. آن را از برنامه‌ی بله، پیامک یا تماس با 09361239027 برای پشتیبان ارسال کنید.')};
 q('#hxcp2').onclick=async()=>{try{await navigator.clipboard.writeText(sid);rm('کپی شد؛ آن را برای پشتیبان بفرستید.')}catch(e){rm('شناسه را یادداشت کنید و برای پشتیبان بفرستید.')}};
 q('#hxrgo').onclick=async()=>{const z=dig(q('#hxcode').value).replace(/\D/g,'');if(z.length!==6)return rm('کد باید ۶ رقم باشد.');rm('لطفاً صبر کنید…');
 const pw=await recoverWith(z);if(!pw)return rm('کد اشتباه است.');
@@ -1233,7 +1236,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.5.1';$('appv').textContent=APP_VER;
+const APP_VER='1.5.2';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
