@@ -844,9 +844,9 @@ function fillYearSelect(el,selected){if(!el)return;const ys=new Set([T[0],Number
 function fillDate(){
  $('dm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');
  $('dm').value=vm;fillYearSelect($('dy'),vy);$('dy').value=String(vy);fillDays(T[0]===vy&&T[1]===vm?T[2]:1)}
-function fillDays(sel){const y=num($('dy').value)||vy,m=+$('dm').value,n=dim(y,m);
+function fillDays(sel){const cur=+$('dd').value,y=num($('dy').value)||vy,m=+$('dm').value,n=dim(y,m);
  $('dd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');
- $('dd').value=Math.min(sel||+$('dd').value||1,n)}
+ $('dd').value=Math.min(sel||cur||1,n)}
 let selectedCat='',editTxId=null,editDueId=null;
 const ADD_CAT_VALUE='__hesab_add_category__';
 function fillCats(selected){
@@ -1039,14 +1039,14 @@ let dtab='r',duesListMode='';
 const rmTxt=r=>r<0?'بدون یادآوری':r===0?'همان روز':fa(r)+' روز قبل';
 const dText=n=>n<0?fa(-n)+' روز گذشته':n===0?'امروز':fa(n)+' روز مانده';
 function daysTo(y,m,d){const g=toG(y,m,d),n=new Date();return Math.round((Date.UTC(g[0],g[1]-1,g[2])-Date.UTC(n.getFullYear(),n.getMonth(),n.getDate()))/864e5)}
-function dDays(sel){const y=num($('dyy').value)||T[0],m=+$('dmm').value,n=dim(y,m);
- $('ddd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('ddd').value=Math.min(sel||+$('ddd').value||1,n)}
+function dDays(sel){const cur=+$('ddd').value,y=num($('dyy').value)||T[0],m=+$('dmm').value,n=dim(y,m);
+ $('ddd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('ddd').value=Math.min(sel||cur||1,n)}
 function dInit(){$('dmm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('dmm').value=T[1];fillYearSelect($('dyy'),T[0]);$('dyy').value=String(T[0]);dDays(T[2]);$('insday').innerHTML=Array.from({length:31},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('insday').value=String(T[2]);$('insmonth').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('insmonth').value=String(T[1]);fillYearSelect($('insyear'),T[0]);$('insyear').value=String(T[0]);$('insrcm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');$('insrcm').value=String(T[1]);fillYearSelect($('insrcy'),T[0]);$('insrcy').value=String(T[0]);insRcDays(T[2]);try{rcKeep()}catch(e){}}
 function insRcDays(sel){const y=num($('insrcy').value)||T[0],m=+$('insrcm').value||1,n=dim(y,m),keep=sel||+$('insrcd').value||1;$('insrcd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('insrcd').value=Math.min(keep,n)}
 function monthStep(y,m,delta){const ix=y*12+(m-1)+delta;return {y:Math.floor(ix/12),m:((ix%12)+12)%12+1}}
 function insRcShow(){const on=$('insrem').value==='c';$('insrcrow').hidden=!on;if(on&&!$('insrcrow').dataset.i){$('insrcrow').dataset.i='1';const dt=monthStep(num($('insyear').value)||T[0],+$('insmonth').value||T[1],-1);$('insrcy').value=String(dt.y);$('insrcm').value=String(dt.m);insRcDays(Math.min(+$('insday').value||T[2],dim(dt.y,dt.m)))}}
 $('insrem').onchange=insRcShow;$('insrcm').onchange=()=>insRcDays();$('insrcy').onchange=()=>insRcDays();
-function rcDays(sel){const y=num($('rcy').value)||T[0],m=+$('rcm').value||1,n=dim(y,m);$('rcd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('rcd').value=Math.min(sel||+$('rcd').value||1,n)}
+function rcDays(sel){const cur=+$('rcd').value,y=num($('rcy').value)||T[0],m=+$('rcm').value||1,n=dim(y,m);$('rcd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${fa(i+1)}</option>`).join('');$('rcd').value=Math.min(sel||cur||1,n)}
 function rcInit(y,m,d){$('rcm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');fillYearSelect($('rcy'),y);$('rcy').value=String(y);$('rcm').value=m;rcDays(d)}
 function rcKeep(){if(!$('rcrow').dataset.i)return;rcInit(num($('rcy').value)||T[0],+$('rcm').value||1,+$('rcd').value||1)}
 function rcShow(){const c=$('drm').value==='c';$('rcrow').hidden=!c;if(c&&!$('rcrow').dataset.i){$('rcrow').dataset.i='1';rcInit(num($('dyy').value)||T[0],+$('dmm').value||T[1],+$('ddd').value||T[2])}}
@@ -1236,7 +1236,7 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.5.2';$('appv').textContent=APP_VER;
+const APP_VER='1.5.4';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const r=await fetch(u.href,{cache:'reload'});const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}catch(e){return null}}
 async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
 async function autoUpd(){
@@ -1670,9 +1670,9 @@ async function saveFile(name,text,mime){
   if(d){await d.save({filename:name,data:text});return true}}catch(e){if(e&&e.code==='declined')return false}
  const b=(text instanceof Blob?text:new Blob([text],{type:mime||'application/json'})),u=URL.createObjectURL(b),a=document.createElement('a');
  a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);return true}
-function applyBackup(t){let o=JSON.parse(t);o=o.data||o;
- if(!Array.isArray(o.tx)||!o.cats||!Array.isArray(o.cats.e)||!Array.isArray(o.cats.i))throw 0;S=o;S.dues=S.dues||[];save();fillCats();render()}
-const bkInfo=async()=>{const n=new Date(),j=toJ(n.getFullYear(),n.getMonth()+1,n.getDate()),p=x=>String(x).padStart(2,'0');return{name:'HESAB'+j[0]+p(j[1])+p(j[2])+'.hesab',txt:await HX.exportTxt({app:'HESAB',v:2,date:j[0]+'/'+p(j[1])+'/'+p(j[2]),data:S})}};
+function applyBackup(t){let o=JSON.parse(t);const x0=+o.x;o=o.data||o;
+ if(!Array.isArray(o.tx)||!o.cats||!Array.isArray(o.cats.e)||!Array.isArray(o.cats.i))throw 0;S=o;S.dues=S.dues||[];save();fillCats();render();if(x0>0&&x0<=Date.now()&&(!LIC.first||x0<LIC.first)){LIC.first=x0;lsave();licApply()}}
+const bkInfo=async()=>{const n=new Date(),j=toJ(n.getFullYear(),n.getMonth()+1,n.getDate()),p=x=>String(x).padStart(2,'0');return{name:'HESAB'+j[0]+p(j[1])+p(j[2])+'.hesab',txt:await HX.exportTxt({app:'HESAB',v:2,date:j[0]+'/'+p(j[1])+'/'+p(j[2]),data:S,x:LIC.first})}};
 $('bd').onclick=async()=>{try{const{name,txt}=await bkInfo();const ok=await saveFile(name,txt,'application/octet-stream');
  $('bm').textContent=ok?'فایل '+name+' آماده شد. اگر در پوشه دانلودها نبود، دوباره تلاش کنید.':'ذخیره فایل لغو شد.';notify(ok?'پشتیبان با موفقیت تهیه شد.':'تهیه پشتیبان انجام نشد.',!ok)}catch(e){if(e&&e.message==='cancel'){$('bm').textContent='تهیه پشتیبان لغو شد.';return}$('bm').textContent='خطا در تهیه پشتیبان.';notify('خطا در تهیه پشتیبان.',true)}};
 $('bf').onclick=()=>$('bi').click();
