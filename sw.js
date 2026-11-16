@@ -38,16 +38,14 @@ self.addEventListener('fetch', event => {
   // Version check requests (?v=...) must always reach the network.
   if (url.searchParams.has('v')) return;
 
-  // Page navigations: serve the cached app shell immediately (works with VPN,
-  // slow or no network), and refresh the cache in the background.
+  // Page navigations: return the cached app shell immediately. Refresh it in
+  // the background so a slow/unstable internet connection never delays startup.
   if (request.mode === 'navigate') {
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       const cached = (await cache.match('./index.html')) || (await cache.match('./'));
 
-      // Network first (bypasses the HTTP cache) so new versions arrive at once;
-      // fall back to the cached shell if the network is slow or offline.
-      const network = fetch(request.url, { cache: 'reload' })
+      const refresh = fetch(request.url, { cache: 'no-store' })
         .then(response => {
           if (response && response.ok) {
             cache.put('./index.html', response.clone());
@@ -57,13 +55,11 @@ self.addEventListener('fetch', event => {
         .catch(() => null);
 
       if (cached) {
-        // Open instantly from the cache (no waiting for a weak network);
-        // the fresh copy is stored in the background for the next launch.
-        event.waitUntil(network);
+        event.waitUntil(refresh);
         return cached;
       }
 
-      const response = await network;
+      const response = await refresh;
       return response ||
         new Response('برای اجرای برنامه، یک‌بار آن را در حالت آنلاین باز کنید.', {
           status: 503,
