@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hesab-shell-v21';
+const CACHE_NAME = 'hesab-shell-v22';
 const APP_FILES = [
   './',
   './index.html',
@@ -57,10 +57,10 @@ self.addEventListener('fetch', event => {
         .catch(() => null);
 
       if (cached) {
-        const timeout = new Promise(resolve => setTimeout(() => resolve(null), 3000));
-        const fresh = await Promise.race([network, timeout]);
+        // Open instantly from the cache (no waiting for a weak network);
+        // the fresh copy is stored in the background for the next launch.
         event.waitUntil(network);
-        return fresh || cached;
+        return cached;
       }
 
       const response = await network;
