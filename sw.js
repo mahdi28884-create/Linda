@@ -1,4 +1,10 @@
-const CACHE_NAME = 'hesab-shell-v22';
+const CACHE_NAME = 'hesab-shell-v23';
+function fetchTimed(input, options = {}, timeoutMs = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(input, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer));
+}
+
 const APP_FILES = [
   './',
   './index.html',
@@ -11,7 +17,7 @@ const APP_FILES = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => Promise.all(APP_FILES.map(f => cache.add(new Request(f, { cache: 'reload' })))))
+      .then(cache => cache.addAll(APP_FILES.map(f => new Request(f, { cache: 'reload' }))))
       .then(() => self.skipWaiting())
   );
 });
@@ -31,63 +37,46 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   const request = event.request;
+  if (request.method !== 'GET') return;
   const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
 
-  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
-
-  // Version check requests (?v=...) must always reach the network.
+  // Explicit version probes must not be answered from the cache.
   if (url.searchParams.has('v')) return;
 
-  // Page navigations: return the cached app shell immediately. Refresh it in
-  // the background so a slow/unstable internet connection never delays startup.
   if (request.mode === 'navigate') {
+    const refresh = caches.open(CACHE_NAME).then(async cache => {
+      const response = await fetchTimed(request.url, { cache: 'no-store' });
+      if (response && response.ok) await cache.put('./index.html', response.clone());
+      return response;
+    }).catch(() => null);
+
+    // Register the background task synchronously during event dispatch.
+    event.waitUntil(refresh.then(() => undefined).catch(() => undefined));
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       const cached = (await cache.match('./index.html')) || (await cache.match('./'));
-
-      const refresh = fetch(request.url, { cache: 'no-store' })
-        .then(response => {
-          if (response && response.ok) {
-            cache.put('./index.html', response.clone());
-          }
-          return response;
-        })
-        .catch(() => null);
-
-      if (cached) {
-        event.waitUntil(refresh);
-        return cached;
-      }
-
+      if (cached) return cached;
       const response = await refresh;
-      return response ||
-        new Response('برای اجرای برنامه، یک‌بار آن را در حالت آنلاین باز کنید.', {
-          status: 503,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        });
+      return response || new Response('برای اجرای برنامه، یک‌بار آن را در حالت آنلاین باز کنید.', {
+        status: 503,
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+      });
     })());
     return;
   }
 
-  // Other app resources: cache first, refresh the cache in the background.
+  const refresh = fetchTimed(request).then(async response => {
+    if (response && response.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(request, response.clone());
+    }
+    return response;
+  }).catch(() => null);
+  event.waitUntil(refresh.then(() => undefined).catch(() => undefined));
   event.respondWith((async () => {
     const cached = await caches.match(request, { ignoreSearch: true });
-
-    const refresh = fetch(request)
-      .then(async response => {
-        if (response && response.ok) {
-          const cache = await caches.open(CACHE_NAME);
-          await cache.put(request, response.clone());
-        }
-        return response;
-      })
-      .catch(() => null);
-
-    if (cached) {
-      event.waitUntil(refresh);
-      return cached;
-    }
-
+    if (cached) return cached;
     const response = await refresh;
     return response || new Response('', { status: 504, statusText: 'Offline' });
   })());
@@ -125,7 +114,7 @@ async function hesabCheckDue() {
   for (const x of list) {
     const left = Math.round((x.g - today) / 864e5);
     if (left <= 0 || left <= x.rem) {
-      const title = x.who ? (x.k === 'r' ? 'سررسید طلب از ' : 'سررسید بدهی به ') + x.who : (x.k === 'r' ? 'سررسید طلب دارید' : 'سررسید بدهی دارید');
+      const title = x.who ? (x.k === 'r' ? 'سررسید طلب از ' : 'سررسید بدهی به ') + x.w : (x.k === 'r' ? 'سررسید طلب دارید' : 'سررسید بدهی دارید');
       const existing = await self.registration.getNotifications({ tag: 'hesab-' + x.id });
       if (existing.length) continue;
 

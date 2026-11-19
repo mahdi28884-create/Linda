@@ -820,19 +820,35 @@ function idbGet(db){return new Promise((resolve,reject)=>{const tx=db.transactio
 function idbPut(db,value){return new Promise((resolve,reject)=>{const tx=db.transaction('state','readwrite');tx.objectStore('state').put(value,'main');tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error||new Error('IndexedDB write failed'));tx.onabort=()=>reject(tx.error||new Error('IndexedDB write aborted'))})}
 let S=null,FIRST=false;
 await HX.gate();
-try{hesabDB=await openHesabDB();S=await HX.unpack(await idbGet(hesabDB))}catch(e){hesabDB=null}
-if(!S){try{S=await HX.unpackStr(localStorage.getItem('dk1'))}catch(e){}}
-if(!S||!Array.isArray(S.tx)||!S.cats){S={tx:[],cats:DEF};FIRST=true}
+let idbState=null,lsState=null;
+try{hesabDB=await openHesabDB();idbState=await idbGet(hesabDB)}catch(e){hesabDB=null}
+try{const hx=localStorage.getItem('dk1');if(hx)lsState={hx,ts:Number(localStorage.getItem('dk1_ts'))||0}}catch(e){}
+const candidates=[idbState,lsState].filter(Boolean).sort((a,b)=>(Number(b.ts)||0)-(Number(a.ts)||0));
+for(const candidate of candidates){try{const data=await HX.unpack(candidate);if(data&&Array.isArray(data.tx)&&data.cats){S=data;break}}catch(e){}}
+if(!S){S={tx:[],cats:DEF};FIRST=true}
 S.dues=S.dues||[];
-try{const w=await HX.pack(S);if(hesabDB)await idbPut(hesabDB,w);try{localStorage.setItem('dk1',w.hx)}catch(e){}}catch(e){}
+let recordIdSeq=Math.max(Date.now(),...S.tx.map(t=>Number(t.id)||0),...S.dues.map(d=>Number(d.id)||0));
+const nextRecordId=()=>{recordIdSeq=Math.max(Date.now(),recordIdSeq+1);return recordIdSeq};
+try{const w=await HX.pack(S),ts=Date.now();if(hesabDB)await idbPut(hesabDB,{hx:w.hx,ts});try{localStorage.setItem('dk1',w.hx);localStorage.setItem('dk1_ts',String(ts))}catch(e){}}catch(e){}
+let lastSaveOk=true;
+async function persistSnapshot(snapshot){
+ const w=await HX.pack(snapshot),ts=Date.now();let idbOk=false,lsOk=false;
+ if(hesabDB){try{await idbPut(hesabDB,{hx:w.hx,ts});idbOk=true}catch(e){idbOk=false}}
+ try{localStorage.setItem('dk1',w.hx);lsOk=localStorage.getItem('dk1')===w.hx;try{localStorage.setItem('dk1_ts',String(ts))}catch(e){}}catch(e){lsOk=false}
+ if(!idbOk&&!lsOk)throw new Error('all storage backends failed');
+ return {idbOk,lsOk};
+}
 const save=()=>{
  const snapshot=JSON.parse(JSON.stringify(S));
- dbQueue=dbQueue.then(async()=>{const w=await HX.pack(snapshot);if(hesabDB)await idbPut(hesabDB,w);try{localStorage.setItem('dk1',w.hx)}catch(e){}}).catch(()=>{});
+ dbQueue=dbQueue.then(()=>persistSnapshot(snapshot)).then(()=>{lastSaveOk=true}).catch(e=>{lastSaveOk=false;try{notify('ذخیره اطلاعات ناموفق بود؛ لطفاً فوراً نسخه پشتیبان تهیه کنید.',true)}catch(x){}});
+ return dbQueue;
 };
-HX.bind={get:()=>S,write:async w=>{await dbQueue;if(hesabDB)await idbPut(hesabDB,w);try{localStorage.setItem('dk1',w.hx)}catch(e){}},save:()=>save()};
+HX.bind={get:()=>S,write:async w=>{await dbQueue;let idbOk=false,lsOk=false;const ts=Date.now();if(hesabDB){try{await idbPut(hesabDB,{hx:w.hx,ts});idbOk=true}catch(e){}}try{localStorage.setItem('dk1',w.hx);lsOk=localStorage.getItem('dk1')===w.hx;try{localStorage.setItem('dk1_ts',String(ts))}catch(e){}}catch(e){}if(!idbOk&&!lsOk)throw new Error('all storage backends failed')},save:()=>save()};
 let toastTimer=0;
 function notify(message,isError=false){const el=$('toast');if(!el)return;el.textContent=message;el.classList.toggle('error',!!isError);el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.hidden=true},3400)}
-async function verifyPersist(){try{const snapshot=JSON.parse(JSON.stringify(S));await dbQueue;const w=await HX.pack(snapshot);if(hesabDB)await idbPut(hesabDB,w);else{localStorage.setItem('dk1',w.hx);if(!localStorage.getItem('dk1'))throw new Error('storage failed')}return true}catch(e){return false}}
+window.addEventListener('offline',()=>notify('اتصال اینترنت قطع شد؛ برنامه با اطلاعات ذخیره‌شده در حالت آفلاین ادامه می‌دهد.'));
+window.addEventListener('online',()=>notify('اتصال اینترنت برقرار شد. اطلاعات محلی شما محفوظ است.'));
+async function verifyPersist(){await dbQueue;return lastSaveOk}
 
 let type='e',vy=T[0],vm=T[1],tvy=T[0],tvm=T[1];const open=new Set();let editing=null;let ry=T[0];
 
@@ -943,11 +959,15 @@ function renderTransactionsTab(){
 
 $('txMonth').addEventListener('change',e=>{tvm=+e.target.value;renderTransactionsTab()});
 $('txYear').addEventListener('change',e=>{tvy=+e.target.value;renderTransactionsTab()});
+function monthKey(y,m){return Number(y)*12+(Number(m)-1)}
+function validTx(t){return t&&Number.isFinite(Number(t.y))&&Number.isFinite(Number(t.m))&&Number(t.m)>=1&&Number(t.m)<=12&&Number(t.a)>=0&&(t.t==='i'||t.t==='e')}
+function closingBalance(y,m){const target=monthKey(y,m);return S.tx.reduce((sum,t)=>{if(!validTx(t)||monthKey(t.y,t.m)>target)return sum;return sum+(t.t==='i'?Number(t.a):-Number(t.a))},0)}
 function render(){
  $('mt').textContent=MN[vm-1]+' '+pd(vy);
- const tx=S.tx.filter(t=>t.y===vy&&t.m===vm);
- const I=tx.filter(t=>t.t==='i').reduce((s,t)=>s+t.a,0),E=tx.filter(t=>t.t==='e').reduce((s,t)=>s+t.a,0);
- $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده این ماه (تومان)</small><b>${fa(I-E)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;fitSum();
+ const tx=S.tx.filter(t=>Number(t.y)===Number(vy)&&Number(t.m)===Number(vm));
+ const I=tx.filter(t=>t.t==='i').reduce((s,t)=>s+Number(t.a||0),0),E=tx.filter(t=>t.t==='e').reduce((s,t)=>s+Number(t.a||0),0);
+ const close=closingBalance(vy,vm);
+ $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده پایان ماه (تومان)</small><b>${fa(close)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;fitSum();
  {const dm=S.tx.some(t=>t.demo)||S.dues.some(d=>d.demo);$('dmb').hidden=!dm;if(dm)$('dmb').innerHTML='داده‌های نمونه نمایش داده می‌شود. برای شروع واقعی آن‌ها را حذف کنید. <button class="eb" data-cd="1">حذف داده‌های نمونه</button>'}
  renderYear();renderList();renderDues();renderTransactionsTab();
  ['e','i'].forEach(k=>$('c'+k).innerHTML=S.cats[k].map((c,i)=>`${editing===k+':'+i?`<span class="chip ed"><input data-ei value="${esc(c)}" aria-label="نام سرفصل"><input class="ie" data-ej value="${esc((S.icons&&S.icons[c])||'')}" placeholder="ایموجی" maxlength="12" aria-label="ایموجی سرفصل"><button data-ok="${k}:${i}">✓</button></span>${pk()}${epk()}`:`<span class="chip"><button class="cn" data-ed="${k}:${i}" aria-label="ویرایش ${esc(c)}">${esc(c)} ${ic('pen')}</button><button data-rc="${k}:${i}" aria-label="حذف ${esc(c)}">×</button></span>`}`).join(''))}
@@ -955,7 +975,7 @@ function render(){
 $('amt').addEventListener('input',e=>{const n=num(e.target.value);e.target.value=n?fa(n):''});
 $('add').onclick=async()=>{const a=num($('amt').value);if(!a){$('amt').focus();notify('مبلغ را به‌درستی وارد کنید.',true);return}
  const y=num($('dy').value)||vy;
- const wasEdit=!!editTxId;if(wasEdit){const t0=S.tx.find(z=>z.id==editTxId);if(t0)Object.assign(t0,{t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});else S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()})}else S.tx.push({id:Date.now(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});editTxId=null;$('ecan').hidden=true;$('add').textContent=type==='e'?'ثبت هزینه':'ثبت درآمد';
+ const wasEdit=!!editTxId;if(wasEdit){const t0=S.tx.find(z=>z.id==editTxId);if(t0)Object.assign(t0,{t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});else S.tx.push({id:nextRecordId(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()})}else S.tx.push({id:nextRecordId(),t:type,a,c:$('cat').value,y,m:+$('dm').value,d:+$('dd').value,n:$('note').value.trim()});editTxId=null;$('ecan').hidden=true;$('add').textContent=type==='e'?'ثبت هزینه':'ثبت درآمد';
  save();const ok=await verifyPersist();vy=y;vm=+$('dm').value;tvy=y;tvm=+$('dm').value;$('amt').value='';$('note').value='';render();notify(ok?(wasEdit?'تغییرات تراکنش ذخیره شد.':'تراکنش با موفقیت ثبت شد.'):'خطا در ذخیره تراکنش؛ فضای ذخیره‌سازی را بررسی کنید.',!ok)};
 $('dm').onchange=()=>fillDays();$('dy').onchange=()=>fillDays();
 
@@ -1132,20 +1152,21 @@ $('insadd').onclick=async()=>{
  if(!amount){$('insamt').focus();notify('مبلغ هر قسط را به‌درستی وارد کنید.',true);return}
  if(!Number.isInteger(count)||count<1||count>600){$('inscount').focus();notify('تعداد اقساط باید بین ۱ تا ۶۰۰ باشد.',true);return}
  const custom=choice==='c'?{y:num($('insrcy').value)||year,m:+$('insrcm').value,d:+$('insrcd').value}:null;
- const stamp=Date.now(),made=[];let seq=stamp;const ids=new Set(S.dues.map(x=>x.id));
+ const stamp=nextRecordId(),made=[];let seq=stamp;const ids=new Set(S.dues.map(x=>x.id));
  for(let i=0;i<count;i++){
   let y=year+Math.floor((month-1+i)/12),m=(month-1+i)%12+1,d=Math.min(day,dim(y,m)),rem=baseRem,rc=null;
   if(custom){const rmth=monthStep(custom.y,custom.m,i);rc={y:rmth.y,m:rmth.m,d:Math.min(custom.d,dim(rmth.y,rmth.m))};const gd=toG(y,m,d),gr=toG(rc.y,rc.m,rc.d);rem=Math.round((Date.UTC(gd[0],gd[1]-1,gd[2])-Date.UTC(gr[0],gr[1]-1,gr[2]))/DAY);if(rem<0){notify('تاریخ یادآوری نمی‌تواند بعد از سررسید قسط باشد.',true);return}}
   while(ids.has(seq))seq++;const id=seq++;ids.add(id);
   made.push({id,k:'p',who,ph,a:amount,subj:(base?base+' — ':'')+'قسط '+(i+1)+' از '+count,y,m,d,rem,rc,done:false,installmentGroup:stamp,installmentNo:i+1,installmentTotal:count});
  }
+ recordIdSeq=Math.max(recordIdSeq,seq);
  S.dues.push(...made);save();const ok=await verifyPersist();
  if(!ok){S.dues=S.dues.filter(x=>x.installmentGroup!==stamp);notify('ذخیره اقساط انجام نشد؛ فضای ذخیره‌سازی را بررسی کنید.',true);return}
  ['inswho','insph','insamt','inscount','inssubj'].forEach(id=>$(id).value='');$('insrem').value='7';$('insrcrow').hidden=true;delete $('insrcrow').dataset.i;$('insmsg').textContent=fa(count)+' قسط ماهانه ثبت شد؛ برای هر قسط یادآوری جداگانه تنظیم شده است.';render();
 };
 $('dadd').onclick=async()=>{const who=$('dnm').value.trim(),a=num($('dam').value);if(!who){$('dnm').focus();notify('نام شخص را وارد کنید.',true);return}if(!a){$('dam').focus();notify('مبلغ را به‌درستی وارد کنید.',true);return}
  const wasEditD=!!editDueId,dv={k:dtab,who,ph:$('dph').value.trim(),a,subj:$('dsb').value.trim(),y:num($('dyy').value)||T[0],m:+$('dmm').value,d:+$('ddd').value,rem:+$('drm').value};if($('drm').value==='c'){const ry=num($('rcy').value)||T[0],rmn=+$('rcm').value,rdd=+$('rcd').value,gd=toG(dv.y,dv.m,dv.d),gr=toG(ry,rmn,rdd),rr=Math.round((Date.UTC(gd[0],gd[1]-1,gd[2])-Date.UTC(gr[0],gr[1]-1,gr[2]))/864e5);if(rr<0){notify('تاریخ یادآوری نمی‌تواند بعد از تاریخ سررسید باشد.',true);return}dv.rem=rr;dv.rc={y:ry,m:rmn,d:rdd}}else dv.rc=null;
- const d0=wasEditD?S.dues.find(z=>z.id==editDueId):null;if(d0){Object.assign(d0,dv);d0.done=false;resetDueFlags(d0.id)}else S.dues.push({id:Date.now(),...dv,done:false});editDueId=null;$('dcan').hidden=true;
+ const d0=wasEditD?S.dues.find(z=>z.id==editDueId):null;if(d0){Object.assign(d0,dv);d0.done=false;resetDueFlags(d0.id)}else S.dues.push({id:nextRecordId(),...dv,done:false});editDueId=null;$('dcan').hidden=true;
  save();const ok=await verifyPersist();['dnm','dph','dam','dsb'].forEach(i=>$(i).value='');$('dform').open=false;delete $('rcrow').dataset.i;rcShow();render();notify(ok?(wasEditD?'تغییرات ذخیره شد.':dtab==='r'?'مطالبه با موفقیت ثبت شد.':'بدهی با موفقیت ثبت شد.'):'خطا در ذخیره اطلاعات؛ فضای ذخیره‌سازی را بررسی کنید.',!ok)};
 const TRIAL=60,PAY_URL='',CONTACT='09361239027 (MORAD_DARVISHPOR)',DAY=864e5,PUB={"kty":"EC","crv":"P-256","x":"saXn4qWSxqRqvUUC_H8NX-xUOyyAAgcjNmZIMR8tB_8","y":"16O_2pcImT6T3qqIvXSyKIswP_ERqIo9x0gjTjXJET8"};
 let LIC={first:0,last:0,code:''};try{Object.assign(LIC,JSON.parse(localStorage.getItem('dk_lic'))||{})}catch(e){}
@@ -1196,11 +1217,13 @@ function bars(g){const n=g.length,mx=Math.max(1,...g.map(x=>Math.max(x.i,x.e))),
  const bs=g.map((x,k)=>{const kk=rt?n-1-k:k,x0=kk*w+w*.12,bw=w*.34,a=x.i/mx*105,b=x.e/mx*105;return `<rect x="${x0}" y="${110-a}" width="${bw}" height="${a}" rx="2" fill="#3DBE7A"/><rect x="${x0+bw+1}" y="${110-b}" width="${bw}" height="${b}" rx="2" fill="#E0443E"/>`}).join('');
  return `<svg viewBox="0 0 360 112" class="bch">${bs}</svg><div class="bl2" style="grid-template-columns:repeat(${n},1fr)">${g.map(x=>`<span>${x.l}</span>`).join('')}</div>`}
 function renderYear(){
- const inS=t=>rscope==='a'||(t.y===ry&&(rscope==='y'||t.m===rm)),sm=a=>a.reduce((s,t)=>s+t.a,0);
+ const inS=t=>rscope==='a'||(Number(t.y)===Number(ry)&&(rscope==='y'||Number(t.m)===Number(rm))),sm=a=>a.reduce((s,t)=>s+t.a,0);
  $('ryt').textContent=rscope==='a'?'همه سال\u200cها':pd(ry);$('ryn').hidden=rscope==='a';$('rrmn').hidden=rscope!=='m';$('rrmn').value=rm;
  document.querySelectorAll('[data-rs2]').forEach(b=>b.classList.toggle('on',b.dataset.rs2===rscope));
  const tx=S.tx.filter(inS),I=sm(tx.filter(t=>t.t==='i')),E=sm(tx.filter(t=>t.t==='e'));
- let h=`<div class="ys"><div><small>درآمد</small><b class="inc">${fa(I)}</b></div><div><small>هزینه</small><b class="exp">${fa(E)}</b></div><div><small>مانده</small><b>${fa(I-E)}</b></div></div>`;
+ const net=rscope==='m'?closingBalance(ry,rm):I-E;
+ const balanceLabel=rscope==='m'?'مانده پایان ماه':'مانده خالص';
+ let h=`<div class="ys"><div><small>درآمد</small><b class="inc">${fa(I)}</b></div><div><small>هزینه</small><b class="exp">${fa(E)}</b></div><div><small>${balanceLabel}</small><b>${fa(net)}</b></div></div>`;
  if(!tx.length){$('ryr').innerHTML=h+'<div class="empty">برای این بازه چیزی ثبت نشده.</div>';return}
  const cat=k=>{const by={};tx.filter(t=>t.t===k).forEach(t=>{const n=t.c||'بدون سرفصل';by[n]=(by[n]||0)+t.a});return Object.entries(by).sort((a,b)=>b[1]-a[1])};
  const exCats=cat('e'),inCats=cat('i');
@@ -1216,9 +1239,25 @@ function fitSum(){
 }
 window.addEventListener('resize',()=>fitSum());
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitSum());
-const APP_VER='1.5.5';$('appv').textContent=APP_VER;
+const APP_VER='1.5.6';$('appv').textContent=APP_VER;
 async function latestVer(){try{const u=new URL('index.html',location.href);u.search='?v='+Date.now();const c=new AbortController();const timer=setTimeout(()=>c.abort(),4500);try{const r=await fetch(u.href,{cache:'no-store',signal:c.signal});if(!r.ok)return null;const m=(await r.text()).match(/const APP_VER='([^']+)'/);return m?m[1]:null}finally{clearTimeout(timer)}}catch(e){return null}}
-async function hardRefresh(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}catch(e){}try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname+'?u='+Date.now())}
+async function hardRefresh(){
+ const m=$('chkm');if(m)m.textContent='در حال دریافت نسخه جدید…';
+ try{
+  const u=new URL('index.html',location.href);u.search='?v='+Date.now();
+  const c=new AbortController(),timer=setTimeout(()=>c.abort(),12000);
+  let r;try{r=await fetch(u.href,{cache:'no-store',signal:c.signal})}finally{clearTimeout(timer)}
+  if(!r||!r.ok)throw new Error('network');
+  const html=await r.clone().text(),v=(html.match(/const APP_VER='([^']+)'/)||[])[1];
+  if(!v)throw new Error('version');
+  if(v===APP_VER){if(m)m.textContent='نسخه جدید دریافت نشد؛ برنامه همین نسخه را دارد.';return}
+  const names=await caches.keys(),shell=names.find(k=>k.startsWith('hesab-shell-'));
+  if(shell){const cache=await caches.open(shell);await cache.put('./index.html',r.clone())}
+  if('serviceWorker' in navigator){const regs=await navigator.serviceWorker.getRegistrations();await Promise.all(regs.map(reg=>reg.update().catch(()=>{})))}
+  if(m)m.textContent='نسخه جدید دریافت شد؛ برنامه در حال بازگشایی است…';
+  setTimeout(()=>location.replace(location.pathname),250);
+ }catch(e){if(m)m.textContent='به‌روزرسانی انجام نشد؛ اتصال اینترنت را بررسی کنید. اطلاعات و نسخه آفلاین حذف نشده‌اند.';notify('به‌روزرسانی ناموفق بود؛ نسخه فعلی محفوظ است.',true)}
+}
 async function autoUpd(){
  const v=await latestVer();if(v&&v!==APP_VER){$('upb').hidden=false;$('upb').innerHTML='نسخه جدید نرم\u200cافزار در دسترس است. <button class="eb" data-upd="1">تأیید به\u200cروزرسانی</button>'}}
 $('chkv').onclick=async()=>{const m=$('chkm');m.textContent='در حال بررسی...';const v=await latestVer();
@@ -1619,7 +1658,7 @@ function exportXlsx(all){const n=new Date(),j=toJ(n.getFullYear(),n.getMonth()+1
   L.forEach(t=>{const k=t.y+'/'+pad(t.m);mo[k]=mo[k]||{i:0,e:0};mo[k][t.t]+=t.a;const c=t.t+'|'+(t.c||'');ct[c]=ct[c]||{s:0,n:0};ct[c].s+=t.a;ct[c].n++});
   sheets=[{name:'تراکنش\u200cها',rows:txRows(L)},
    {name:'مطالبات و دیون',rows:[['نوع','نام','تلفن','مبلغ (تومان)','موضوع','سررسید','یادآوری (روز قبل)','وضعیت'],...S.dues.slice().sort((x,y)=>tk(x)-tk(y)).map(d=>[d.k==='r'?'مطالبه':'بدهی',d.who,d.ph||'',d.a,d.subj||'',ds(d),d.rem<0?'—':d.rem,d.done?'تسویه شد':'باز'])]},
-   {name:'خلاصه ماهانه',rows:[['ماه','درآمد','هزینه','مانده'],...Object.keys(mo).sort().map(k=>[k,mo[k].i,mo[k].e,mo[k].i-mo[k].e])]},
+   {name:'خلاصه ماهانه',rows:[['ماه','درآمد','هزینه','مانده پایان ماه'],...Object.keys(mo).sort().map(k=>{const [y,m]=k.split('/').map(Number);return [k,mo[k].i,mo[k].e,closingBalance(y,m)]})]},
    {name:'سرفصل\u200cها',rows:[['نوع','سرفصل','جمع مبلغ','تعداد'],...Object.keys(ct).sort().map(k=>{const [t,c]=k.split('|');return [TYN(t),c,ct[k].s,ct[k].n]})]}]}
  saveFile('HESAB-Excel-'+stamp+'.xlsx',xlsxB(sheets))}
 $('xla').onclick=()=>exportXlsx(true);
