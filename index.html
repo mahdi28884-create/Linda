@@ -855,7 +855,7 @@ let type='e',vy=T[0],vm=T[1],tvy=T[0],tvm=T[1];const open=new Set();let editing=
 const toLat=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
 const pd=s=>String(s).replace(/\d/g,d=>({en:'0123456789',ar:'٠١٢٣٤٥٦٧٨٩',fa:'۰۱۲۳۴۵۶۷۸۹'}[LANG])[d]);
 const num=s=>parseInt(toLat(s).replace(/[^\d]/g,''),10)||0;
-function fillYearSelect(el,selected){if(!el)return;const ys=new Set([T[0],Number(selected)||T[0],...S.tx.map(t=>Number(t.y)).filter(Number.isFinite),...S.dues.map(t=>Number(t.y)).filter(Number.isFinite)]);const lo=Math.max(1300,Math.min(...ys)-2),hi=Math.min(1500,Math.max(...ys)+5);const list=[];for(let y=lo;y<=hi;y++)list.push(y);el.innerHTML=list.map(y=>`<option value="${y}">${pd(y)}</option>`).join('');el.value=String(Number(selected)||T[0]);if(!el.value)el.value=String(T[0])}
+function fillYearSelect(el,selected){if(!el)return;const lo=1300,hi=1500,list=[];for(let y=lo;y<=hi;y++)list.push(y);el.innerHTML=list.map(y=>`<option value="${y}">${pd(y)}</option>`).join('');const target=Number(selected)||T[0];el.value=String(target);if(!el.value){const opt=document.createElement('option');opt.value=String(target);opt.textContent=pd(target);el.appendChild(opt);el.value=String(target)}}
 
 function fillDate(){
  $('dm').innerHTML=MN.map((n,i)=>`<option value="${i+1}">${n}</option>`).join('');
@@ -967,7 +967,7 @@ function render(){
  const tx=S.tx.filter(t=>Number(t.y)===Number(vy)&&Number(t.m)===Number(vm));
  const I=tx.filter(t=>t.t==='i').reduce((s,t)=>s+Number(t.a||0),0),E=tx.filter(t=>t.t==='e').reduce((s,t)=>s+Number(t.a||0),0);
  const close=closingBalance(vy,vm);
- $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده پایان ماه (تومان)</small><b>${fa(close)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;fitSum();
+ $('sum').innerHTML=`<div class="bal"><div class="bal-main"><small>مانده ماه (تومان)</small><b>${fa(close)}</b></div><div class="stat"><small>درآمد</small><b class="inc">${fa(I)}</b></div><div class="stat"><small>هزینه</small><b class="exp">${fa(E)}</b></div></div>`;fitSum();
  {const dm=S.tx.some(t=>t.demo)||S.dues.some(d=>d.demo);$('dmb').hidden=!dm;if(dm)$('dmb').innerHTML='داده‌های نمونه نمایش داده می‌شود. برای شروع واقعی آن‌ها را حذف کنید. <button class="eb" data-cd="1">حذف داده‌های نمونه</button>'}
  renderYear();renderList();renderDues();renderTransactionsTab();
  ['e','i'].forEach(k=>$('c'+k).innerHTML=S.cats[k].map((c,i)=>`${editing===k+':'+i?`<span class="chip ed"><input data-ei value="${esc(c)}" aria-label="نام سرفصل"><input class="ie" data-ej value="${esc((S.icons&&S.icons[c])||'')}" placeholder="ایموجی" maxlength="12" aria-label="ایموجی سرفصل"><button data-ok="${k}:${i}">✓</button></span>${pk()}${epk()}`:`<span class="chip"><button class="cn" data-ed="${k}:${i}" aria-label="ویرایش ${esc(c)}">${esc(c)} ${ic('pen')}</button><button data-rc="${k}:${i}" aria-label="حذف ${esc(c)}">×</button></span>`}`).join(''))}
@@ -1222,7 +1222,7 @@ function renderYear(){
  document.querySelectorAll('[data-rs2]').forEach(b=>b.classList.toggle('on',b.dataset.rs2===rscope));
  const tx=S.tx.filter(inS),I=sm(tx.filter(t=>t.t==='i')),E=sm(tx.filter(t=>t.t==='e'));
  const net=rscope==='m'?closingBalance(ry,rm):I-E;
- const balanceLabel=rscope==='m'?'مانده پایان ماه':'مانده خالص';
+ const balanceLabel=rscope==='m'?'مانده ماه':'مانده خالص';
  let h=`<div class="ys"><div><small>درآمد</small><b class="inc">${fa(I)}</b></div><div><small>هزینه</small><b class="exp">${fa(E)}</b></div><div><small>${balanceLabel}</small><b>${fa(net)}</b></div></div>`;
  if(!tx.length){$('ryr').innerHTML=h+'<div class="empty">برای این بازه چیزی ثبت نشده.</div>';return}
  const cat=k=>{const by={};tx.filter(t=>t.t===k).forEach(t=>{const n=t.c||'بدون سرفصل';by[n]=(by[n]||0)+t.a});return Object.entries(by).sort((a,b)=>b[1]-a[1])};
@@ -1658,7 +1658,7 @@ function exportXlsx(all){const n=new Date(),j=toJ(n.getFullYear(),n.getMonth()+1
   L.forEach(t=>{const k=t.y+'/'+pad(t.m);mo[k]=mo[k]||{i:0,e:0};mo[k][t.t]+=t.a;const c=t.t+'|'+(t.c||'');ct[c]=ct[c]||{s:0,n:0};ct[c].s+=t.a;ct[c].n++});
   sheets=[{name:'تراکنش\u200cها',rows:txRows(L)},
    {name:'مطالبات و دیون',rows:[['نوع','نام','تلفن','مبلغ (تومان)','موضوع','سررسید','یادآوری (روز قبل)','وضعیت'],...S.dues.slice().sort((x,y)=>tk(x)-tk(y)).map(d=>[d.k==='r'?'مطالبه':'بدهی',d.who,d.ph||'',d.a,d.subj||'',ds(d),d.rem<0?'—':d.rem,d.done?'تسویه شد':'باز'])]},
-   {name:'خلاصه ماهانه',rows:[['ماه','درآمد','هزینه','مانده پایان ماه'],...Object.keys(mo).sort().map(k=>{const [y,m]=k.split('/').map(Number);return [k,mo[k].i,mo[k].e,closingBalance(y,m)]})]},
+   {name:'خلاصه ماهانه',rows:[['ماه','درآمد','هزینه','مانده ماه'],...Object.keys(mo).sort().map(k=>{const [y,m]=k.split('/').map(Number);return [k,mo[k].i,mo[k].e,closingBalance(y,m)]})]},
    {name:'سرفصل\u200cها',rows:[['نوع','سرفصل','جمع مبلغ','تعداد'],...Object.keys(ct).sort().map(k=>{const [t,c]=k.split('|');return [TYN(t),c,ct[k].s,ct[k].n]})]}]}
  saveFile('HESAB-Excel-'+stamp+'.xlsx',xlsxB(sheets))}
 $('xla').onclick=()=>exportXlsx(true);

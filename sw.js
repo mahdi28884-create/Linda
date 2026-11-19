@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hesab-shell-v23';
+const CACHE_NAME = 'hesab-shell-v24';
 function fetchTimed(input, options = {}, timeoutMs = 8000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
